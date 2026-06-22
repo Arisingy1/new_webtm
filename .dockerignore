@@ -1,0 +1,35 @@
+# зависимости и артефакты сборки — ставятся/собираются внутри образа
+node_modules
+.next
+out
+build
+
+# git и CI
+.git
+.gitignore
+.github
+
+# секреты и локальные конфиги — НИКОГДА не попадают в образ
+.env
+.env.*
+*.pem
+
+# IDE / редакторы
+.vscode
+.idea
+.claude
+
+# k8s / helm — в образ не нужны
+.kuber
+
+# логи и мусор
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+*.tsbuildinfo
+
+# докер-файлы и доки внутри образа не нужны
+Dockerfile
+.dockerignore
+README.md

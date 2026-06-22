@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployments.talentmind.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.deployments.talentmind.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.deployments.talentmind.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployments.talentmind.name }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.deployments.talentmind.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.deployments.talentmind.name }}
+          image: "{{ .Values.deployments.talentmind.image.repository }}:{{ .Values.deployments.talentmind.image.tag }}"
+          imagePullPolicy: {{ .Values.deployments.talentmind.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.deployments.talentmind.securityContext | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.deployments.talentmind.containerPort }}
+              protocol: TCP
+          {{- with .Values.deployments.talentmind.env }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.deployments.talentmind.sheetsSecretName }}
+          # Переменные интеграции с Google Sheets (форма заявок):
+          # GOOGLE_SERVICE_ACCOUNT_KEY и GOOGLE_SHEET_ID берутся из секрета.
+          # optional: true — под стартует, даже если секрет ещё не создан
+          # (форма тогда просто не пишет в таблицу до создания секрета).
+          envFrom:
+            - secretRef:
+                name: {{ .Values.deployments.talentmind.sheetsSecretName }}
+                optional: true
+          {{- end }}
+          # Next.js отдаёт корень — используем его как health-check
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.deployments.talentmind.resources | nindent 12 }}
+          # readOnlyRootFilesystem=true → нужны writable /tmp и кеш Next.js
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: next-cache
+              mountPath: /app/.next/cache
+      volumes:
+        - name: tmp
+          emptyDir: {}
+        - name: next-cache
+          emptyDir: {}

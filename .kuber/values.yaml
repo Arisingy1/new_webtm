@@ -1,0 +1,68 @@
+# Namespace, в который ставится приложение (указывается в metadata всех ресурсов)
+namespace: talentmind-demo
+
+# cert-manager ClusterIssuer для выпуска TLS-сертификата
+certIssuer: letsencrypt
+
+# Базовая HTTP-аутентификация на ingress (опционально).
+# secretName — заранее созданный secret типа auth (htpasswd).
+basicAuth:
+  enabled: false
+  secretName: talentmind-basic-auth
+
+# Домены
+other:
+  domain:
+    talentmind: talentmind.ru
+  # Доп. домены — для каждого создаётся отдельный tls-блок talentmind-tls-<i>
+  additionalDomains: []
+  # - www.talentmind.ru
+
+# Pull-секрет для приватного registry (cr.yandex). Создаётся отдельно в namespace.
+imagePullSecrets:
+  - name: regcred
+
+deployments:
+  talentmind:
+    name: talentmind
+    replicaCount: 2
+    image:
+      # Yandex Container Registry
+      repository: cr.yandex/crp6vn90m70ft81br1ud/talentmindru
+      # Тег НЕ "latest" — пиннинг конкретной версии (по security-правилам)
+      tag: "0.2.0"
+      pullPolicy: IfNotPresent
+    # Порт контейнера (= ENV PORT в Dockerfile)
+    containerPort: 3000
+    service:
+      port: 80
+    # Запросы/лимиты ресурсов обязательны (по security-правилам)
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 256Mi
+    # Безопасность пода: non-root
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+    # Безопасность контейнера: без эскалации, read-only FS, drop всех capabilities
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL
+    # Доп. переменные окружения приложения
+    env: []
+      # - name: NEXT_PUBLIC_API_URL
+      #   value: "https://api.example.com"
+    # Секрет с переменными интеграции Google Sheets (форма заявок на /contacts).
+    # Должен содержать ключи GOOGLE_SERVICE_ACCOUNT_KEY и GOOGLE_SHEET_ID.
+    # Создаётся отдельно в namespace (см. DEPLOY.md, раздел «Секрет для формы заявок»).
+    # Пустое значение "" — отключить проброс (форма работать с таблицей не будет).
+    sheetsSecretName: talentmind-sheets
