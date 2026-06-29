@@ -78,7 +78,7 @@ export default function AssistantBody({ embedded = false }: { embedded?: boolean
             in your pipeline in memory and answers any question in seconds
           </p>
           <div className="pd-rise mt-9 flex flex-wrap items-center gap-3">
-            <a href="/pricing" className="ease-smooth group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-1" style={{ background: GREEN, boxShadow: `0 18px 45px ${GREEN}40` }}>
+            <a href="https://app.talentmind.app" className="ease-smooth group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-1" style={{ background: GREEN, boxShadow: `0 18px 45px ${GREEN}40` }}>
               Start for free <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </a>
             <a href="#caps" className="ease-smooth inline-flex items-center gap-2 rounded-2xl border border-[#183833]/15 bg-white/60 px-6 py-4 text-lg font-medium text-[#183833] backdrop-blur transition-all duration-300 hover:-translate-y-1">
@@ -127,7 +127,7 @@ export default function AssistantBody({ embedded = false }: { embedded?: boolean
             <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-white/20 blur-[90px]" />
             <h2 className="relative text-3xl font-bold tracking-tight sm:text-5xl">Ask the assistant about your candidates</h2>
             <p className="relative mx-auto mt-4 max-w-xl text-lg text-white/85">5 analyses free, no credit card required. Your first answer in under a minute</p>
-            <a href="/pricing" className="ease-smooth relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>
+            <a href="https://app.talentmind.app" className="ease-smooth relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>
               Start for free <ArrowRight className="h-5 w-5" />
             </a>
           </div>

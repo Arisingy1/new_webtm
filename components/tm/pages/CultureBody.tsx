@@ -42,7 +42,7 @@ export default function CultureBody({ embedded = false }: { embedded?: boolean }
           <a href="/culture/example" className="ease-smooth group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-lg font-medium text-white shadow-[0_18px_40px_rgba(122,184,0,0.32)] transition-all duration-300 hover:-translate-y-1" style={{ background: GREEN }}>
             Sample report <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
           </a>
-          <a href="https://app.talentmind.ru" className="ease-smooth inline-flex items-center gap-2 rounded-2xl border border-[#183833]/15 bg-white/70 px-6 py-4 text-lg font-medium text-[#183833] backdrop-blur transition-all duration-300 hover:-translate-y-1">
+          <a href="https://app.talentmind.app" className="ease-smooth inline-flex items-center gap-2 rounded-2xl border border-[#183833]/15 bg-white/70 px-6 py-4 text-lg font-medium text-[#183833] backdrop-blur transition-all duration-300 hover:-translate-y-1">
             Report for your company
           </a>
         </div>
@@ -60,7 +60,7 @@ export default function CultureBody({ embedded = false }: { embedded?: boolean }
             <p className="relative mx-auto mt-4 max-w-xl text-lg text-white/85">
               Upload your culture artifacts and assess candidates against your own DNA. First 5 assessments free
             </p>
-            <a href="/pricing" className="ease-smooth relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>
+            <a href="https://app.talentmind.app" className="ease-smooth relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>
               Start for free →
             </a>
           </div>

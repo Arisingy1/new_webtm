@@ -106,13 +106,13 @@ export default function Header() {
             </nav>
             <div className="flex shrink-0 items-center gap-2">
               <a
-                href="https://app.talentmind.ru"
+                href="https://app.talentmind.app"
                 className="ease-smooth whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-medium text-[#183833] transition-all duration-300 hover:bg-[#F4F7F6]"
               >
                 Log in
               </a>
               <a
-                href="https://app.talentmind.ru"
+                href="https://app.talentmind.app"
                 className="ease-smooth group flex items-center gap-1 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium text-white shadow-[0_10px_24px_rgba(122,184,0,0.3)] transition-all duration-300 hover:-translate-y-0.5"
                 style={{ background: GREEN }}
               >
@@ -172,13 +172,13 @@ export default function Header() {
         </nav>
         <div className="mt-3 flex flex-col gap-2.5 border-t border-black/5 pt-4">
           <a
-            href="https://app.talentmind.ru"
+            href="https://app.talentmind.app"
             className="ease-smooth flex items-center justify-center rounded-full border border-[#183833]/12 px-5 py-3.5 text-[15px] font-medium text-[#183833] transition-colors hover:bg-[#F4F7F6]"
           >
             Log in
           </a>
           <a
-            href="https://app.talentmind.ru"
+            href="https://app.talentmind.app"
             className="ease-smooth group flex items-center justify-center gap-1.5 rounded-full px-5 py-3.5 text-[15px] font-medium text-white shadow-[0_12px_28px_rgba(122,184,0,0.32)] transition-all"
             style={{ background: GREEN }}
           >

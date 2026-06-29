@@ -89,7 +89,7 @@ export default function PricingBento() {
 
           {/* CTA pinned to the bottom */}
           <a
-            href="https://app.talentmind.ru"
+            href="https://app.talentmind.app"
             className={`group mt-8 flex w-full items-center justify-center gap-1.5 rounded-2xl py-3.5 text-sm font-semibold transition-transform hover:scale-[1.02] ${
               t.hot ? "text-white" : "text-[#183833]"
             }`}

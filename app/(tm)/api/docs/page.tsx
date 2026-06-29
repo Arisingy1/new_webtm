@@ -56,7 +56,7 @@ const GROUPS: Group[] = [
         pathValues: { id: "int_8d24f0" },
         responses: [{ code: "200", label: "Success" }, { code: "404", label: "Interview not found" }],
         res: {
-          "200": `{\n  "success": true,\n  "id": "int_8d24f0",\n  "status": "completed",\n  "match": 0.88,\n  "report_url": "https://app.talentmind.ru/r/int_8d24f0",\n  "scores": {\n    "leadership": 0.88,\n    "communication": 0.84,\n    "empathy": 0.75,\n    "logic": 0.76\n  }\n}`,
+          "200": `{\n  "success": true,\n  "id": "int_8d24f0",\n  "status": "completed",\n  "match": 0.88,\n  "report_url": "https://app.talentmind.app/r/int_8d24f0",\n  "scores": {\n    "leadership": 0.88,\n    "communication": 0.84,\n    "empathy": 0.75,\n    "logic": 0.76\n  }\n}`,
           "404": nf("Interview not found"),
         },
       },

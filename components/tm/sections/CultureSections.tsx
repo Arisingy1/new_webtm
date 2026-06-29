@@ -3,13 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Dna, Check, AlertTriangle, Target, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 /* ── палитра бренда TalentMind ── */
 const GREEN = "#7AB800";
-const TEAL = "#11AFCC";
 const INK = "#183833";
-const AMBER = "#E8A317";
 
 /* ============================================================
    CultureSections — контентные блоки страницы «Корпоративная
@@ -101,17 +99,6 @@ const GROUPS: { key: DimKey; label: string; color: string; items: P[] }[] = DIM_
   items: PARAMS.filter((p) => p.dim === key),
 }));
 
-/* ДНК компании — 7 измерений OCP (демо-профиль) */
-const DNA: [string, number, string][] = [
-  ["Innovation", 64, GREEN],
-  ["Stability", 78, TEAL],
-  ["People orientation", 72, AMBER],
-  ["Results orientation", 81, "#FF6B57"],
-  ["Attention to detail", 75, "#2E9E8F"],
-  ["Team orientation", 69, "#5BA528"],
-  ["Competitiveness", 58, "#E07B39"],
-];
-
 export default function CultureSections() {
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -131,83 +118,6 @@ export default function CultureSections() {
 
   return (
     <div ref={rootRef} className="relative w-full" style={{ color: INK }}>
-      {/* ===================== ДНК КОМПАНИИ ===================== */}
-      <section id="dna" className="relative mx-auto max-w-[1280px] px-6 pb-28 md:px-12">
-        <div className="reveal mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest" style={{ color: GREEN }}>
-            <Dna className="h-4 w-4" /> Company DNA
-          </span>
-          <h2 className="mt-4 text-3xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ color: INK }}>
-            We factor in your company DNA when analyzing <span style={{ color: GREEN }}>every candidate</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-[#183833]/65">
-            Your culture profile becomes the benchmark. For each candidate we calculate a match score
-            and break cultural fit down into strong alignment points and areas to watch
-          </p>
-        </div>
-
-        <div className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-[1.15fr_0.85fr]">
-          {/* ДНК — 7 измерений OCP */}
-          <div className="reveal rounded-[28px] border border-[#e8efe6] bg-white/95 p-7 shadow-[0_24px_60px_rgba(24,56,51,0.09)]">
-            <div className="flex items-center gap-2.5">
-              <span className="grid h-10 w-10 place-items-center rounded-2xl" style={{ background: `${GREEN}1a` }}><Dna className="h-5 w-5" style={{ color: GREEN }} /></span>
-              <div>
-                <p className="text-base font-bold" style={{ color: INK }}>Company culture profile</p>
-                <p className="text-xs text-[#183833]/50">7 dimensions · 54 parameters</p>
-              </div>
-            </div>
-            <div className="mt-6 space-y-3.5">
-              {DNA.map(([name, val, c]) => (
-                <div key={name}>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-medium" style={{ color: INK }}>{name}</span>
-                    <span className="font-bold" style={{ color: c }}>{val}</span>
-                  </div>
-                  <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-[#eef2ec]">
-                    <div className="h-full rounded-full" style={{ width: `${val}%`, background: c }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Уровень соответствия + культурный фит */}
-          <div className="flex flex-col gap-5">
-            <div className="reveal flex items-center gap-5 rounded-[28px] border border-[#e8efe6] bg-white/95 p-7 shadow-[0_24px_60px_rgba(24,56,51,0.09)]">
-              <Ring value={74} />
-              <div>
-                <p className="flex items-center gap-1.5 text-base font-bold" style={{ color: INK }}><Target className="h-4 w-4" style={{ color: GREEN }} /> Match score</p>
-                <p className="mt-1.5 text-sm leading-snug text-[#183833]/65">
-                  How closely the candidate’s values and behavior align with your company DNA
-                </p>
-              </div>
-            </div>
-
-            <div className="reveal rounded-[28px] border border-[#e8efe6] bg-white/95 p-7 shadow-[0_24px_60px_rgba(24,56,51,0.09)]">
-              <p className="text-base font-bold" style={{ color: INK }}>Cultural fit</p>
-              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide" style={{ color: GREEN }}><Check className="h-3.5 w-3.5" /> Alignment points</p>
-                  <ul className="mt-2 space-y-1.5">
-                    {["Execution discipline", "Respect for areas of responsibility", "Analytical approach"].map((t) => (
-                      <li key={t} className="flex items-start gap-1.5 text-xs leading-snug text-[#183833]/70"><span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: GREEN }} /> {t}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide" style={{ color: AMBER }}><AlertTriangle className="h-3.5 w-3.5" /> Areas to watch</p>
-                  <ul className="mt-2 space-y-1.5">
-                    {["Low initiative", "Limited flexibility to change"].map((t) => (
-                      <li key={t} className="flex items-start gap-1.5 text-xs leading-snug text-[#183833]/70"><span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: AMBER }} /> {t}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ===================== АНАЛИЗИРУЕМЫЕ ПАРАМЕТРЫ (обозреватель) ===================== */}
       <ParametersExplorer />
     </div>
@@ -305,22 +215,5 @@ function ParametersExplorer() {
         </div>
       </div>
     </section>
-  );
-}
-
-/* кольцо уровня соответствия */
-function Ring({ value }: { value: number }) {
-  const r = 38, c = 2 * Math.PI * r, dash = ((value / 100) * c).toFixed(1);
-  return (
-    <div className="relative h-[104px] w-[104px] shrink-0 text-center">
-      <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
-        <defs><linearGradient id="cRing" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor={TEAL} /><stop offset="100%" stopColor={GREEN} /></linearGradient></defs>
-        <circle cx="50" cy="50" r={r} fill="none" stroke="#e9efe6" strokeWidth="9" />
-        <circle cx="50" cy="50" r={r} fill="none" stroke="url(#cRing)" strokeWidth="9" strokeLinecap="round" strokeDasharray={`${dash} ${c.toFixed(1)}`} />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-bold" style={{ color: GREEN }}>{value}%</span>
-      </div>
-    </div>
   );
 }

@@ -340,7 +340,7 @@ export default function CulturePrimerPage() {
         <div className="rv overflow-hidden rounded-[2rem] px-8 py-12 text-center text-white shadow-[0_30px_70px_rgba(122,184,0,0.28)]" style={{ background: `linear-gradient(135deg, ${GREEN} 0%, #5e9400 100%)` }}>
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Build a profile like this for your company</h2>
           <p className="mx-auto mt-3 max-w-xl text-white/85">Upload your culture artifacts and evaluate candidates through the lens of your DNA. The first 5 reports are free</p>
-          <a href="https://app.talentmind.ru" className="ease-smooth mt-7 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>Get a report for your company →</a>
+          <a href="https://app.talentmind.app" className="ease-smooth mt-7 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>Get a report for your company →</a>
         </div>
 
         <p className="rv text-center text-[11px] text-[#183833]/40">TalentMind · automatically generated report · demo data</p>

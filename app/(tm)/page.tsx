@@ -5,7 +5,6 @@ import { gsap } from "gsap";
 import { Clock, Repeat2, ShieldCheck } from "lucide-react";
 import { Arrow, CountUp, GREEN, INK, TEAL, useReveals } from "@/components/tm/ui";
 import FigmaImage from "@/components/tm/FigmaImage";
-import PricingBento from "@/components/tm/PricingBento";
 import BusinessValue from "@/components/tm/BusinessValue";
 import Automation from "@/components/tm/Automation";
 
@@ -67,7 +66,7 @@ export default function HomePage() {
               the accuracy for yourself — get 5 full reports for free
             </p>
             <a
-              href="/pricing"
+              href="https://app.talentmind.app"
               className="ease-smooth group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-7 py-4 text-base font-medium text-white shadow-[0_18px_40px_rgba(122,184,0,0.32)] transition-all duration-300 hover:-translate-y-1 sm:mt-8 sm:w-fit sm:justify-start sm:text-lg"
               style={{ background: GREEN }}
             >
@@ -146,13 +145,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ========================== MARQUEE (под hero, светлый фон) ========================== */}
-      <div className="overflow-hidden border-y border-[#183833]/10 bg-[#f3f7ef] py-6 sm:py-7 [mask-image:linear-gradient(to_right,transparent,#000_7%,#000_93%,transparent)]">
+      {/* ===================== БЛОК 2 · ЦЕННОСТЬ И БИЗНЕС-РЕЗУЛЬТАТЫ ===================== */}
+      <BusinessValue />
+
+      {/* ===================== БЛОК 3 · АВТОМАТИЗАЦИЯ ===================== */}
+      <Automation />
+
+      {/* ========================== MARQUEE (низ, тёмный фон) ========================== */}
+      <div className="overflow-hidden border-t border-white/10 bg-[#183833] py-7">
         <div className="flex w-max animate-[amzmarquee_28s_linear_infinite] items-center">
           {Array.from({ length: 2 }).map((_, dup) => (
             <div key={dup} className="flex items-center" aria-hidden={dup === 1 || undefined}>
               {Array.from({ length: 6 }).map((_, i) => (
-                <a key={i} href="/contacts" className="group flex items-center gap-3 px-6 text-2xl font-bold tracking-tight transition-opacity hover:opacity-70 sm:gap-4 sm:px-8 sm:text-4xl lg:text-6xl" style={{ color: GREEN }}>
+                <a key={i} href="https://app.talentmind.app" className="group flex items-center gap-3 px-6 text-2xl font-bold tracking-tight transition-opacity hover:opacity-80 sm:gap-4 sm:px-8 sm:text-4xl lg:text-6xl" style={{ color: GREEN }}>
                   Evaluate 5 candidates for free
                   <Arrow className="h-6 w-6 sm:h-9 sm:w-9" />
                 </a>
@@ -161,23 +166,6 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-
-      {/* ===================== БЛОК 2 · ЦЕННОСТЬ И БИЗНЕС-РЕЗУЛЬТАТЫ ===================== */}
-      <BusinessValue />
-
-      {/* ===================== БЛОК 3 · АВТОМАТИЗАЦИЯ ===================== */}
-      <Automation />
-
-      {/* ===================== PRICING (Bento) ===================== */}
-      <section className="w-full px-5 py-16 sm:px-6 sm:py-24 md:px-12">
-        <div className="reveal mx-auto mb-10 max-w-3xl text-center sm:mb-12">
-          <h2 className="mt-4 text-[clamp(1.9rem,6vw,3.75rem)] font-bold tracking-tight">Pricing that grows with your team</h2>
-        </div>
-        <div className="reveal mx-auto 2xl:max-w-[1440px] 3xl:max-w-[1600px]">
-          <PricingBento />
-        </div>
-      </section>
-
     </div>
   );
 }
