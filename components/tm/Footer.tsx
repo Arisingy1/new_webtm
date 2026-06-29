@@ -3,8 +3,8 @@ import { INK } from "./ui";
 
 export default function Footer() {
   const cols: { h: string; links: [string, string][] }[] = [
-    { h: "Product", links: [["AI assistant", "/ai-assistant"], ["Candidate report", "/otchet"], ["Corporate culture", "/culture"]] },
-    { h: "Platform", links: [["API", "/api"], ["Pricing", "/pricing"]] },
+    { h: "Product", links: [["Platform", "/platform"], ["Pricing", "/pricing"], ["Contacts", "/contacts"]] },
+    { h: "Resources", links: [["API", "/api"], ["Security", "/security"], ["Partners", "/partners"]] },
   ];
   return (
     <footer className="relative z-10 overflow-hidden pt-20 text-white" style={{ background: INK }}>

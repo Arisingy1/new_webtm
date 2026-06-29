@@ -4,12 +4,9 @@ import { useEffect, useState } from "react";
 import { Arrow, GREEN } from "./ui";
 
 const LINKS: [string, string][] = [
-  ["Report", "/otchet"],
-  ["Corporate culture", "/culture"],
-  ["AI assistant", "/ai-assistant"],
-  ["API", "/api"],
-  ["Security", "/security"],
+  ["Platform", "/platform"],
   ["Pricing", "/pricing"],
+  ["Partners", "/partners"],
   ["Contacts", "/contacts"],
 ];
 

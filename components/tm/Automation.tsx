@@ -69,7 +69,7 @@ const STEPS: Step[] = [
           <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ color: INK }}>
             <span style={{ color: GREEN }}>Cultural fit</span> analysis across 54 parameters
           </h2>
-          <a href="/culture" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+          <a href="/platform#block-1" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
             See how values assessment works <Arrow style={{ color: GREEN }} />
           </a>
           </div>
@@ -231,7 +231,7 @@ const STEPS: Step[] = [
           <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ color: INK }}>
             A ready candidate profile backed by <span style={{ color: GREEN }}>objective reasoning</span>
           </h2>
-          <a href="/otchet" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+          <a href="/platform#block-2" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
             See a sample report <Arrow style={{ color: GREEN }} />
           </a>
           </div>
@@ -265,7 +265,7 @@ const STEPS: Step[] = [
           <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ color: INK }}>
             AI assistant: <span style={{ color: GREEN }}>"chat"</span> with your candidate pipeline
           </h2>
-          <a href="/ai-assistant" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+          <a href="/platform#block-3" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
             See a sample chat <Arrow style={{ color: GREEN }} />
           </a>
           </div>

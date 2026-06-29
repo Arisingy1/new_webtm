@@ -17,11 +17,14 @@ export default function LenisProvider({
     const raf = (t: number) => lenis.raf(t * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
+    // expose instance so in-page nav (anchors/TOC) can scroll smoothly
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
     // refresh once everything has mounted
     const id = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => {
       cancelAnimationFrame(id);
       gsap.ticker.remove(raf);
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
       lenis.destroy();
     };
   }, []);

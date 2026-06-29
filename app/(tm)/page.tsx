@@ -146,6 +146,22 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ========================== MARQUEE (под hero, светлый фон) ========================== */}
+      <div className="overflow-hidden border-y border-[#183833]/10 bg-[#f3f7ef] py-6 sm:py-7 [mask-image:linear-gradient(to_right,transparent,#000_7%,#000_93%,transparent)]">
+        <div className="flex w-max animate-[amzmarquee_28s_linear_infinite] items-center">
+          {Array.from({ length: 2 }).map((_, dup) => (
+            <div key={dup} className="flex items-center" aria-hidden={dup === 1 || undefined}>
+              {Array.from({ length: 6 }).map((_, i) => (
+                <a key={i} href="/contacts" className="group flex items-center gap-3 px-6 text-2xl font-bold tracking-tight transition-opacity hover:opacity-70 sm:gap-4 sm:px-8 sm:text-4xl lg:text-6xl" style={{ color: GREEN }}>
+                  Evaluate 5 candidates for free
+                  <Arrow className="h-6 w-6 sm:h-9 sm:w-9" />
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* ===================== БЛОК 2 · ЦЕННОСТЬ И БИЗНЕС-РЕЗУЛЬТАТЫ ===================== */}
       <BusinessValue />
 
@@ -162,21 +178,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ========================== MARQUEE ========================== */}
-      <div className="overflow-hidden border-t border-white/10 bg-[#183833] py-7">
-        <div className="flex w-max animate-[amzmarquee_28s_linear_infinite] items-center">
-          {Array.from({ length: 2 }).map((_, dup) => (
-            <div key={dup} className="flex items-center">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <a key={i} href="/contacts" className="group flex items-center gap-3 px-6 text-2xl font-bold tracking-tight transition-opacity hover:opacity-80 sm:gap-4 sm:px-8 sm:text-4xl lg:text-6xl" style={{ color: GREEN }}>
-                  Evaluate 5 candidates for free
-                  <Arrow className="h-6 w-6 sm:h-9 sm:w-9" />
-                </a>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
