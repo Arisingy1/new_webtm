@@ -101,10 +101,7 @@ export default function PartnersPage() {
       <section className="relative mx-auto grid max-w-[1340px] grid-cols-1 items-center gap-12 px-6 pt-32 pb-12 md:px-10 lg:grid-cols-[1.04fr_1fr] lg:pt-40">
         {/* ЛЕВО */}
         <div className="relative z-10">
-          <span className="partners-rise inline-flex items-center gap-2 rounded-full border border-[#183833]/10 bg-white/70 px-4 py-1.5 font-mono text-xs uppercase tracking-widest backdrop-blur" style={{ color: GREEN }}>
-            Partner program
-          </span>
-          <h1 className="partners-rise mt-5 max-w-[15ch] text-[clamp(2.1rem,4.4vw,4.3rem)] font-bold leading-[1.04] tracking-tight text-balance" style={{ color: INK }}>
+          <h1 className="partners-rise max-w-[15ch] text-[clamp(2.1rem,4.4vw,4.3rem)] font-bold leading-[1.04] tracking-tight text-balance" style={{ color: INK }}>
             Grow your business <span style={{ color: GREEN }}>with TalentMind</span>
           </h1>
           <p className="partners-rise mt-6 max-w-xl text-lg leading-relaxed text-pretty text-[#183833]/70">

@@ -40,7 +40,7 @@ export default function AssistantSections() {
       <section id="caps" className="relative mx-auto max-w-[1340px] px-6 py-16 md:px-10">
         <div className="as-reveal mb-12 flex flex-wrap items-end justify-between gap-4">
           <h2 className="max-w-[16ch] text-[clamp(2rem,3.6vw,3.6rem)] font-bold leading-[1.05] tracking-tight" style={{ color: INK }}>
-            What the <span style={{ color: GREEN }}>assistant</span> can do
+            What the <span style={{ color: GREEN }}>assistant</span> can do
           </h2>
           <p className="max-w-sm text-[#183833]/55">Five capabilities that turn your pipeline into a conversation partner</p>
         </div>

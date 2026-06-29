@@ -2,12 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { Dna, FileText, Bot } from "lucide-react";
 import CultureBody from "@/components/tm/pages/CultureBody";
 import ReportBody from "@/components/tm/pages/ReportBody";
 import AssistantBody from "@/components/tm/pages/AssistantBody";
 import BlockNav from "@/components/tm/BlockNav";
-import { smoothJumpTo } from "@/components/tm/transition";
+import PlatformFlow from "@/components/tm/PlatformFlow";
 
 /* ── палитра бренда TalentMind ── */
 const GREEN = "#7AB800";
@@ -30,12 +29,6 @@ const NAV_BLOCKS = [
    Навигация по блокам — карточки-якоря в hero (плавный скролл
    через Lenis).
    ============================================================ */
-
-const PILLARS: { icon: React.ReactNode; title: string; text: string; href: string }[] = [
-  { icon: <Dna className="h-5 w-5" />, title: "Corporate culture", text: "Map your company DNA across 54 parameters and assess every candidate against it", href: "#block-1" },
-  { icon: <FileText className="h-5 w-5" />, title: "Candidate report", text: "A detailed breakdown of soft skills and cultural fit from a real interview", href: "#block-2" },
-  { icon: <Bot className="h-5 w-5" />, title: "AI assistant", text: "Talk to your whole pipeline in natural language and get answers in seconds", href: "#block-3" },
-];
 
 export default function PlatformPage() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -71,11 +64,6 @@ export default function PlatformPage() {
     return () => clearTimeout(t);
   }, []);
 
-  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    smoothJumpTo(href);
-  };
-
   return (
     <div ref={rootRef} className="relative w-full overflow-hidden" style={{ color: INK }}>
       {/* завеса плавных переходов между блоками (в цвет фона страницы) */}
@@ -107,21 +95,8 @@ export default function PlatformPage() {
           </a>
         </div>
 
-        {/* три столпа платформы — навигация-якоря по блокам ниже */}
-        <div className="pl-rise mx-auto mt-14 grid max-w-3xl grid-cols-1 gap-4 text-left sm:grid-cols-3">
-          {PILLARS.map((p) => (
-            <a
-              key={p.title}
-              href={p.href}
-              onClick={(e) => scrollTo(e, p.href)}
-              className="ease-smooth group rounded-3xl border border-[#e8efe6] bg-white/95 p-5 shadow-[0_18px_44px_rgba(24,56,51,0.07)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_26px_60px_rgba(24,56,51,0.10)]"
-            >
-              <span className="grid h-10 w-10 place-items-center rounded-2xl transition-transform duration-300 group-hover:scale-105" style={{ background: `${GREEN}1a`, color: GREEN }}>{p.icon}</span>
-              <p className="mt-3 text-base font-bold" style={{ color: INK }}>{p.title}</p>
-              <p className="mt-1.5 text-sm leading-snug text-[#183833]/60">{p.text}</p>
-            </a>
-          ))}
-        </div>
+        {/* путь платформы — интерактивный таймлайн из трёх блоков */}
+        <PlatformFlow />
       </section>
 
       {/* ===================== БЛОКИ ===================== */}

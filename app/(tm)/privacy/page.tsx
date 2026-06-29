@@ -12,7 +12,7 @@ const SECTIONS: Section[] = [
   {
     h: "1. General Provisions",
     body: [
-      "This personal data processing policy has been drawn up in accordance with the requirements of Federal Law No. 152-FZ of July 27, 2006 “On Personal Data” (hereinafter — the Personal Data Law) and defines the procedure for processing personal data and the measures taken by Webpractic LLC (hereinafter — the Operator) to ensure the security of personal data.",
+      "This personal data processing policy has been drawn up in accordance with the requirements of Federal Law No. 152-FZ of July 27, 2006 “On Personal Data” (hereinafter — the Personal Data Law) and defines the procedure for processing personal data and the measures taken by TalentMind AI CORP (hereinafter — the Operator) to ensure the security of personal data.",
       "1.1. The Operator sets as the most important goal and condition of its activities the observance of the rights and freedoms of the individual and citizen when processing their personal data, including the protection of the rights to privacy and to personal and family confidentiality.",
       "1.2. This Operator policy regarding the processing of personal data (hereinafter — the Policy) applies to all information that the Operator may obtain about visitors to the talentmind.ru website.",
     ],
@@ -181,7 +181,7 @@ export default function PrivacyPage() {
         <h1 className="mt-4 text-[clamp(1.9rem,3.4vw,2.9rem)] font-bold leading-[1.1] tracking-tight">
           Personal Data Processing Policy
         </h1>
-        <p className="mt-3 text-lg font-semibold text-[#183833]/80">Webpractic LLC</p>
+        <p className="mt-3 text-lg font-semibold text-[#183833]/80">TalentMind AI CORP</p>
 
         <div className="mt-10 divide-y divide-[#e6ece4]">
           {SECTIONS.map((s) => (
@@ -204,7 +204,7 @@ export default function PrivacyPage() {
           ))}
         </div>
 
-        <p className="mt-10 text-sm text-[#183833]/50">© 2026 Webpractic LLC</p>
+        <p className="mt-10 text-sm text-[#183833]/50">© 2026 TalentMind AI CORP</p>
       </section>
     </main>
   );

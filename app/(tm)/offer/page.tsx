@@ -22,7 +22,7 @@ const SECTIONS: Section[] = [
         "Agreement — the text of this Offer together with its Appendices, which form an integral part of it, accepted by the Customer through the performance of the conclusive actions provided for in this Offer.",
         "Conclusive actions — conduct that expresses agreement with the counterparty's proposal to conclude, amend, or terminate an agreement. Such actions consist of the full or partial performance of the terms proposed by the counterparty.",
         "Contractor's website on the “Internet” — a set of computer programs and other information contained in an information system, access to which is provided via the “Internet” under the domain name and network address: https://talentmind.ru/.",
-        "Parties to the Agreement (the Parties) — the Contractor (Webpractic LLC) and the Customer (any individual, sole proprietor, or legal entity that has accepted the Offer).",
+        "Parties to the Agreement (the Parties) — the Contractor (TalentMind AI CORP) and the Customer (any individual, sole proprietor, or legal entity that has accepted the Offer).",
         "Service — the service of providing access to the functional capabilities of the TalentMind IT platform for candidate assessment, rendered by the Contractor to the Customer in the manner and on the terms established by this Offer and the selected Pricing plan.",
       ] },
     ],
@@ -247,7 +247,7 @@ export default function OfferPage() {
           </ol>
         </div>
 
-        <p className="mt-10 text-sm text-[#183833]/50">© 2026 Webpractic LLC</p>
+        <p className="mt-10 text-sm text-[#183833]/50">© 2026 TalentMind AI CORP</p>
       </section>
     </main>
   );
