@@ -4,6 +4,58 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Cookie, X } from "lucide-react";
 import { GREEN, INK } from "./ui";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import { localize, type Locale } from "@/lib/i18n";
+
+const DICT: Record<
+  Locale,
+  {
+    before: string;
+    privacy: string;
+    after: string;
+    accept: string;
+    decline: string;
+    closeAria: string;
+    dialogAria: string;
+  }
+> = {
+  en: {
+    before: "We use cookies to improve how the site works. By continuing to use the site, you agree to our ",
+    privacy: "Privacy Policy",
+    after: " and to the use of cookies.",
+    accept: "Accept",
+    decline: "Decline",
+    closeAria: "Close and accept only necessary cookies",
+    dialogAria: "Cookie usage notice",
+  },
+  es: {
+    before: "Usamos cookies para mejorar el funcionamiento del sitio. Al continuar usando el sitio, aceptas nuestra ",
+    privacy: "Política de privacidad",
+    after: " y el uso de cookies.",
+    accept: "Aceptar",
+    decline: "Rechazar",
+    closeAria: "Cerrar y aceptar solo las cookies necesarias",
+    dialogAria: "Aviso sobre el uso de cookies",
+  },
+  pt: {
+    before: "Usamos cookies para melhorar o funcionamento do site. Ao continuar a usar o site, você concorda com nossa ",
+    privacy: "Política de privacidade",
+    after: " e com o uso de cookies.",
+    accept: "Aceitar",
+    decline: "Recusar",
+    closeAria: "Fechar e aceitar apenas os cookies necessários",
+    dialogAria: "Aviso sobre o uso de cookies",
+  },
+  ar: {
+    before: "نستخدم ملفات تعريف الارتباط لتحسين طريقة عمل الموقع. بمواصلة استخدام الموقع، فإنك توافق على ",
+    privacy: "سياسة الخصوصية",
+    after: " وعلى استخدام ملفات تعريف الارتباط.",
+    accept: "موافق",
+    decline: "رفض",
+    closeAria: "الإغلاق وقبول ملفات تعريف الارتباط الضرورية فقط",
+    dialogAria: "إشعار بشأن استخدام ملفات تعريف الارتباط",
+  },
+};
 
 /* ============================================================
    CookieConsent — уведомление об использовании cookie.
@@ -17,6 +69,8 @@ import { GREEN, INK } from "./ui";
 const STORAGE_KEY = "tm-cookie-consent"; // "accepted" | "necessary"
 
 export default function CookieConsent() {
+  const locale = useLocale();
+  const t = DICT[locale];
   // visible начинается с false, чтобы не было мигания при SSR/гидрации
   const [visible, setVisible] = useState(false);
 
@@ -55,7 +109,7 @@ export default function CookieConsent() {
           transition={{ type: "spring", stiffness: 240, damping: 26 }}
           role="dialog"
           aria-live="polite"
-          aria-label="Cookie usage notice"
+          aria-label={t.dialogAria}
           className="fixed bottom-4 left-4 right-4 z-[100] sm:left-6 sm:right-auto sm:max-w-[440px]"
         >
           <div className="relative overflow-hidden rounded-3xl border border-black/5 bg-white/95 p-6 shadow-[0_30px_70px_rgba(24,56,51,0.18)] backdrop-blur-md sm:p-7">
@@ -68,7 +122,7 @@ export default function CookieConsent() {
             <button
               type="button"
               onClick={() => decide("necessary")}
-              aria-label="Close and accept only necessary cookies"
+              aria-label={t.closeAria}
               className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full text-[#183833]/40 transition-colors hover:bg-[#F4F7F6] hover:text-[#183833]"
             >
               <X className="h-4 w-4" />
@@ -83,16 +137,15 @@ export default function CookieConsent() {
               </span>
               <div className="pr-6">
                 <p className="text-[13.5px] leading-relaxed text-[#183833]/65">
-                  We use cookies to improve how the site works. By continuing to use
-                  the site, you agree to our{" "}
+                  {t.before}
                   <a
-                    href="/privacy"
+                    href={localize("/privacy", locale)}
                     className="font-medium underline decoration-[#7AB800]/40 underline-offset-2 transition-colors hover:text-[#7AB800]"
                     style={{ color: INK }}
                   >
-                    Privacy Policy
-                  </a>{" "}
-                  and to the use of cookies.
+                    {t.privacy}
+                  </a>
+                  {t.after}
                 </p>
               </div>
             </div>

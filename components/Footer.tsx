@@ -124,16 +124,12 @@ export default function Footer() {
               info@talentmind.ru
             </a>
             <a
-              href="https://t.me/TalentMind_bot"
+              href="https://www.linkedin.com/company/talentmindapp"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm text-ink-500 transition-colors hover:text-lime-700"
             >
-              Telegram: @TalentMind_bot
-            </a>
-            <a
-              href="tel:+74955405179"
-              className="text-sm text-ink-500 transition-colors hover:text-lime-700"
-            >
-              +7 (495) 540-51-79
+              LinkedIn
             </a>
           </div>
         </div>

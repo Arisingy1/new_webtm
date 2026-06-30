@@ -8,10 +8,14 @@ import {
   Check, ArrowRight,
 } from "lucide-react";
 import { GREEN, INK, TEAL, Arrow, useReveals } from "@/components/tm/ui";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import { localize } from "@/lib/i18n";
+import { PARTNERS } from "@/lib/content/partners";
 
 /* ── дополнительные акценты бренда ── */
 const AMBER = "#E8A317";
 const TEALGREEN = "#2E9E8F";
+const NODE_LABELS: Record<string, string[]> = { en: ["Integrate", "Refer", "Resell", "Agencies"], es: ["Integrar", "Referir", "Revender", "Agencias"], pt: ["Integrar", "Indicar", "Revender", "Agências"], ar: ["دمج", "ترشيح", "إعادة بيع", "وكالات"] };
 
 /* ============================================================
    /partners — «Партнёрство». Сигнатура: hub партнёрской сети в
@@ -61,6 +65,10 @@ const STEPS: { n: string; title: string; text: string }[] = [
 
 export default function PartnersPage() {
   const stageRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
+  const c = PARTNERS[locale];
+  const nodeLabels = NODE_LABELS[locale];
+  const contactsHref = localize("/contacts", locale);
 
   const root = useReveals(() => {
     gsap.fromTo(".partners-rise",
@@ -102,22 +110,19 @@ export default function PartnersPage() {
         {/* ЛЕВО */}
         <div className="relative z-10">
           <h1 className="partners-rise max-w-[15ch] text-[clamp(2.1rem,4.4vw,4.3rem)] font-bold leading-[1.04] tracking-tight text-balance" style={{ color: INK }}>
-            Grow your business <span style={{ color: GREEN }}>with TalentMind</span>
+            {c.heroPre}<span style={{ color: GREEN }}>{c.heroAccent}</span>
           </h1>
-          <p className="partners-rise mt-6 max-w-xl text-lg leading-relaxed text-pretty text-[#183833]/70">
-            Join our partner network and bring AI-driven candidate assessment to your clients. Integrate it,
-            refer it or resell it — we help you deliver better hiring and earn while doing it
-          </p>
+          <p className="partners-rise mt-6 max-w-xl text-lg leading-relaxed text-pretty text-[#183833]/70">{c.heroP}</p>
           <div className="partners-rise mt-8 flex flex-wrap items-center gap-3">
-            <a href="/contacts" className="ease-smooth group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-lg font-medium text-white shadow-[0_18px_40px_rgba(122,184,0,0.32)] transition-all duration-300 hover:-translate-y-1" style={{ background: GREEN }}>
-              Become a partner <Arrow className="h-5 w-5 text-white" />
+            <a href={contactsHref} className="ease-smooth group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-lg font-medium text-white shadow-[0_18px_40px_rgba(122,184,0,0.32)] transition-all duration-300 hover:-translate-y-1" style={{ background: GREEN }}>
+              {c.ctaPrimary} <Arrow className="h-5 w-5 text-white" />
             </a>
             <a href="#models" className="ease-smooth inline-flex items-center gap-2 rounded-2xl border border-[#183833]/15 bg-white/70 px-6 py-4 text-lg font-medium text-[#183833] backdrop-blur transition-all duration-300 hover:-translate-y-1">
-              Explore models
+              {c.ctaSecondary}
             </a>
           </div>
           <div className="partners-rise mt-7 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#183833]/60">
-            {["Recurring revenue share", "Co-marketing", "Dedicated manager"].map((t) => (
+            {c.trust.map((t) => (
               <span key={t} className="inline-flex items-center gap-1.5"><Check className="h-4 w-4" style={{ color: GREEN }} /> {t}</span>
             ))}
           </div>
@@ -155,7 +160,7 @@ export default function PartnersPage() {
             <div key={i} className="depth absolute z-10 -translate-x-1/2 -translate-y-1/2" style={{ left: `${n.x}%`, top: `${n.y}%`, animationDelay: `${i * 0.4}s` }} data-depth={n.depth}>
               <div className="animate-floaty flex items-center gap-2 rounded-2xl border border-[#e6ece4] bg-white px-3.5 py-2.5 shadow-[0_16px_40px_rgba(24,56,51,0.12)]" style={{ animationDelay: `${0.3 + i * 0.4}s` }}>
                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl" style={{ background: `${n.color}1a`, color: n.color }}>{n.icon}</span>
-                <span className="text-sm font-semibold" style={{ color: INK }}>{n.label}</span>
+                <span className="text-sm font-semibold" style={{ color: INK }}>{nodeLabels[i]}</span>
               </div>
             </div>
           ))}
@@ -164,7 +169,7 @@ export default function PartnersPage() {
 
       {/* ===================== ЛОГОТИПЫ СТЕКА ===================== */}
       <section className="reveal mx-auto max-w-[1100px] px-6 pb-4 md:px-12">
-        <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-[#183833]/40">Plugs into the tools your clients already use</p>
+        <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-[#183833]/40">{c.logosLabel}</p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
           {LOGOS.map((src) => (
             <img key={src} src={src} alt="" className="h-7 w-auto opacity-50 grayscale transition-all duration-300 hover:opacity-90 hover:grayscale-0 sm:h-8" />
@@ -175,7 +180,7 @@ export default function PartnersPage() {
       {/* ===================== ПОЛОСА МЕТРИК ===================== */}
       <section className="mx-auto max-w-[1180px] px-6 py-14 md:px-12">
         <div className="reveal grid grid-cols-2 gap-px overflow-hidden rounded-[28px] border border-[#e8efe6] bg-[#e8efe6] shadow-[0_24px_60px_rgba(24,56,51,0.07)] sm:grid-cols-4">
-          {STATS.map(([v, l]) => (
+          {c.stats.map(([v, l]) => (
             <div key={l} className="bg-white px-5 py-7 text-center">
               <p className="text-[clamp(1.8rem,3vw,2.6rem)] font-black leading-none tracking-tight" style={{ color: GREEN }}>{v}</p>
               <p className="mt-2 text-xs leading-snug text-[#183833]/55 sm:text-sm">{l}</p>
@@ -188,22 +193,20 @@ export default function PartnersPage() {
       <section id="models" className="relative mx-auto max-w-[1280px] scroll-mt-24 px-6 pb-8 md:px-12">
         <div className="reveal mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ color: INK }}>
-            Ways to <span style={{ color: GREEN }}>partner</span>
+            {c.typesTitlePre}<span style={{ color: GREEN }}>{c.typesTitleAccent}</span>
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-[#183833]/65">
-            Pick the model that fits your business — or combine a few. Every partner gets the same hands-on support
-          </p>
+          <p className="mt-4 text-lg leading-relaxed text-[#183833]/65">{c.typesSub}</p>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {TYPES.map((t) => (
-            <article key={t.title} className="reveal ease-smooth group relative flex flex-col overflow-hidden rounded-[28px] border border-[#e8efe6] bg-white p-7 shadow-[0_22px_55px_rgba(24,56,51,0.07)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_32px_72px_rgba(24,56,51,0.12)]">
+          {TYPES.map((t, i) => (
+            <article key={i} className="reveal ease-smooth group relative flex flex-col overflow-hidden rounded-[28px] border border-[#e8efe6] bg-white p-7 shadow-[0_22px_55px_rgba(24,56,51,0.07)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_32px_72px_rgba(24,56,51,0.12)]">
               <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-0 blur-[70px] transition-opacity duration-500 group-hover:opacity-30" style={{ background: t.color }} />
               <span className="grid h-14 w-14 place-items-center rounded-2xl" style={{ background: `${t.color}1a`, color: t.color }}>{t.icon}</span>
-              <h3 className="relative mt-6 text-2xl font-bold tracking-tight" style={{ color: INK }}>{t.title}</h3>
-              <p className="relative mt-1.5 text-sm font-medium" style={{ color: t.color }}>{t.best}</p>
+              <h3 className="relative mt-6 text-2xl font-bold tracking-tight" style={{ color: INK }}>{c.types[i].title}</h3>
+              <p className="relative mt-1.5 text-sm font-medium" style={{ color: t.color }}>{c.types[i].best}</p>
               <ul className="relative mt-5 space-y-2.5 border-t border-[#eef2ec] pt-5">
-                {t.points.map((p) => (
+                {c.types[i].points.map((p) => (
                   <li key={p} className="flex items-start gap-2 text-sm leading-snug text-[#183833]/70">
                     <Check className="mt-0.5 h-4 w-4 shrink-0" style={{ color: t.color }} /> {p}
                   </li>
@@ -218,19 +221,17 @@ export default function PartnersPage() {
       <section className="relative mx-auto max-w-[1280px] px-6 py-20 md:px-12">
         <div className="reveal mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ color: INK }}>
-            Why partners <span style={{ color: GREEN }}>choose us</span>
+            {c.benTitlePre}<span style={{ color: GREEN }}>{c.benTitleAccent}</span>
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-[#183833]/65">
-            We invest in the partners who invest in us — with real margins and real support
-          </p>
+          <p className="mt-4 text-lg leading-relaxed text-[#183833]/65">{c.benSub}</p>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {BENEFITS.map((b) => (
-            <div key={b.title} className="reveal ease-smooth group rounded-[24px] border border-[#e8efe6] bg-white/90 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#dfe7da] hover:shadow-[0_24px_55px_rgba(24,56,51,0.10)]">
+          {BENEFITS.map((b, i) => (
+            <div key={i} className="reveal ease-smooth group rounded-[24px] border border-[#e8efe6] bg-white/90 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#dfe7da] hover:shadow-[0_24px_55px_rgba(24,56,51,0.10)]">
               <span className="grid h-11 w-11 place-items-center rounded-2xl transition-transform duration-300 group-hover:scale-105" style={{ background: `${b.color}1a`, color: b.color }}>{b.icon}</span>
-              <p className="mt-4 text-lg font-bold tracking-tight" style={{ color: INK }}>{b.title}</p>
-              <p className="mt-1.5 leading-relaxed text-[#183833]/60">{b.text}</p>
+              <p className="mt-4 text-lg font-bold tracking-tight" style={{ color: INK }}>{c.benefits[i].title}</p>
+              <p className="mt-1.5 leading-relaxed text-[#183833]/60">{c.benefits[i].text}</p>
             </div>
           ))}
         </div>
@@ -240,21 +241,19 @@ export default function PartnersPage() {
       <section className="relative mx-auto max-w-[1280px] px-6 pb-20 md:px-12">
         <div className="reveal mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-bold leading-[1.1] tracking-tight sm:text-5xl" style={{ color: INK }}>
-            How it <span style={{ color: GREEN }}>works</span>
+            {c.stepsTitlePre}<span style={{ color: GREEN }}>{c.stepsTitleAccent}</span>
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-[#183833]/65">
-            From first hello to growing revenue — usually a couple of weeks, not months
-          </p>
+          <p className="mt-4 text-lg leading-relaxed text-[#183833]/65">{c.stepsSub}</p>
         </div>
 
         <div className="relative mt-14">
           <div className="pointer-events-none absolute left-0 right-0 top-7 hidden h-px bg-gradient-to-r from-transparent via-[#cfe0bd] to-transparent lg:block" />
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map((s) => (
+            {STEPS.map((s, i) => (
               <div key={s.n} className="reveal relative text-center lg:text-left">
                 <span className="relative z-10 mx-auto grid h-14 w-14 place-items-center rounded-2xl text-lg font-black text-white shadow-[0_12px_28px_rgba(122,184,0,0.32)] lg:mx-0" style={{ background: GREEN }}>{s.n}</span>
-                <h3 className="mt-5 text-xl font-bold tracking-tight" style={{ color: INK }}>{s.title}</h3>
-                <p className="mt-2 leading-relaxed text-[#183833]/60">{s.text}</p>
+                <h3 className="mt-5 text-xl font-bold tracking-tight" style={{ color: INK }}>{c.steps[i].title}</h3>
+                <p className="mt-2 leading-relaxed text-[#183833]/60">{c.steps[i].text}</p>
               </div>
             ))}
           </div>
@@ -266,12 +265,10 @@ export default function PartnersPage() {
         <div className="reveal relative overflow-hidden rounded-[2.5rem] px-8 py-14 text-center text-white shadow-[0_40px_90px_rgba(122,184,0,0.32)] md:px-16" style={{ background: `linear-gradient(135deg, ${GREEN} 0%, #5e9400 100%)` }}>
           <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/15 blur-[90px]" />
           <div className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-white/10 blur-[90px]" />
-          <h2 className="relative text-3xl font-bold tracking-tight sm:text-5xl">Ready to partner with us?</h2>
-          <p className="relative mx-auto mt-4 max-w-xl text-lg text-white/85">
-            Tell us about your business and we’ll come back within two business days with a plan tailored to you
-          </p>
-          <a href="/contacts" className="ease-smooth relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>
-            Become a partner <ArrowRight className="h-5 w-5" />
+          <h2 className="relative text-3xl font-bold tracking-tight sm:text-5xl">{c.cta.title}</h2>
+          <p className="relative mx-auto mt-4 max-w-xl text-lg text-white/85">{c.cta.sub}</p>
+          <a href={contactsHref} className="ease-smooth relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>
+            {c.cta.button} <ArrowRight className="h-5 w-5" />
           </a>
         </div>
       </section>

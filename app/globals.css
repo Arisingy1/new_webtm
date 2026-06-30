@@ -84,6 +84,14 @@
     outline-offset: 3px;
     border-radius: 4px;
   }
+
+  /* Arabic (RTL): headings use the Arabic display font (Cairo) and
+     normal tracking — the Latin display font lacks Arabic glyphs and
+     negative letter-spacing hurts Arabic legibility. */
+  [dir="rtl"] :is(h1, h2, h3, h4) {
+    font-family: var(--font-arabic), "Cairo", system-ui, sans-serif;
+    letter-spacing: normal;
+  }
 }
 
 @layer components {

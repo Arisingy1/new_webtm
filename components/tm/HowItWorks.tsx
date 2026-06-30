@@ -2,6 +2,117 @@
 
 import { useEffect, useRef, useState } from "react";
 import { GREEN, INK, TEAL } from "./ui";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import type { Locale } from "@/lib/i18n";
+
+type Dict = {
+  badge: string;
+  headingLine1: string;
+  headingLine2: string;
+  flow: string;
+  client: string;
+  autoImport: string;
+  manualUpload: string;
+  or: string;
+  oneTimeSetup: string;
+  actualCulture: string;
+  declaredCulture: string;
+  corporateCompatibility: string;
+  corporateCompatibilityDesc: string;
+  coreSuffix: string;
+  softSkillsAnalysis: string;
+  softSkillsAnalysisDesc: string;
+  exportToAts: string;
+  reportInDashboard: string;
+  softSkillsCultureReport: string;
+};
+
+const DICT: Record<Locale, Dict> = {
+  en: {
+    badge: "How it works",
+    headingLine1: "Assessment based on your cultural code,",
+    headingLine2: "not on universal templates",
+    flow: "Data import (culture and interviews) → Analytical AI core → Clear scores and reports on soft skills",
+    client: "Client",
+    autoImport: "Auto-import interviews from video calls",
+    manualUpload: "Manual interview upload",
+    or: "or",
+    oneTimeSetup: "One-time setup",
+    actualCulture: "Actual culture",
+    declaredCulture: "Declared culture",
+    corporateCompatibility: "Corporate compatibility assessment",
+    corporateCompatibilityDesc: "Matching a candidate's values against the company's digital profile across 54 parameters",
+    coreSuffix: "core",
+    softSkillsAnalysis: "Soft skills analysis",
+    softSkillsAnalysisDesc: "Scoring based on psycholinguistic dialogue patterns to build a detailed competency map",
+    exportToAts: "Export report to ATS",
+    reportInDashboard: "Report in dashboard",
+    softSkillsCultureReport: "Soft skills and culture report",
+  },
+  es: {
+    badge: "Cómo funciona",
+    headingLine1: "Evaluación basada en tu código cultural,",
+    headingLine2: "no en plantillas universales",
+    flow: "Importación de datos (cultura y entrevistas) → Núcleo de IA analítica → Puntuaciones e informes claros sobre habilidades blandas (soft skills)",
+    client: "Cliente",
+    autoImport: "Importación automática de entrevistas desde videollamadas",
+    manualUpload: "Carga manual de entrevistas",
+    or: "o",
+    oneTimeSetup: "Configuración única",
+    actualCulture: "Cultura real",
+    declaredCulture: "Cultura declarada",
+    corporateCompatibility: "Evaluación de compatibilidad corporativa",
+    corporateCompatibilityDesc: "Comparación de los valores de un candidato con el perfil digital de la empresa a través de 54 parámetros",
+    coreSuffix: "núcleo",
+    softSkillsAnalysis: "Análisis de habilidades blandas (soft skills)",
+    softSkillsAnalysisDesc: "Puntuación basada en patrones psicolingüísticos del diálogo para construir un mapa detallado de competencias",
+    exportToAts: "Exportar informe al ATS",
+    reportInDashboard: "Informe en el panel",
+    softSkillsCultureReport: "Informe de habilidades blandas (soft skills) y cultura",
+  },
+  pt: {
+    badge: "Como funciona",
+    headingLine1: "Avaliação baseada no seu código cultural,",
+    headingLine2: "não em modelos universais",
+    flow: "Importação de dados (cultura e entrevistas) → Núcleo de IA analítica → Pontuações e relatórios claros sobre habilidades comportamentais (soft skills)",
+    client: "Cliente",
+    autoImport: "Importação automática de entrevistas a partir de videochamadas",
+    manualUpload: "Upload manual de entrevistas",
+    or: "ou",
+    oneTimeSetup: "Configuração única",
+    actualCulture: "Cultura real",
+    declaredCulture: "Cultura declarada",
+    corporateCompatibility: "Avaliação de compatibilidade corporativa",
+    corporateCompatibilityDesc: "Comparação dos valores de um candidato com o perfil digital da empresa em 54 parâmetros",
+    coreSuffix: "núcleo",
+    softSkillsAnalysis: "Análise de habilidades comportamentais (soft skills)",
+    softSkillsAnalysisDesc: "Pontuação baseada em padrões psicolinguísticos do diálogo para construir um mapa detalhado de competências",
+    exportToAts: "Exportar relatório para o ATS",
+    reportInDashboard: "Relatório no painel",
+    softSkillsCultureReport: "Relatório de habilidades comportamentais (soft skills) e cultura",
+  },
+  ar: {
+    badge: "كيف يعمل",
+    headingLine1: "تقييم قائم على شيفرتك الثقافية،",
+    headingLine2: "وليس على قوالب عامة",
+    flow: "استيراد البيانات (الثقافة والمقابلات) إلى نواة الذكاء الاصطناعي التحليلية ثم درجات وتقارير واضحة عن المهارات الشخصية",
+    client: "العميل",
+    autoImport: "استيراد تلقائي للمقابلات من مكالمات الفيديو",
+    manualUpload: "رفع المقابلات يدويًا",
+    or: "أو",
+    oneTimeSetup: "إعداد لمرة واحدة",
+    actualCulture: "الثقافة الفعلية",
+    declaredCulture: "الثقافة المعلنة",
+    corporateCompatibility: "تقييم التوافق المؤسسي",
+    corporateCompatibilityDesc: "مطابقة قيم المرشّح مع الملف الرقمي للشركة عبر 54 معيارًا",
+    coreSuffix: "النواة",
+    softSkillsAnalysis: "تحليل المهارات الشخصية",
+    softSkillsAnalysisDesc: "تقييم قائم على الأنماط اللغوية النفسية للحوار لبناء خريطة كفاءات مفصّلة",
+    exportToAts: "تصدير التقرير إلى نظام التوظيف (ATS)",
+    reportInDashboard: "التقرير في لوحة التحكم",
+    softSkillsCultureReport: "تقرير المهارات الشخصية والثقافة",
+  },
+};
 
 /* ============================================================
    «Как это работает?» — full-width схема перетекания данных.
@@ -68,6 +179,7 @@ function Card({
 }
 
 export default function HowItWorks() {
+  const t = DICT[useLocale()];
   const fitRef = useRef<HTMLDivElement>(null);
   const scale = useFit(fitRef);
 
@@ -76,15 +188,14 @@ export default function HowItWorks() {
       {/* ---------- заголовок: по левому краю, без центрирования ---------- */}
       <div className="reveal w-full text-left">
         <span className="inline-flex items-center gap-2 rounded-full border border-[#ededed] bg-white px-4 py-1.5 font-mono text-xs uppercase tracking-widest" style={{ color: TEAL }}>
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: TEAL }} /> How it works
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: TEAL }} /> {t.badge}
         </span>
         <h2 className="mt-6 max-w-4xl text-3xl font-semibold leading-tight tracking-tight sm:text-5xl" style={{ color: INK }}>
-          Assessment based on your cultural code,
-          <br className="hidden sm:block" /> not on universal templates
+          {t.headingLine1}
+          <br className="hidden sm:block" /> {t.headingLine2}
         </h2>
         <p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#183833]/70">
-          Data import (culture and interviews) → Analytical AI core → Clear
-          scores and reports on soft skills
+          {t.flow}
         </p>
       </div>
 
@@ -116,21 +227,21 @@ export default function HowItWorks() {
           {/* ===================== КОЛОНКА 1 — ВВОД ===================== */}
           {/* Клиент (по левому краю, x=0) */}
           <Card style={{ left: 0, top: 70, width: 150, height: 56 }} className="grid place-items-center">
-            <span className={TITLE} style={{ color: INK }}>Client</span>
+            <span className={TITLE} style={{ color: INK }}>{t.client}</span>
           </Card>
 
           {/* Контейнер: Автоимпорт / Ручная загрузка (расширен под 2-строчные заголовки) */}
           <Card plain style={{ left: 0, top: 390, width: 460, height: 180 }} className="flex items-stretch gap-3 p-4">
             <div className="ease-smooth flex flex-1 cursor-pointer flex-col justify-between rounded-xl border border-[#ededed] bg-white p-4 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_16px_36px_rgba(24,56,51,0.12)]">
-              <p className={TITLE} style={{ color: INK }}>Auto-import interviews from video calls</p>
+              <p className={TITLE} style={{ color: INK }}>{t.autoImport}</p>
               <div className="flex items-center gap-2">
                 <img src="/image 31358.png" alt="Kontur Talk" className="h-7 w-7 object-contain" />
                 <img src="/image 31359.png" alt="Kontur Talk" className="h-4 w-auto object-contain" />
               </div>
             </div>
-            <span className="flex shrink-0 items-center text-sm text-[#183833]/50">or</span>
+            <span className="flex shrink-0 items-center text-sm text-[#183833]/50">{t.or}</span>
             <div className="ease-smooth flex flex-1 cursor-pointer flex-col justify-between rounded-xl border border-[#ededed] bg-white p-4 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_16px_36px_rgba(24,56,51,0.12)]">
-              <p className={TITLE} style={{ color: INK }}>Manual interview upload</p>
+              <p className={TITLE} style={{ color: INK }}>{t.manualUpload}</p>
               <div className="flex items-center gap-2">
                 <img src="/ic_library_books_48px.png" alt="" className="h-6 w-6 object-contain" />
                 <img src="/figma/logo.svg" alt="TalentMind" className="h-4 w-auto" />
@@ -140,15 +251,15 @@ export default function HowItWorks() {
 
           {/* Разовая настройка */}
           <Card style={{ left: 210, top: 70, width: 240, height: 160 }} className="p-5">
-            <p className={TITLE} style={{ color: INK }}>One-time setup</p>
+            <p className={TITLE} style={{ color: INK }}>{t.oneTimeSetup}</p>
             <div className="mt-5 flex justify-around text-center">
               <div className="flex w-[46%] flex-col items-center gap-2">
                 <img src="/people.png" alt="" className="h-10 w-10 object-contain" />
-                <span className="text-[11px] leading-tight text-[#183833]/70">Actual culture</span>
+                <span className="text-[11px] leading-tight text-[#183833]/70">{t.actualCulture}</span>
               </div>
               <div className="flex w-[46%] flex-col items-center gap-2">
                 <img src="/ic_library_books_48px.png" alt="" className="h-10 w-10 object-contain" />
-                <span className="text-[11px] leading-tight text-[#183833]/70">Declared culture</span>
+                <span className="text-[11px] leading-tight text-[#183833]/70">{t.declaredCulture}</span>
               </div>
             </div>
           </Card>
@@ -156,23 +267,23 @@ export default function HowItWorks() {
           {/* ===================== КОЛОНКА 2 — ЯДРО ===================== */}
           <Card plain style={{ left: 490, top: 70, width: 430, height: 500 }} className="flex flex-col p-6">
             <div className="ease-smooth cursor-pointer rounded-xl border border-[#ededed] bg-white p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_14px_30px_rgba(24,56,51,0.1)]">
-              <p className={TITLE} style={{ color: INK }}>Corporate compatibility assessment</p>
-              <p className="mt-2 text-xs leading-snug text-[#183833]/60">Matching a candidate's values against the company's digital profile across 54 parameters</p>
+              <p className={TITLE} style={{ color: INK }}>{t.corporateCompatibility}</p>
+              <p className="mt-2 text-xs leading-snug text-[#183833]/60">{t.corporateCompatibilityDesc}</p>
             </div>
             <div className="flex flex-1 flex-col items-center justify-center gap-3 py-3">
-              <p className={TITLE} style={{ color: INK }}>Talent<span style={{ color: GREEN }}>Mind</span> core</p>
+              <p className={TITLE} style={{ color: INK }}>Talent<span style={{ color: GREEN }}>Mind</span> {t.coreSuffix}</p>
               <img src="/figma/ai-orb.png" alt="TalentMind core" className="h-24 w-24 object-contain" />
             </div>
             <div className="ease-smooth cursor-pointer rounded-xl border border-[#ededed] bg-white p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_14px_30px_rgba(24,56,51,0.1)]">
-              <p className={TITLE} style={{ color: INK }}>Soft skills analysis</p>
-              <p className="mt-2 text-xs leading-snug text-[#183833]/60">Scoring based on psycholinguistic dialogue patterns to build a detailed competency map</p>
+              <p className={TITLE} style={{ color: INK }}>{t.softSkillsAnalysis}</p>
+              <p className="mt-2 text-xs leading-snug text-[#183833]/60">{t.softSkillsAnalysisDesc}</p>
             </div>
           </Card>
 
           {/* ===================== КОЛОНКА 3 — РЕЗУЛЬТАТЫ ===================== */}
           {/* Экспорт в ATS и Отчёт в ЛК — идентичные (w260 × h150) */}
           <Card style={{ left: 940, top: 60, width: 260, height: 150 }} className="flex flex-col justify-between p-5">
-            <p className={`${TITLE} whitespace-nowrap`} style={{ color: INK }}>Export report to ATS</p>
+            <p className={`${TITLE} whitespace-nowrap`} style={{ color: INK }}>{t.exportToAts}</p>
             <div className="flex flex-row items-center gap-4">
               <img src="/image 31355.png" alt="Huntflow" className="h-8 w-auto object-contain" />
               <img src="/image 31356.png" alt="Talantix" className="h-8 w-auto object-contain" />
@@ -180,13 +291,13 @@ export default function HowItWorks() {
           </Card>
 
           <Card style={{ left: 1210, top: 60, width: 260, height: 150 }} className="flex flex-col justify-between p-5">
-            <p className={`${TITLE} whitespace-nowrap`} style={{ color: INK }}>Report in dashboard</p>
+            <p className={`${TITLE} whitespace-nowrap`} style={{ color: INK }}>{t.reportInDashboard}</p>
             <img src="/figma/logo.svg" alt="TalentMind" className="h-7 w-auto self-start object-contain" />
           </Card>
 
           {/* Отчёт по soft skills и культуре */}
           <Card style={{ left: 960, top: 350, width: 300, height: 220 }} className="flex flex-col p-5">
-            <p className={TITLE} style={{ color: INK }}>Soft skills and culture report</p>
+            <p className={TITLE} style={{ color: INK }}>{t.softSkillsCultureReport}</p>
             <div className="flex flex-1 items-center justify-center">
               <img src="/Feature Image.png" alt="Soft skills and culture report" className="max-h-[130px] w-full object-contain" />
             </div>

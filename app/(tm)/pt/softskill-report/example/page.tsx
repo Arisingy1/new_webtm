@@ -1,0 +1,1 @@
+﻿export { default } from "../../../softskill-report/example/page";

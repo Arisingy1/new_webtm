@@ -7,6 +7,264 @@ import { Heart, Check, X, AlertTriangle, Sparkles, GitBranch, Zap, Brain } from 
 import { Arrow, GREEN, INK, RED, TEAL } from "./ui";
 import { AnimatedChat } from "./AnimatedChat";
 import { ReportModalCard, CandidateInfoCard, DecisionCard } from "./ReportCards";
+import { useLocale } from "./LocaleProvider";
+import { localize, type Locale } from "@/lib/i18n";
+import { HOME } from "@/lib/content/home";
+
+type Auto = (typeof HOME)["en"]["auto"];
+
+/* ── словарь виджетов/мок-карточек (текст внутри макетов отчёта) ── */
+type Widgets = {
+  valueProp: string;
+  valuePropDesc: string;
+  cultureType: string;
+  cultureTypeDesc: string;
+  dominantValues: string;
+  values: string[];
+  matchScore: string;
+  matchExplain: string;
+  innovation: string;
+  teamOrientation: string;
+  stated: string;
+  operationalReality: string;
+  whyNotLower: string;
+  whyNotHigher: string;
+  innovationStated: string;
+  innovationReality: string;
+  innovationExplain: string;
+  innovationLower: string;
+  innovationHigher: string;
+  teamStated: string;
+  teamReality: string;
+  teamExplain: string;
+  teamLower: string;
+  teamHigher: string;
+  cultureMatch: string;
+  cultureMatchDesc: string;
+  alignmentPoints: string;
+  frictionPoints: string;
+  align1Title: string;
+  align1Quote: string;
+  align1Sub: string;
+  align2Title: string;
+  align2Quote: string;
+  align2Sub: string;
+  friction1Title: string;
+  friction1Quote: string;
+  friction1Sub: string;
+  friction2Title: string;
+  friction2Quote: string;
+  friction2Sub: string;
+  warning: string;
+  contextNeverLost: string;
+  contextNeverLostDesc: string;
+  answersInSeconds: string;
+  basedOnInterviews: string;
+  assistantAlt: string;
+};
+
+const W: Record<Locale, Widgets> = {
+  en: {
+    valueProp: "Company value proposition",
+    valuePropDesc: "A high degree of process-driven management, clear role boundaries, and systematic time tracking",
+    cultureType: "Culture type",
+    cultureTypeDesc: "A process-oriented culture with elements of distributed management",
+    dominantValues: "Dominant values",
+    values: ["Diligence", "Integrity", "Collaboration"],
+    matchScore: "Match score",
+    matchExplain: "How well the candidate matches the company's values and cultural code",
+    innovation: "Innovation / Flexibility",
+    teamOrientation: "Team orientation / Informality",
+    stated: "Stated",
+    operationalReality: "Operational reality",
+    whyNotLower: "Why not lower",
+    whyNotHigher: "Why not higher",
+    innovationStated: "Declared values of innovation and flexible roles",
+    innovationReality: "Strict time tracking and approval procedures",
+    innovationExplain: "Innovation is encouraged on paper, but time-tracking requirements lengthen the rollout cycle",
+    innovationLower: "There are dedicated roles for growth",
+    innovationHigher: "Approvals limit the pace",
+    teamStated: "Onboarding and mentorship program",
+    teamReality: "Structured, scheduled team meetings",
+    teamExplain: "Support is declared through mentorship, but meetings are governed by formal rules",
+    teamLower: "An onboarding system is in place",
+    teamHigher: "Regulations formalize communication",
+    cultureMatch: "Cultural-code match",
+    cultureMatchDesc:
+      "The candidate would fit naturally into an executor role with clear boundaries of responsibility and is unlikely to overstep them. However, heavy process bureaucracy could become a blocker",
+    alignmentPoints: "Alignment points",
+    frictionPoints: "Friction points",
+    align1Title: "Respects boundaries of responsibility",
+    align1Quote: "\"Clearly distinguishes their own scope from others'.\"",
+    align1Sub: "Does not encroach on others' areas without asking",
+    align2Title: "Honesty and transparency",
+    align2Quote: "\"Openly acknowledges past mistakes.\"",
+    align2Sub: "Meets the transparency requirement",
+    friction1Title: "Lacks proactivity",
+    friction1Quote: "\"Waits for leading questions.\"",
+    friction1Sub: "Not ready to define tasks on their own",
+    friction2Title: "Weak process thinking",
+    friction2Quote: "\"Struggles to structure tasks.\"",
+    friction2Sub: "Difficulty with multi-level requirements",
+    warning: "Reliant on external direction — needs micromanagement at the start",
+    contextNeverLost: "Context is never lost",
+    contextNeverLostDesc:
+      "The AI keeps the entire conversation and your whole pipeline in memory — ask anything, no need to repeat the background",
+    answersInSeconds: "Answers in seconds",
+    basedOnInterviews: "Based on interviews",
+    assistantAlt: "TalentMind AI assistant",
+  },
+  es: {
+    valueProp: "Propuesta de valor de la empresa",
+    valuePropDesc: "Un alto grado de gestión orientada a procesos, límites de rol claros y un seguimiento sistemático del tiempo",
+    cultureType: "Tipo de cultura",
+    cultureTypeDesc: "Una cultura orientada a procesos con elementos de gestión distribuida",
+    dominantValues: "Valores dominantes",
+    values: ["Diligencia", "Integridad", "Colaboración"],
+    matchScore: "Puntuación de coincidencia",
+    matchExplain: "Qué tan bien encaja el candidato con los valores y el código cultural de la empresa",
+    innovation: "Innovación / Flexibilidad",
+    teamOrientation: "Orientación al equipo / Informalidad",
+    stated: "Declarado",
+    operationalReality: "Realidad operativa",
+    whyNotLower: "Por qué no más bajo",
+    whyNotHigher: "Por qué no más alto",
+    innovationStated: "Valores declarados de innovación y roles flexibles",
+    innovationReality: "Seguimiento estricto del tiempo y procedimientos de aprobación",
+    innovationExplain: "La innovación se fomenta sobre el papel, pero los requisitos de control de tiempo alargan el ciclo de implementación",
+    innovationLower: "Hay roles dedicados al crecimiento",
+    innovationHigher: "Las aprobaciones limitan el ritmo",
+    teamStated: "Programa de incorporación y mentoría",
+    teamReality: "Reuniones de equipo estructuradas y planificadas",
+    teamExplain: "El apoyo se declara a través de la mentoría, pero las reuniones se rigen por reglas formales",
+    teamLower: "Existe un sistema de incorporación",
+    teamHigher: "Las normas formalizan la comunicación",
+    cultureMatch: "Coincidencia con el código cultural",
+    cultureMatchDesc:
+      "El candidato encajaría de forma natural en un rol de ejecutor con límites de responsabilidad claros y es poco probable que los sobrepase. Sin embargo, una fuerte burocracia de procesos podría convertirse en un obstáculo",
+    alignmentPoints: "Puntos de alineación",
+    frictionPoints: "Puntos de fricción",
+    align1Title: "Respeta los límites de responsabilidad",
+    align1Quote: "«Distingue claramente su propio alcance del de los demás.»",
+    align1Sub: "No invade las áreas de otros sin preguntar",
+    align2Title: "Honestidad y transparencia",
+    align2Quote: "«Reconoce abiertamente errores pasados.»",
+    align2Sub: "Cumple el requisito de transparencia",
+    friction1Title: "Falta de proactividad",
+    friction1Quote: "«Espera preguntas que lo orienten.»",
+    friction1Sub: "No está listo para definir tareas por su cuenta",
+    friction2Title: "Pensamiento de procesos débil",
+    friction2Quote: "«Le cuesta estructurar las tareas.»",
+    friction2Sub: "Dificultad con requisitos de varios niveles",
+    warning: "Depende de la dirección externa: necesita microgestión al principio",
+    contextNeverLost: "El contexto nunca se pierde",
+    contextNeverLostDesc:
+      "La IA conserva en memoria toda la conversación y tu pipeline completo: pregunta lo que quieras, sin necesidad de repetir los antecedentes",
+    answersInSeconds: "Respuestas en segundos",
+    basedOnInterviews: "Basado en entrevistas",
+    assistantAlt: "Asistente de IA de TalentMind",
+  },
+  pt: {
+    valueProp: "Proposta de valor da empresa",
+    valuePropDesc: "Um alto grau de gestão orientada a processos, limites de função claros e controle sistemático de tempo",
+    cultureType: "Tipo de cultura",
+    cultureTypeDesc: "Uma cultura orientada a processos com elementos de gestão distribuída",
+    dominantValues: "Valores dominantes",
+    values: ["Diligência", "Integridade", "Colaboração"],
+    matchScore: "Pontuação de compatibilidade",
+    matchExplain: "O quanto o candidato se alinha aos valores e ao código cultural da empresa",
+    innovation: "Inovação / Flexibilidade",
+    teamOrientation: "Orientação para a equipe / Informalidade",
+    stated: "Declarado",
+    operationalReality: "Realidade operacional",
+    whyNotLower: "Por que não mais baixo",
+    whyNotHigher: "Por que não mais alto",
+    innovationStated: "Valores declarados de inovação e funções flexíveis",
+    innovationReality: "Controle de tempo rigoroso e procedimentos de aprovação",
+    innovationExplain: "A inovação é incentivada no papel, mas as exigências de controle de tempo alongam o ciclo de implantação",
+    innovationLower: "Há funções dedicadas ao crescimento",
+    innovationHigher: "As aprovações limitam o ritmo",
+    teamStated: "Programa de integração e mentoria",
+    teamReality: "Reuniões de equipe estruturadas e agendadas",
+    teamExplain: "O apoio é declarado por meio da mentoria, mas as reuniões seguem regras formais",
+    teamLower: "Há um sistema de integração",
+    teamHigher: "As normas formalizam a comunicação",
+    cultureMatch: "Compatibilidade com o código cultural",
+    cultureMatchDesc:
+      "O candidato se encaixaria naturalmente em uma função de executor com limites de responsabilidade claros e dificilmente os ultrapassaria. No entanto, uma forte burocracia de processos poderia se tornar um obstáculo",
+    alignmentPoints: "Pontos de alinhamento",
+    frictionPoints: "Pontos de atrito",
+    align1Title: "Respeita os limites de responsabilidade",
+    align1Quote: "\"Distingue claramente o próprio escopo do dos outros.\"",
+    align1Sub: "Não invade as áreas dos outros sem perguntar",
+    align2Title: "Honestidade e transparência",
+    align2Quote: "\"Reconhece abertamente erros do passado.\"",
+    align2Sub: "Atende ao requisito de transparência",
+    friction1Title: "Falta de proatividade",
+    friction1Quote: "\"Espera por perguntas que o orientem.\"",
+    friction1Sub: "Não está pronto para definir tarefas por conta própria",
+    friction2Title: "Pensamento de processos fraco",
+    friction2Quote: "\"Tem dificuldade para estruturar tarefas.\"",
+    friction2Sub: "Dificuldade com requisitos de vários níveis",
+    warning: "Depende de direcionamento externo — precisa de microgerenciamento no início",
+    contextNeverLost: "O contexto nunca se perde",
+    contextNeverLostDesc:
+      "A IA mantém na memória toda a conversa e todo o seu pipeline — pergunte o que quiser, sem precisar repetir o contexto",
+    answersInSeconds: "Respostas em segundos",
+    basedOnInterviews: "Com base nas entrevistas",
+    assistantAlt: "Assistente de IA da TalentMind",
+  },
+  ar: {
+    valueProp: "عرض القيمة للشركة",
+    valuePropDesc: "درجة عالية من الإدارة القائمة على العمليات، وحدود أدوار واضحة، وتتبّع منهجي للوقت",
+    cultureType: "نوع الثقافة",
+    cultureTypeDesc: "ثقافة موجّهة نحو العمليات مع عناصر من الإدارة الموزّعة",
+    dominantValues: "القيم السائدة",
+    values: ["الاجتهاد", "النزاهة", "التعاون"],
+    matchScore: "مؤشر التوافق",
+    matchExplain: "مدى توافق المرشّح مع قيم الشركة وشيفرتها الثقافية",
+    innovation: "الابتكار / المرونة",
+    teamOrientation: "التوجه نحو الفريق / عدم الرسمية",
+    stated: "معلن",
+    operationalReality: "الواقع التشغيلي",
+    whyNotLower: "لماذا ليست أقل",
+    whyNotHigher: "لماذا ليست أعلى",
+    innovationStated: "قيم معلنة للابتكار والأدوار المرنة",
+    innovationReality: "تتبّع صارم للوقت وإجراءات اعتماد",
+    innovationExplain: "يُشجَّع الابتكار على الورق، لكن متطلبات تتبّع الوقت تطيل دورة التنفيذ",
+    innovationLower: "توجد أدوار مخصّصة للنمو",
+    innovationHigher: "الاعتمادات تحدّ من الوتيرة",
+    teamStated: "برنامج التأهيل والإرشاد",
+    teamReality: "اجتماعات فريق منظّمة ومجدولة",
+    teamExplain: "يُعلَن الدعم عبر الإرشاد، لكن الاجتماعات تخضع لقواعد رسمية",
+    teamLower: "يوجد نظام تأهيل قائم",
+    teamHigher: "اللوائح تُضفي طابعًا رسميًا على التواصل",
+    cultureMatch: "توافق الشيفرة الثقافية",
+    cultureMatchDesc:
+      "سيندمج المرشّح بشكل طبيعي في دور المنفّذ ضمن حدود مسؤولية واضحة، ومن غير المرجّح أن يتجاوزها. غير أن البيروقراطية الثقيلة للعمليات قد تتحوّل إلى عائق",
+    alignmentPoints: "نقاط التوافق",
+    frictionPoints: "نقاط الاحتكاك",
+    align1Title: "يحترم حدود المسؤولية",
+    align1Quote: "«يميّز بوضوح نطاق عمله عن نطاق الآخرين.»",
+    align1Sub: "لا يتعدّى على مجالات الآخرين دون استئذان",
+    align2Title: "الصدق والشفافية",
+    align2Quote: "«يعترف بصراحة بأخطاء الماضي.»",
+    align2Sub: "يستوفي متطلب الشفافية",
+    friction1Title: "يفتقر إلى المبادرة",
+    friction1Quote: "«ينتظر الأسئلة الموجِّهة.»",
+    friction1Sub: "غير مستعد لتحديد المهام بنفسه",
+    friction2Title: "تفكير ضعيف في العمليات",
+    friction2Quote: "«يجد صعوبة في هيكلة المهام.»",
+    friction2Sub: "صعوبة في التعامل مع المتطلبات المتعددة المستويات",
+    warning: "يعتمد على التوجيه الخارجي — يحتاج إلى إدارة دقيقة في البداية",
+    contextNeverLost: "لا يضيع السياق أبدًا",
+    contextNeverLostDesc:
+      "يحتفظ الذكاء الاصطناعي بكامل المحادثة وقائمة مرشّحيك بالكامل في الذاكرة — اسأل عن أي شيء دون الحاجة إلى تكرار الخلفية",
+    answersInSeconds: "إجابات في ثوانٍ",
+    basedOnInterviews: "استنادًا إلى المقابلات",
+    assistantAlt: "مساعد الذكاء الاصطناعي من TalentMind",
+  },
+};
 
 /* ============================================================
    Блок 3 — вертикальный стек экранов «полёт в облаках».
@@ -56,7 +314,7 @@ type Step = {
   full?: React.ReactNode;
 };
 
-const STEPS: Step[] = [
+const makeSteps = (a: Auto, w: Widgets, link: (h: string) => string): Step[] => [
   {
     key: "fit",
     full: (
@@ -66,11 +324,11 @@ const STEPS: Step[] = [
           {/* мягкий ореол — заголовок читается поверх блоков заднего фона */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 hidden h-[160%] w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(244,248,243,0.92),rgba(244,248,243,0.55)_55%,rgba(244,248,243,0))] lg:block" />
           <div className="report-head relative will-change-[filter,opacity,transform]">
-          <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ color: INK }}>
-            <span style={{ color: GREEN }}>Cultural fit</span> analysis across 54 parameters
+          <h2 className="text-3xl font-bold leading-tight tracking-tight text-balance sm:text-5xl" style={{ color: INK }}>
+            {a.fit.pre}<span style={{ color: GREEN }}>{a.fit.accent}</span>{a.fit.post}
           </h2>
-          <a href="/platform#block-1" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
-            See how values assessment works <Arrow style={{ color: GREEN }} />
+          <a href={link("/platform#block-1")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+            {a.fit.link} <Arrow style={{ color: GREEN }} />
           </a>
           </div>
         </div>
@@ -79,20 +337,20 @@ const STEPS: Step[] = [
         <div data-focus="0" className="report-card w-full max-w-md lg:absolute lg:left-[1%] lg:top-[1%] lg:w-[330px] lg:max-w-none">
           <div className="rounded-3xl border border-[#e9efe6] bg-white/95 p-5 shadow-[0_20px_50px_rgba(24,56,51,0.10)]">
             <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold" style={{ background: `${GREEN}1a`, color: GREEN }}>
-              <Sparkles className="h-3.5 w-3.5" /> Company value proposition
+              <Sparkles className="h-3.5 w-3.5" /> {w.valueProp}
             </span>
             <p className="mt-3 text-sm leading-relaxed" style={{ color: INK }}>
-              A high degree of process-driven management, clear role boundaries, and systematic time tracking
+              {w.valuePropDesc}
             </p>
             <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               <div className="rounded-2xl bg-[#f4f7f2] p-3">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/45">Culture type</p>
-                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">A process-oriented culture with elements of distributed management</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/45">{w.cultureType}</p>
+                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">{w.cultureTypeDesc}</p>
               </div>
               <div className="rounded-2xl bg-[#f4f7f2] p-3">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/45">Dominant values</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/45">{w.dominantValues}</p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
-                  {["Diligence", "Integrity", "Collaboration"].map((v) => (
+                  {w.values.map((v) => (
                     <span key={v} className="rounded-full bg-white px-2.5 py-1 text-[11px] font-medium shadow-[0_4px_12px_rgba(24,56,51,0.08)]" style={{ color: INK }}>{v}</span>
                   ))}
                 </div>
@@ -104,7 +362,7 @@ const STEPS: Step[] = [
         {/* Индекс уверенности — правый нижний угол (маленький) */}
         <div data-focus="2" className="report-card w-full max-w-[260px] lg:absolute lg:right-[1%] lg:bottom-[2%] lg:w-[210px] lg:max-w-none">
           <div className="flex flex-col items-center justify-center rounded-3xl border border-[#e9efe6] bg-white/95 p-5 text-center shadow-[0_20px_50px_rgba(24,56,51,0.10)]">
-            <p className="text-sm font-semibold" style={{ color: INK }}>Match score</p>
+            <p className="text-sm font-semibold" style={{ color: INK }}>{w.matchScore}</p>
             <div className="relative my-2.5 h-[112px] w-[112px]">
               <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
                 <defs>
@@ -120,7 +378,7 @@ const STEPS: Step[] = [
                 <span className="text-3xl font-bold" style={{ color: INK }}>85%</span>
               </div>
             </div>
-            <p className="text-[11px] leading-snug text-[#183833]/55">How well the candidate matches the company's values and cultural code</p>
+            <p className="text-[11px] leading-snug text-[#183833]/55">{w.matchExplain}</p>
           </div>
         </div>
 
@@ -128,42 +386,42 @@ const STEPS: Step[] = [
         <div data-focus="2" className="report-card flex w-full flex-col gap-5 lg:absolute lg:bottom-[2%] lg:left-[-3%] lg:flex-row lg:items-end lg:gap-4">
           <div className="w-full lg:w-[300px]">
           <div className="rounded-3xl border border-[#e9efe6] bg-white/95 p-4 shadow-[0_20px_50px_rgba(24,56,51,0.10)]">
-            <p className="flex items-center gap-2 text-[15px] font-semibold" style={{ color: INK }}><GitBranch className="h-4 w-4" style={{ color: TEAL }} /> Innovation / Flexibility</p>
+            <p className="flex items-center gap-2 text-[15px] font-semibold" style={{ color: INK }}><GitBranch className="h-4 w-4" style={{ color: TEAL }} /> {w.innovation}</p>
             <div className="mt-3 grid grid-cols-2 gap-2.5">
               <div className="rounded-xl p-2.5" style={{ background: `${GREEN}12` }}>
-                <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: GREEN }}>Stated</p>
-                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">Declared values of innovation and flexible roles</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: GREEN }}>{w.stated}</p>
+                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">{w.innovationStated}</p>
               </div>
               <div className="rounded-xl p-2.5" style={{ background: `${TEAL}12` }}>
-                <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: TEAL }}>Operational reality</p>
-                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">Strict time tracking and approval procedures</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: TEAL }}>{w.operationalReality}</p>
+                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">{w.innovationReality}</p>
               </div>
             </div>
-            <p className="mt-2.5 text-[11px] leading-snug text-[#183833]/65">Innovation is encouraged on paper, but time-tracking requirements lengthen the rollout cycle</p>
+            <p className="mt-2.5 text-[11px] leading-snug text-[#183833]/65">{w.innovationExplain}</p>
             <div className="mt-2.5 grid grid-cols-2 gap-2.5 border-t border-[#eef0ee] pt-2.5">
-              <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/40">Why not lower</p><p className="mt-1 text-[11px] leading-snug text-[#183833]/70">There are dedicated roles for growth</p></div>
-              <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/40">Why not higher</p><p className="mt-1 text-[11px] leading-snug text-[#183833]/70">Approvals limit the pace</p></div>
+              <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/40">{w.whyNotLower}</p><p className="mt-1 text-[11px] leading-snug text-[#183833]/70">{w.innovationLower}</p></div>
+              <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/40">{w.whyNotHigher}</p><p className="mt-1 text-[11px] leading-snug text-[#183833]/70">{w.innovationHigher}</p></div>
             </div>
           </div>
           </div>
 
           <div className="w-full lg:w-[300px]">
           <div className="rounded-3xl border border-[#e9efe6] bg-white/95 p-4 shadow-[0_20px_50px_rgba(24,56,51,0.10)]">
-            <p className="flex items-center gap-2 text-[15px] font-semibold" style={{ color: INK }}><GitBranch className="h-4 w-4" style={{ color: TEAL }} /> Team orientation / Informality</p>
+            <p className="flex items-center gap-2 text-[15px] font-semibold" style={{ color: INK }}><GitBranch className="h-4 w-4" style={{ color: TEAL }} /> {w.teamOrientation}</p>
             <div className="mt-3 grid grid-cols-2 gap-2.5">
               <div className="rounded-xl p-2.5" style={{ background: `${GREEN}12` }}>
-                <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: GREEN }}>Stated</p>
-                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">Onboarding and mentorship program</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: GREEN }}>{w.stated}</p>
+                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">{w.teamStated}</p>
               </div>
               <div className="rounded-xl p-2.5" style={{ background: `${TEAL}12` }}>
-                <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: TEAL }}>Operational reality</p>
-                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">Structured, scheduled team meetings</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: TEAL }}>{w.operationalReality}</p>
+                <p className="mt-1 text-[11px] leading-snug text-[#183833]/75">{w.teamReality}</p>
               </div>
             </div>
-            <p className="mt-2.5 text-[11px] leading-snug text-[#183833]/65">Support is declared through mentorship, but meetings are governed by formal rules</p>
+            <p className="mt-2.5 text-[11px] leading-snug text-[#183833]/65">{w.teamExplain}</p>
             <div className="mt-2.5 grid grid-cols-2 gap-2.5 border-t border-[#eef0ee] pt-2.5">
-              <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/40">Why not lower</p><p className="mt-1 text-[11px] leading-snug text-[#183833]/70">An onboarding system is in place</p></div>
-              <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/40">Why not higher</p><p className="mt-1 text-[11px] leading-snug text-[#183833]/70">Regulations formalize communication</p></div>
+              <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/40">{w.whyNotLower}</p><p className="mt-1 text-[11px] leading-snug text-[#183833]/70">{w.teamLower}</p></div>
+              <div><p className="text-[10px] font-semibold uppercase tracking-wide text-[#183833]/40">{w.whyNotHigher}</p><p className="mt-1 text-[11px] leading-snug text-[#183833]/70">{w.teamHigher}</p></div>
             </div>
           </div>
           </div>
@@ -174,46 +432,46 @@ const STEPS: Step[] = [
           <div className="rounded-3xl border border-[#e9efe6] bg-white/95 p-5 shadow-[0_20px_50px_rgba(24,56,51,0.10)]">
             <div className="flex items-center gap-2">
               <Heart className="h-5 w-5 shrink-0" style={{ color: GREEN }} fill={GREEN} />
-              <span className="text-[15px] font-bold" style={{ color: INK }}>Cultural-code match</span>
+              <span className="text-[15px] font-bold" style={{ color: INK }}>{w.cultureMatch}</span>
               <span className="ml-auto rounded-full px-2 py-0.5 text-xs font-semibold" style={{ background: `${GREEN}1a`, color: GREEN }}>70%</span>
             </div>
             <div className="mt-2.5 rounded-2xl border border-[#eef0ee] bg-[#fafbf9] p-2.5 text-xs leading-snug text-[#183833]/75">
-              The candidate would fit naturally into an executor role with clear boundaries of responsibility and is unlikely to overstep them. However, heavy process bureaucracy could become a blocker
+              {w.cultureMatchDesc}
             </div>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               <div>
-                <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide" style={{ color: GREEN }}><Check className="h-3.5 w-3.5" /> Alignment points</p>
+                <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide" style={{ color: GREEN }}><Check className="h-3.5 w-3.5" /> {w.alignmentPoints}</p>
                 <div className="mt-2 space-y-2">
                   <div className="rounded-xl border border-[#e7f0d8] bg-[#f6faef] p-2.5">
-                    <p className="text-xs font-semibold" style={{ color: INK }}>Respects boundaries of responsibility</p>
-                    <p className="mt-1 text-[11px] italic leading-snug text-[#183833]/55">"Clearly distinguishes their own scope from others'."</p>
-                    <p className="mt-1 text-[11px] leading-snug text-[#183833]/70">Does not encroach on others' areas without asking</p>
+                    <p className="text-xs font-semibold" style={{ color: INK }}>{w.align1Title}</p>
+                    <p className="mt-1 text-[11px] italic leading-snug text-[#183833]/55">{w.align1Quote}</p>
+                    <p className="mt-1 text-[11px] leading-snug text-[#183833]/70">{w.align1Sub}</p>
                   </div>
                   <div className="rounded-xl border border-[#e7f0d8] bg-[#f6faef] p-2.5">
-                    <p className="text-xs font-semibold" style={{ color: INK }}>Honesty and transparency</p>
-                    <p className="mt-1 text-[11px] italic leading-snug text-[#183833]/55">"Openly acknowledges past mistakes."</p>
-                    <p className="mt-1 text-[11px] leading-snug text-[#183833]/70">Meets the transparency requirement</p>
+                    <p className="text-xs font-semibold" style={{ color: INK }}>{w.align2Title}</p>
+                    <p className="mt-1 text-[11px] italic leading-snug text-[#183833]/55">{w.align2Quote}</p>
+                    <p className="mt-1 text-[11px] leading-snug text-[#183833]/70">{w.align2Sub}</p>
                   </div>
                 </div>
               </div>
               <div>
-                <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide" style={{ color: AMBER }}><X className="h-3.5 w-3.5" /> Friction points</p>
+                <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide" style={{ color: AMBER }}><X className="h-3.5 w-3.5" /> {w.frictionPoints}</p>
                 <div className="mt-2 space-y-2">
                   <div className="rounded-xl border border-[#f3e6c7] bg-[#fdf8ee] p-2.5">
-                    <p className="text-xs font-semibold" style={{ color: INK }}>Lacks proactivity</p>
-                    <p className="mt-1 text-[11px] italic leading-snug text-[#183833]/55">"Waits for leading questions."</p>
-                    <p className="mt-1 text-[11px] leading-snug text-[#183833]/70">Not ready to define tasks on their own</p>
+                    <p className="text-xs font-semibold" style={{ color: INK }}>{w.friction1Title}</p>
+                    <p className="mt-1 text-[11px] italic leading-snug text-[#183833]/55">{w.friction1Quote}</p>
+                    <p className="mt-1 text-[11px] leading-snug text-[#183833]/70">{w.friction1Sub}</p>
                   </div>
                   <div className="rounded-xl border border-[#f3e6c7] bg-[#fdf8ee] p-2.5">
-                    <p className="text-xs font-semibold" style={{ color: INK }}>Weak process thinking</p>
-                    <p className="mt-1 text-[11px] italic leading-snug text-[#183833]/55">"Struggles to structure tasks."</p>
-                    <p className="mt-1 text-[11px] leading-snug text-[#183833]/70">Difficulty with multi-level requirements</p>
+                    <p className="text-xs font-semibold" style={{ color: INK }}>{w.friction2Title}</p>
+                    <p className="mt-1 text-[11px] italic leading-snug text-[#183833]/55">{w.friction2Quote}</p>
+                    <p className="mt-1 text-[11px] leading-snug text-[#183833]/70">{w.friction2Sub}</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="mt-3 flex items-center gap-2 rounded-xl border border-[#ffd9d9] bg-[#fff5f5] px-3 py-2 text-[11px]" style={{ color: RED }}>
-              <AlertTriangle className="h-4 w-4 shrink-0" /> Reliant on external direction — needs micromanagement at the start
+              <AlertTriangle className="h-4 w-4 shrink-0" /> {w.warning}
             </div>
           </div>
         </div>
@@ -228,11 +486,11 @@ const STEPS: Step[] = [
         <div className="relative order-first text-center lg:absolute lg:left-1/2 lg:top-1/2 lg:z-20 lg:w-[46rem] lg:-translate-x-1/2 lg:-translate-y-1/2">
           <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 hidden h-[170%] w-[160%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(244,248,243,0.94),rgba(244,248,243,0.55)_55%,rgba(244,248,243,0))] lg:block" />
           <div className="report-head relative will-change-[filter,opacity,transform]">
-          <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ color: INK }}>
-            A ready candidate profile backed by <span style={{ color: GREEN }}>objective reasoning</span>
+          <h2 className="text-3xl font-bold leading-tight tracking-tight text-balance sm:text-5xl" style={{ color: INK }}>
+            {a.report.pre}<span style={{ color: GREEN }}>{a.report.accent}</span>{a.report.post}
           </h2>
-          <a href="/platform#block-2" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
-            See a sample report <Arrow style={{ color: GREEN }} />
+          <a href={link("/platform#block-2")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+            {a.report.link} <Arrow style={{ color: GREEN }} />
           </a>
           </div>
         </div>
@@ -262,11 +520,11 @@ const STEPS: Step[] = [
         <div className="relative order-first text-center lg:absolute lg:left-1/2 lg:top-1/2 lg:z-20 lg:w-[48rem] lg:-translate-x-1/2 lg:-translate-y-1/2">
           <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 hidden h-[170%] w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(244,248,243,0.92),rgba(244,248,243,0.55)_55%,rgba(244,248,243,0))] lg:block" />
           <div className="report-head relative will-change-[filter,opacity,transform]">
-          <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ color: INK }}>
-            AI assistant: <span style={{ color: GREEN }}>"chat"</span> with your candidate pipeline
+          <h2 className="text-3xl font-bold leading-tight tracking-tight text-balance sm:text-5xl" style={{ color: INK }}>
+            {a.copilot.pre}<span style={{ color: GREEN }}>{a.copilot.accent}</span>{a.copilot.post}
           </h2>
-          <a href="/platform#block-3" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
-            See a sample chat <Arrow style={{ color: GREEN }} />
+          <a href={link("/platform#block-3")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+            {a.copilot.link} <Arrow style={{ color: GREEN }} />
           </a>
           </div>
         </div>
@@ -275,7 +533,7 @@ const STEPS: Step[] = [
         <div data-focus="0" className="report-card mx-auto w-2/3 max-w-[260px] lg:absolute lg:left-[1%] lg:top-[6%] lg:mx-0 lg:w-[260px] lg:max-w-none">
           <div className="relative">
             <div className="pointer-events-none absolute inset-[14%] -z-10 rounded-full bg-[#11AFCC]/30 blur-[55px]" />
-            <img src="/robot.png" alt="TalentMind AI assistant" className="w-full drop-shadow-[0_24px_45px_rgba(17,175,204,0.28)]" />
+            <img src="/robot.png" alt={w.assistantAlt} className="w-full drop-shadow-[0_24px_45px_rgba(17,175,204,0.28)]" />
           </div>
         </div>
 
@@ -289,12 +547,12 @@ const STEPS: Step[] = [
           <div className="rounded-3xl border border-[#e9efe6] bg-white/95 p-5 shadow-[0_22px_50px_rgba(24,56,51,0.12)]">
             <div className="flex items-center gap-2.5">
               <span className="grid h-10 w-10 place-items-center rounded-2xl" style={{ background: `${GREEN}1a` }}><Sparkles className="h-5 w-5" style={{ color: GREEN }} /></span>
-              <p className="text-base font-semibold" style={{ color: INK }}>Context is never lost</p>
+              <p className="text-base font-semibold" style={{ color: INK }}>{w.contextNeverLost}</p>
             </div>
-            <p className="mt-2.5 text-sm leading-snug text-[#183833]/65">The AI keeps the entire conversation and your whole pipeline in memory — ask anything, no need to repeat the background</p>
+            <p className="mt-2.5 text-sm leading-snug text-[#183833]/65">{w.contextNeverLostDesc}</p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f4f7f2] px-3 py-1.5 text-xs font-medium" style={{ color: INK }}><Zap className="h-3.5 w-3.5" style={{ color: GREEN }} /> Answers in seconds</span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f4f7f2] px-3 py-1.5 text-xs font-medium" style={{ color: INK }}><Brain className="h-3.5 w-3.5" style={{ color: TEAL }} /> Based on interviews</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f4f7f2] px-3 py-1.5 text-xs font-medium" style={{ color: INK }}><Zap className="h-3.5 w-3.5" style={{ color: GREEN }} /> {w.answersInSeconds}</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#f4f7f2] px-3 py-1.5 text-xs font-medium" style={{ color: INK }}><Brain className="h-3.5 w-3.5" style={{ color: TEAL }} /> {w.basedOnInterviews}</span>
             </div>
           </div>
         </div>
@@ -309,11 +567,11 @@ const STEPS: Step[] = [
         <div className="relative order-first text-center lg:absolute lg:left-1/2 lg:top-1/2 lg:z-20 lg:w-[46rem] lg:-translate-x-1/2 lg:-translate-y-1/2">
           <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 hidden h-[170%] w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(244,248,243,0.92),rgba(244,248,243,0.55)_55%,rgba(244,248,243,0))] lg:block" />
           <div className="report-head relative will-change-[filter,opacity,transform]">
-          <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ color: INK }}>
-            Embed <span style={{ color: GREEN }}>AI analysis</span> into your existing hiring workflow
+          <h2 className="text-3xl font-bold leading-tight tracking-tight text-balance sm:text-5xl" style={{ color: INK }}>
+            {a.integrations.pre}<span style={{ color: GREEN }}>{a.integrations.accent}</span>{a.integrations.post}
           </h2>
-          <a href="/api" className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
-            Go to API <Arrow style={{ color: GREEN }} />
+          <a href={link("/api")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+            {a.integrations.link} <Arrow style={{ color: GREEN }} />
           </a>
           </div>
         </div>
@@ -333,6 +591,8 @@ const STEPS: Step[] = [
 
 export default function Automation() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
+  const STEPS = makeSteps(HOME[locale].auto, W[locale], (h) => localize(h, locale));
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -403,7 +663,7 @@ export default function Automation() {
             <>
               <div className="pointer-events-none absolute inset-0 hidden lg:block">{s.widgets}</div>
               <div className="relative z-10 max-w-[52rem] text-center">
-                <h2 className="text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl" style={{ color: INK }}>{s.head}</h2>
+                <h2 className="text-4xl font-semibold leading-[1.1] tracking-tight text-balance sm:text-5xl" style={{ color: INK }}>{s.head}</h2>
                 <a href={s.href} className="group mt-7 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
                   {s.link} <Arrow style={{ color: GREEN }} />
                 </a>

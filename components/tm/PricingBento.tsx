@@ -2,50 +2,16 @@
 
 import { Check } from "lucide-react";
 import { Arrow, GREEN, INK } from "./ui";
-
-const TIERS = [
-  {
-    name: "Free",
-    price: "$0",
-    per: "5 interviews",
-    desc: "To try the platform. No credit card required",
-    incl: "Included in the plan:",
-    feats: ["Corporate culture profile upload", "Basic soft-skills scoring and AI report", "Basic analytics dashboards"],
-    hot: false,
-  },
-  {
-    name: "Starter",
-    price: "$149",
-    per: "per month · up to 30 interviews",
-    desc: "Perfect for small teams and a fast start with AI in hiring",
-    incl: "Everything in Free, plus:",
-    feats: ["Video-conferencing integrations", "Data stored in secure EU/MENA data centers", "Email support"],
-    hot: false,
-  },
-  {
-    name: "Growth",
-    price: "$449",
-    per: "per month · up to 100 interviews",
-    desc: "For fast-growing companies and structured HR teams",
-    incl: "Everything in Starter, plus:",
-    feats: ["ATS integrations", "Branded reports (your company logo)", "Priority support via messengers"],
-    hot: true,
-  },
-  {
-    name: "Scale",
-    price: "$1,699",
-    per: "per month · up to 400 interviews",
-    desc: "For large businesses that need customization and automation",
-    incl: "Everything in Growth, plus:",
-    feats: ["Open API and webhooks", "1 custom AI competency model", "Bias control", "Dedicated account manager"],
-    hot: false,
-  },
-];
+import { useLocale } from "./LocaleProvider";
+import { PRICING } from "@/lib/content/pricing";
 
 export default function PricingBento() {
+  const locale = useLocale();
+  const c = PRICING[locale];
+
   return (
     <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {TIERS.map((t) => (
+      {c.tiers.map((t) => (
         <div
           key={t.name}
           className={`ease-smooth flex h-full flex-col rounded-3xl bg-white p-6 transition-all duration-300 hover:-translate-y-1 ${
@@ -95,7 +61,7 @@ export default function PricingBento() {
             }`}
             style={t.hot ? { background: GREEN } : { background: "#F4F7F6", border: `1px solid ${INK}1a` }}
           >
-            {t.name === "Free" ? "Start for free" : `Choose ${t.name}`}
+            {t.name === "Free" ? c.startFree : c.cta(t.name)}
             <Arrow className={t.hot ? "text-white" : ""} />
           </a>
         </div>

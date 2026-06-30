@@ -3,8 +3,19 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Arrow, GREEN, INK } from "./ui";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import { localize, type Locale } from "@/lib/i18n";
+
+const DICT: Record<Locale, { evaluate: string; start: string }> = {
+  en: { evaluate: "Evaluate 5 candidates for free", start: "Start" },
+  es: { evaluate: "Evalúa 5 candidatos gratis", start: "Empezar" },
+  pt: { evaluate: "Avalie 5 candidatos grátis", start: "Começar" },
+  ar: { evaluate: "قيّم 5 مرشّحين مجانًا", start: "ابدأ" },
+};
 
 export default function StickyCTA() {
+  const locale = useLocale();
+  const t = DICT[locale];
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;
@@ -26,14 +37,14 @@ export default function StickyCTA() {
       style={{ background: INK }}
     >
       <p className="hidden text-sm font-medium text-white sm:block">
-        Evaluate 5 candidates for free
+        {t.evaluate}
       </p>
       <a
-        href="/pricing"
+        href={localize("/pricing", locale)}
         className="group flex items-center gap-1 rounded-xl px-4 py-2 text-sm font-semibold text-white"
         style={{ background: GREEN }}
       >
-        Start
+        {t.start}
         <Arrow className="text-white" />
       </a>
     </div>

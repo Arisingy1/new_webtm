@@ -3,6 +3,9 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import ReportSections, { STEPS } from "@/components/tm/sections/ReportSections";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import { localize } from "@/lib/i18n";
+import { BLOCKS } from "@/lib/content/blocks";
 
 /* ── палитра бренда TalentMind ── */
 const GREEN = "#7AB800";
@@ -26,6 +29,8 @@ export default function ReportBody({
   const rootRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
+  const c = BLOCKS[locale].report;
 
   /* ── авто-прокрутка отчёта внутри ноутбука (hero) ── */
   useEffect(() => {
@@ -73,18 +78,16 @@ export default function ReportBody({
 
       {/* ============================== HERO ============================== */}
       <section className={`relative mx-auto max-w-[1600px] px-6 pb-10 text-center md:px-8 ${embedded ? "pt-10" : "pt-32 lg:pt-40"}`}>
-        <h1 className="otchet-rise mx-auto max-w-[18ch] text-[clamp(2.4rem,5vw,4.8rem)] font-bold leading-[1.02] tracking-tight" style={{ color: INK }}>
-          A ready <span style={{ color: GREEN }}>report</span> on your candidate
+        <h1 className="otchet-rise mx-auto max-w-[18ch] text-[clamp(2.4rem,5vw,4.8rem)] font-bold leading-[1.02] tracking-tight text-balance" style={{ color: INK }}>
+          {c.hero.pre}<span style={{ color: GREEN }}>{c.hero.accent}</span>{c.hero.post}
         </h1>
-        <p className="otchet-rise mx-auto mt-5 max-w-xl text-lg leading-relaxed text-[#183833]/70">
-          A detailed breakdown of soft skills and cultural fit, based on a real interview
-        </p>
+        <p className="otchet-rise mx-auto mt-5 max-w-xl text-lg leading-relaxed text-[#183833]/70">{c.hero.p}</p>
         <div className="otchet-rise mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a href="/softskill-report/example" className="ease-smooth group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-lg font-medium text-white shadow-[0_18px_40px_rgba(122,184,0,0.32)] transition-all duration-300 hover:-translate-y-1" style={{ background: GREEN }}>
-            View the report <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+          <a href={localize("/softskill-report/example", locale)} className="ease-smooth group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-lg font-medium text-white shadow-[0_18px_40px_rgba(122,184,0,0.32)] transition-all duration-300 hover:-translate-y-1" style={{ background: GREEN }}>
+            {c.hero.cta1} <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
           </a>
           <a href="https://app.talentmind.app" className="ease-smooth inline-flex items-center gap-2 rounded-2xl border border-[#183833]/15 bg-white/70 px-6 py-4 text-lg font-medium text-[#183833] backdrop-blur transition-all duration-300 hover:-translate-y-1">
-            Get your report
+            {c.hero.cta2}
           </a>
         </div>
 
@@ -94,7 +97,7 @@ export default function ReportBody({
           <div ref={screenRef} className="absolute overflow-hidden bg-[#f4f7f6]" style={{ left: "27.6%", top: "20.6%", width: "44.8%", height: "42.2%" }}>
             <div ref={contentRef} className="will-change-transform">
               <div className="px-4 pb-6 pt-4">
-                <p className="text-center text-sm font-bold" style={{ color: INK }}>Analysis result</p>
+                <p className="text-center text-sm font-bold" style={{ color: INK }}>{{ en: "Analysis result", es: "Resultado del análisis", pt: "Resultado da análise", ar: "نتيجة التحليل" }[locale]}</p>
                 <div className="mt-3 space-y-2">
                   {STEPS.map((s) => (
                     s.node
@@ -111,19 +114,17 @@ export default function ReportBody({
       </section>
 
       {/* ===================== ЗАКРЕПЛЁННЫЙ РАЗБОР ===================== */}
-      <ReportSections prevHref={prevHref} nextHref={nextHref} prevLabel={prevLabel} nextLabel={nextLabel} />
+      <ReportSections prevHref={prevHref} nextHref={nextHref} prevLabel={prevLabel ?? c.prevLabel} nextLabel={nextLabel ?? c.nextLabel} />
 
       {/* ===================== CTA ===================== */}
       {!embedded && (
         <section className="relative mx-auto mb-24 max-w-[1100px] px-6 md:px-12">
           <div className="relative overflow-hidden rounded-[2.5rem] px-8 py-14 text-center text-white shadow-[0_40px_90px_rgba(122,184,0,0.32)] md:px-16" style={{ background: `linear-gradient(135deg, ${GREEN} 0%, #5e9400 100%)` }}>
             <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/15 blur-[90px]" />
-            <h2 className="relative text-3xl font-bold tracking-tight sm:text-5xl">Get a report like this for your candidate</h2>
-            <p className="relative mx-auto mt-4 max-w-xl text-lg text-white/85">
-              Upload an interview recording and TalentMind returns an objective breakdown in minutes. First 5 reports free
-            </p>
+            <h2 className="relative text-3xl font-bold tracking-tight sm:text-5xl">{c.cta.title}</h2>
+            <p className="relative mx-auto mt-4 max-w-xl text-lg text-white/85">{c.cta.sub}</p>
             <a href="https://app.talentmind.app" className="ease-smooth relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>
-              Start for free →
+              {c.cta.button} →
             </a>
           </div>
         </section>

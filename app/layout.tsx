@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geologica, JetBrains_Mono, Onest } from "next/font/google";
+import { Geologica, JetBrains_Mono, Onest, Cairo } from "next/font/google";
 import "./globals.css";
 
 const onest = Onest({
@@ -20,6 +20,13 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
   weight: ["400", "500"],
   variable: "--font-mono-jb",
+});
+
+const cairo = Cairo({
+  subsets: ["arabic"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-arabic",
 });
 
 export const metadata: Metadata = {
@@ -52,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${onest.variable} ${geologica.variable} ${jetbrainsMono.variable}`}
+      className={`${onest.variable} ${geologica.variable} ${jetbrainsMono.variable} ${cairo.variable}`}
     >
       <body className="min-h-dvh antialiased">{children}</body>
     </html>

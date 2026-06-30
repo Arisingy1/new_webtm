@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Mail, Link2, KeyRound, Lock, ChevronRight, Check, Copy } from "lucide-react";
 import { GREEN, TEAL, INK, RED, useReveals } from "@/components/tm/ui";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import type { Locale } from "@/lib/i18n";
 
 /* ============================================================
    /api/docs — Документация Randvar API (1.0.0).
@@ -172,6 +174,437 @@ const GROUPS: Group[] = [
 
 const ALL = GROUPS.flatMap((g) => g.endpoints);
 
+/* ============================================================
+   Переводы — только проза. Код, JSON и идентификаторы остаются
+   на английском. Ключи — стабильные id (группа, эндпоинт,
+   имя параметра, код/индекс ответа). EN = текущие строки.
+   ============================================================ */
+type GroupTx = { name: string; summaries: Record<string, string>; params: Record<string, string>; responses: Record<string, string[]> };
+type Tx = { groups: Record<string, GroupTx> };
+
+/* ── UI-словарь статичной обвязки страницы ── */
+type UiDict = {
+  heroSub: string;
+  authTitle: string;
+  authDescA: string; // before <code>Authorization</code>
+  authDescB: string; // between the two codes
+  cardScheme: string;
+  cardType: string;
+  cardHeader: string;
+  pathParameters: string;
+  queryParameters: string;
+  requestBody: string;
+  responses: string;
+  required: string;
+  defaultPrefix: string;
+  enumPrefix: string;
+  request: string;
+  response: string;
+  copy: string;
+  copied: string;
+};
+
+const UI: Record<Locale, UiDict> = {
+  en: {
+    heroSub: "TalentMind API documentation — programmatic access to interview analysis, soft skills scoring, and candidate corporate fit assessment. REST API and webhooks for embedding AI assessment into your ATS",
+    authTitle: "Authorization",
+    authDescA: "The ",
+    authDescB: " header is passed in the format ",
+    cardScheme: "Scheme",
+    cardType: "Type",
+    cardHeader: "Header",
+    pathParameters: "Path parameters",
+    queryParameters: "Query parameters",
+    requestBody: "Request body · application/json",
+    responses: "Responses",
+    required: "required",
+    defaultPrefix: "Default: ",
+    enumPrefix: "Enum: ",
+    request: "Request",
+    response: "Response · application/json",
+    copy: "Copy",
+    copied: "Copied",
+  },
+  es: {
+    heroSub: "Documentación de la API de TalentMind: acceso programático al análisis de entrevistas, la evaluación de habilidades blandas y la valoración de la compatibilidad corporativa de los candidatos. API REST y webhooks para integrar la evaluación con IA en tu ATS",
+    authTitle: "Autorización",
+    authDescA: "El encabezado ",
+    authDescB: " se envía en el formato ",
+    cardScheme: "Esquema",
+    cardType: "Tipo",
+    cardHeader: "Encabezado",
+    pathParameters: "Parámetros de ruta",
+    queryParameters: "Parámetros de consulta",
+    requestBody: "Cuerpo de la solicitud · application/json",
+    responses: "Respuestas",
+    required: "obligatorio",
+    defaultPrefix: "Predeterminado: ",
+    enumPrefix: "Enum: ",
+    request: "Solicitud",
+    response: "Respuesta · application/json",
+    copy: "Copiar",
+    copied: "Copiado",
+  },
+  pt: {
+    heroSub: "Documentação da API da TalentMind: acesso programático à análise de entrevistas, à avaliação de habilidades comportamentais e à aferição da compatibilidade corporativa dos candidatos. API REST e webhooks para integrar a avaliação com IA ao seu ATS",
+    authTitle: "Autorização",
+    authDescA: "O cabeçalho ",
+    authDescB: " é enviado no formato ",
+    cardScheme: "Esquema",
+    cardType: "Tipo",
+    cardHeader: "Cabeçalho",
+    pathParameters: "Parâmetros de caminho",
+    queryParameters: "Parâmetros de consulta",
+    requestBody: "Corpo da solicitação · application/json",
+    responses: "Respostas",
+    required: "obrigatório",
+    defaultPrefix: "Padrão: ",
+    enumPrefix: "Enum: ",
+    request: "Solicitação",
+    response: "Resposta · application/json",
+    copy: "Copiar",
+    copied: "Copiado",
+  },
+  ar: {
+    heroSub: "توثيق واجهة TalentMind البرمجية — وصول برمجي إلى تحليل المقابلات وتقييم المهارات الشخصية وقياس مدى ملاءمة المرشّحين للثقافة المؤسسية. واجهة REST وخطافات الويب (webhooks) لدمج التقييم بالذكاء الاصطناعي في نظام تتبّع المتقدّمين لديك",
+    authTitle: "المصادقة",
+    authDescA: "يُمرَّر ترويسة ",
+    authDescB: " بالصيغة ",
+    cardScheme: "المخطّط",
+    cardType: "النوع",
+    cardHeader: "الترويسة",
+    pathParameters: "معاملات المسار",
+    queryParameters: "معاملات الاستعلام",
+    requestBody: "جسم الطلب · application/json",
+    responses: "الاستجابات",
+    required: "مطلوب",
+    defaultPrefix: "الافتراضي: ",
+    enumPrefix: "Enum: ",
+    request: "الطلب",
+    response: "الاستجابة · application/json",
+    copy: "نسخ",
+    copied: "تم النسخ",
+  },
+};
+
+const TX: Record<Locale, Tx> = {
+  en: {
+    groups: {
+      interviews: {
+        name: "Interviews",
+        summaries: {
+          uploadInterview: "Upload an interview recording for analysis",
+          getInterview: "Get the status and analysis result of an interview",
+          listInterviews: "List interviews",
+        },
+        params: {
+          "uploadInterview.candidate_id": "Candidate identifier",
+          "uploadInterview.vacancy_id": "Vacancy identifier",
+          "uploadInterview.media_url": "URL of the interview recording (mp4, mp3, m4a)",
+          "getInterview.id": "Interview identifier",
+          "listInterviews.status": "Filter by status",
+          "listInterviews.limit": "Number of records. Maximum 100.",
+          "listInterviews.offset": "Offset for pagination.",
+        },
+        responses: {
+          uploadInterview: ["Interview accepted for processing", "Bad request"],
+          getInterview: ["Success", "Interview not found"],
+          listInterviews: ["Success", "Bad request"],
+        },
+      },
+      candidates: {
+        name: "Candidates",
+        summaries: {
+          getCandidateScore: "Score a candidate's soft skills",
+          getCandidateReport: "Full candidate report",
+          compareCandidates: "Compare candidates by criteria",
+        },
+        params: {
+          "getCandidateScore.id": "Candidate identifier",
+          "getCandidateReport.id": "Candidate identifier",
+          "compareCandidates.candidate_ids": "Candidate identifiers (2 to 10)",
+          "compareCandidates.criteria": "Comparison criterion (for example, leadership)",
+        },
+        responses: {
+          getCandidateScore: ["Success", "Candidate not found"],
+          getCandidateReport: ["Success", "Candidate not found"],
+          compareCandidates: ["Success", "Bad request"],
+        },
+      },
+      culture: {
+        name: "Culture",
+        summaries: {
+          getCultureProfile: "Company corporate culture profile",
+          getCultureFit: "Assess a candidate's fit with the company DNA",
+        },
+        params: {
+          "getCultureFit.candidate_id": "Candidate identifier",
+        },
+        responses: {
+          getCultureProfile: ["Success"],
+          getCultureFit: ["Success", "Bad request"],
+        },
+      },
+      webhooks: {
+        name: "Webhooks",
+        summaries: {
+          createWebhook: "Subscribe to analysis events",
+          listWebhooks: "List webhooks",
+          deleteWebhook: "Delete a webhook",
+        },
+        params: {
+          "createWebhook.url": "URL for event delivery",
+          "createWebhook.events": "Events: interview.completed, report.ready, candidate.scored",
+          "deleteWebhook.id": "Webhook identifier",
+        },
+        responses: {
+          createWebhook: ["Webhook created", "Bad request"],
+          listWebhooks: ["Success"],
+          deleteWebhook: ["Webhook deleted", "Webhook not found"],
+        },
+      },
+    },
+  },
+  es: {
+    groups: {
+      interviews: {
+        name: "Entrevistas",
+        summaries: {
+          uploadInterview: "Sube una grabación de entrevista para su análisis",
+          getInterview: "Obtén el estado y el resultado del análisis de una entrevista",
+          listInterviews: "Lista de entrevistas",
+        },
+        params: {
+          "uploadInterview.candidate_id": "Identificador del candidato",
+          "uploadInterview.vacancy_id": "Identificador de la vacante",
+          "uploadInterview.media_url": "URL de la grabación de la entrevista (mp4, mp3, m4a)",
+          "getInterview.id": "Identificador de la entrevista",
+          "listInterviews.status": "Filtrar por estado",
+          "listInterviews.limit": "Número de registros. Máximo 100.",
+          "listInterviews.offset": "Desplazamiento para la paginación.",
+        },
+        responses: {
+          uploadInterview: ["Entrevista aceptada para su procesamiento", "Solicitud incorrecta"],
+          getInterview: ["Éxito", "Entrevista no encontrada"],
+          listInterviews: ["Éxito", "Solicitud incorrecta"],
+        },
+      },
+      candidates: {
+        name: "Candidatos",
+        summaries: {
+          getCandidateScore: "Evalúa las habilidades blandas de un candidato",
+          getCandidateReport: "Informe completo del candidato",
+          compareCandidates: "Compara candidatos por criterios",
+        },
+        params: {
+          "getCandidateScore.id": "Identificador del candidato",
+          "getCandidateReport.id": "Identificador del candidato",
+          "compareCandidates.candidate_ids": "Identificadores de candidatos (de 2 a 10)",
+          "compareCandidates.criteria": "Criterio de comparación (por ejemplo, liderazgo)",
+        },
+        responses: {
+          getCandidateScore: ["Éxito", "Candidato no encontrado"],
+          getCandidateReport: ["Éxito", "Candidato no encontrado"],
+          compareCandidates: ["Éxito", "Solicitud incorrecta"],
+        },
+      },
+      culture: {
+        name: "Cultura",
+        summaries: {
+          getCultureProfile: "Perfil de la cultura corporativa de la empresa",
+          getCultureFit: "Evalúa la afinidad de un candidato con el ADN de la empresa",
+        },
+        params: {
+          "getCultureFit.candidate_id": "Identificador del candidato",
+        },
+        responses: {
+          getCultureProfile: ["Éxito"],
+          getCultureFit: ["Éxito", "Solicitud incorrecta"],
+        },
+      },
+      webhooks: {
+        name: "Webhooks",
+        summaries: {
+          createWebhook: "Suscríbete a los eventos de análisis",
+          listWebhooks: "Lista de webhooks",
+          deleteWebhook: "Elimina un webhook",
+        },
+        params: {
+          "createWebhook.url": "URL para la entrega de eventos",
+          "createWebhook.events": "Eventos: interview.completed, report.ready, candidate.scored",
+          "deleteWebhook.id": "Identificador del webhook",
+        },
+        responses: {
+          createWebhook: ["Webhook creado", "Solicitud incorrecta"],
+          listWebhooks: ["Éxito"],
+          deleteWebhook: ["Webhook eliminado", "Webhook no encontrado"],
+        },
+      },
+    },
+  },
+  pt: {
+    groups: {
+      interviews: {
+        name: "Entrevistas",
+        summaries: {
+          uploadInterview: "Envie uma gravação de entrevista para análise",
+          getInterview: "Obtenha o status e o resultado da análise de uma entrevista",
+          listInterviews: "Listar entrevistas",
+        },
+        params: {
+          "uploadInterview.candidate_id": "Identificador do candidato",
+          "uploadInterview.vacancy_id": "Identificador da vaga",
+          "uploadInterview.media_url": "URL da gravação da entrevista (mp4, mp3, m4a)",
+          "getInterview.id": "Identificador da entrevista",
+          "listInterviews.status": "Filtrar por status",
+          "listInterviews.limit": "Número de registros. Máximo 100.",
+          "listInterviews.offset": "Deslocamento para a paginação.",
+        },
+        responses: {
+          uploadInterview: ["Entrevista aceita para processamento", "Solicitação inválida"],
+          getInterview: ["Sucesso", "Entrevista não encontrada"],
+          listInterviews: ["Sucesso", "Solicitação inválida"],
+        },
+      },
+      candidates: {
+        name: "Candidatos",
+        summaries: {
+          getCandidateScore: "Avalie as habilidades comportamentais de um candidato",
+          getCandidateReport: "Relatório completo do candidato",
+          compareCandidates: "Compare candidatos por critérios",
+        },
+        params: {
+          "getCandidateScore.id": "Identificador do candidato",
+          "getCandidateReport.id": "Identificador do candidato",
+          "compareCandidates.candidate_ids": "Identificadores de candidatos (de 2 a 10)",
+          "compareCandidates.criteria": "Critério de comparação (por exemplo, liderança)",
+        },
+        responses: {
+          getCandidateScore: ["Sucesso", "Candidato não encontrado"],
+          getCandidateReport: ["Sucesso", "Candidato não encontrado"],
+          compareCandidates: ["Sucesso", "Solicitação inválida"],
+        },
+      },
+      culture: {
+        name: "Cultura",
+        summaries: {
+          getCultureProfile: "Perfil da cultura corporativa da empresa",
+          getCultureFit: "Avalie a compatibilidade de um candidato com o DNA da empresa",
+        },
+        params: {
+          "getCultureFit.candidate_id": "Identificador do candidato",
+        },
+        responses: {
+          getCultureProfile: ["Sucesso"],
+          getCultureFit: ["Sucesso", "Solicitação inválida"],
+        },
+      },
+      webhooks: {
+        name: "Webhooks",
+        summaries: {
+          createWebhook: "Inscreva-se nos eventos de análise",
+          listWebhooks: "Listar webhooks",
+          deleteWebhook: "Exclua um webhook",
+        },
+        params: {
+          "createWebhook.url": "URL para a entrega de eventos",
+          "createWebhook.events": "Eventos: interview.completed, report.ready, candidate.scored",
+          "deleteWebhook.id": "Identificador do webhook",
+        },
+        responses: {
+          createWebhook: ["Webhook criado", "Solicitação inválida"],
+          listWebhooks: ["Sucesso"],
+          deleteWebhook: ["Webhook excluído", "Webhook não encontrado"],
+        },
+      },
+    },
+  },
+  ar: {
+    groups: {
+      interviews: {
+        name: "المقابلات",
+        summaries: {
+          uploadInterview: "ارفع تسجيل مقابلة للتحليل",
+          getInterview: "احصل على حالة مقابلة ونتيجة تحليلها",
+          listInterviews: "عرض قائمة المقابلات",
+        },
+        params: {
+          "uploadInterview.candidate_id": "معرّف المرشّح",
+          "uploadInterview.vacancy_id": "معرّف الوظيفة",
+          "uploadInterview.media_url": "رابط تسجيل المقابلة (mp4 أو mp3 أو m4a)",
+          "getInterview.id": "معرّف المقابلة",
+          "listInterviews.status": "التصفية حسب الحالة",
+          "listInterviews.limit": "عدد السجلّات. الحدّ الأقصى 100.",
+          "listInterviews.offset": "الإزاحة للتقسيم إلى صفحات.",
+        },
+        responses: {
+          uploadInterview: ["تم قبول المقابلة للمعالجة", "طلب غير صالح"],
+          getInterview: ["نجاح", "المقابلة غير موجودة"],
+          listInterviews: ["نجاح", "طلب غير صالح"],
+        },
+      },
+      candidates: {
+        name: "المرشّحون",
+        summaries: {
+          getCandidateScore: "قيّم المهارات الشخصية لمرشّح",
+          getCandidateReport: "تقرير كامل عن المرشّح",
+          compareCandidates: "قارن بين المرشّحين وفق معايير",
+        },
+        params: {
+          "getCandidateScore.id": "معرّف المرشّح",
+          "getCandidateReport.id": "معرّف المرشّح",
+          "compareCandidates.candidate_ids": "معرّفات المرشّحين (من 2 إلى 10)",
+          "compareCandidates.criteria": "معيار المقارنة (مثلًا، القيادة)",
+        },
+        responses: {
+          getCandidateScore: ["نجاح", "المرشّح غير موجود"],
+          getCandidateReport: ["نجاح", "المرشّح غير موجود"],
+          compareCandidates: ["نجاح", "طلب غير صالح"],
+        },
+      },
+      culture: {
+        name: "الثقافة",
+        summaries: {
+          getCultureProfile: "ملف الثقافة المؤسسية للشركة",
+          getCultureFit: "قيّم مدى ملاءمة مرشّح للحمض المؤسسي للشركة",
+        },
+        params: {
+          "getCultureFit.candidate_id": "معرّف المرشّح",
+        },
+        responses: {
+          getCultureProfile: ["نجاح"],
+          getCultureFit: ["نجاح", "طلب غير صالح"],
+        },
+      },
+      webhooks: {
+        name: "Webhooks",
+        summaries: {
+          createWebhook: "اشترك في أحداث التحليل",
+          listWebhooks: "عرض قائمة الـwebhooks",
+          deleteWebhook: "احذف webhook",
+        },
+        params: {
+          "createWebhook.url": "رابط تسليم الأحداث",
+          "createWebhook.events": "الأحداث: interview.completed، report.ready، candidate.scored",
+          "deleteWebhook.id": "معرّف الـwebhook",
+        },
+        responses: {
+          createWebhook: ["تم إنشاء الـwebhook", "طلب غير صالح"],
+          listWebhooks: ["نجاح"],
+          deleteWebhook: ["تم حذف الـwebhook", "الـwebhook غير موجود"],
+        },
+      },
+    },
+  },
+};
+
+/* ── резолверы локализованного текста по стабильным id ── */
+const gid = (ep: Endpoint): string => GROUPS.find((g) => g.endpoints.some((e) => e.id === ep.id))!.id;
+const txGroupName = (l: Locale, groupId: string) => TX[l].groups[groupId].name;
+const txSummary = (l: Locale, ep: Endpoint) => TX[l].groups[gid(ep)].summaries[ep.id];
+const txParam = (l: Locale, ep: Endpoint, paramName: string) => TX[l].groups[gid(ep)].params[`${ep.id}.${paramName}`];
+const txResponses = (l: Locale, ep: Endpoint) => TX[l].groups[gid(ep)].responses[ep.id];
+
 /* ---------- генераторы кода ---------- */
 const resolvePath = (ep: Endpoint) => {
   let p = ep.path;
@@ -258,6 +691,8 @@ const LANGS: [Lang, string][] = [["ts", "TypeScript"], ["php", "PHP"], ["go", "G
    ============================================================ */
 export default function ApiDocsPage() {
   const root = useReveals();
+  const locale = useLocale();
+  const ui = UI[locale];
   const [lang, setLang] = useState<Lang>("ts");
   const [active, setActive] = useState(ALL[0].id);
 
@@ -296,7 +731,7 @@ export default function ApiDocsPage() {
           <span className="mb-1.5 rounded-full px-3 py-1 font-mono text-xs font-semibold" style={{ background: `${GREEN}1a`, color: GREEN }}>v1.0.0</span>
         </div>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#183833]/70 animate-rise" style={{ animationDelay: "120ms" }}>
-          TalentMind API documentation — programmatic access to interview analysis, soft skills scoring, and candidate corporate fit assessment. REST API and webhooks for embedding AI assessment into your ATS
+          {ui.heroSub}
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-3 animate-rise" style={{ animationDelay: "180ms" }}>
           <a href="mailto:support@talentmind.ru" className="ease-smooth inline-flex items-center gap-2 rounded-xl border border-[#183833]/12 bg-white px-4 py-3 text-sm font-medium transition-colors hover:bg-[#f4f7f2]">
@@ -315,7 +750,7 @@ export default function ApiDocsPage() {
           <nav className="ds-scroll sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
             {GROUPS.map((g) => (
               <div key={g.id} className="mb-6">
-                <p className="mb-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-[#183833]/45">{g.name}</p>
+                <p className="mb-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-[#183833]/45">{txGroupName(locale, g.id)}</p>
                 <ul className="space-y-0.5">
                   {g.endpoints.map((ep) => {
                     const on = active === ep.id;
@@ -342,13 +777,13 @@ export default function ApiDocsPage() {
           <section className="reveal rounded-3xl border border-[#e6ece4] bg-white p-6 shadow-[0_16px_44px_rgba(24,56,51,0.06)] md:p-8">
             <div className="flex items-center gap-2.5">
               <span className="grid h-10 w-10 place-items-center rounded-2xl" style={{ background: `${TEAL}1a` }}><Lock className="h-5 w-5" style={{ color: TEAL }} /></span>
-              <h2 className="text-xl font-bold tracking-tight">Authorization</h2>
+              <h2 className="text-xl font-bold tracking-tight">{ui.authTitle}</h2>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-[#183833]/70">
-              The <code className="rounded bg-[#f4f7f2] px-1.5 py-0.5 font-mono text-[13px]" style={{ color: INK }}>Authorization</code> header is passed in the format <code className="rounded bg-[#f4f7f2] px-1.5 py-0.5 font-mono text-[13px]" style={{ color: GREEN }}>Bearer {"{token}"}</code>
+              {ui.authDescA}<code dir="ltr" className="rounded bg-[#f4f7f2] px-1.5 py-0.5 font-mono text-[13px]" style={{ color: INK }}>Authorization</code>{ui.authDescB}<code dir="ltr" className="rounded bg-[#f4f7f2] px-1.5 py-0.5 font-mono text-[13px]" style={{ color: GREEN }}>Bearer {"{token}"}</code>
             </p>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-              {[["Scheme", "BearerAuth", <KeyRound key="k" className="h-4 w-4" />], ["Type", "API Key", <Lock key="l" className="h-4 w-4" />], ["Header", "Authorization", <ChevronRight key="c" className="h-4 w-4" />]].map(([t, v, icon]) => (
+              {[[ui.cardScheme, "BearerAuth", <KeyRound key="k" className="h-4 w-4" />], [ui.cardType, "API Key", <Lock key="l" className="h-4 w-4" />], [ui.cardHeader, "Authorization", <ChevronRight key="c" className="h-4 w-4" />]].map(([t, v, icon]) => (
                 <div key={t as string} className="rounded-2xl border border-[#eef0ee] bg-[#fafcf8] p-4">
                   <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-[#183833]/45">{icon} {t as string}</p>
                   <p className="mt-1.5 font-mono text-sm font-semibold" style={{ color: INK }}>{v as string}</p>
@@ -361,10 +796,10 @@ export default function ApiDocsPage() {
           {GROUPS.map((g) => (
             <section key={g.id} id={g.id} className="scroll-mt-28">
               <h2 className="reveal mt-14 mb-2 flex items-center gap-3 text-2xl font-bold tracking-tight sm:text-3xl">
-                <span className="h-7 w-1.5 rounded-full" style={{ background: GREEN }} /> {g.name}
+                <span className="h-7 w-1.5 rounded-full" style={{ background: GREEN }} /> {txGroupName(locale, g.id)}
               </h2>
               <div className="space-y-2">
-                {g.endpoints.map((ep) => <EndpointCard key={ep.id} ep={ep} lang={lang} setLang={setLang} />)}
+                {g.endpoints.map((ep) => <EndpointCard key={ep.id} ep={ep} lang={lang} setLang={setLang} locale={locale} ui={ui} />)}
               </div>
             </section>
           ))}
@@ -379,57 +814,58 @@ function MethodBadge({ method }: { method: Method }) {
   return <span className="rounded-md px-2.5 py-1 font-mono text-[11px] font-bold uppercase tracking-wide text-white" style={{ background: methodColor(method) }}>{method}</span>;
 }
 
-function EndpointCard({ ep, lang, setLang }: { ep: Endpoint; lang: Lang; setLang: (l: Lang) => void }) {
+function EndpointCard({ ep, lang, setLang, locale, ui }: { ep: Endpoint; lang: Lang; setLang: (l: Lang) => void; locale: Locale; ui: UiDict }) {
+  const respLabels = txResponses(locale, ep);
   return (
     <article id={ep.id} className="reveal scroll-mt-28 grid gap-6 border-t border-[#e6ece4] py-10 xl:grid-cols-[1fr_minmax(0,540px)] xl:gap-10">
       {/* ДОКУМЕНТАЦИЯ */}
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-3">
           <MethodBadge method={ep.method} />
-          <h3 className="font-mono text-lg font-bold tracking-tight" style={{ color: INK }}>{ep.fn}</h3>
+          <h3 dir="ltr" className="font-mono text-lg font-bold tracking-tight" style={{ color: INK }}>{ep.fn}</h3>
         </div>
-        <p className="mt-2.5 text-[15px] leading-relaxed text-[#183833]/70">{ep.summary}</p>
+        <p className="mt-2.5 text-[15px] leading-relaxed text-[#183833]/70">{txSummary(locale, ep)}</p>
 
         {ep.pathParams && (
           <div className="mt-5">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[#183833]/45">Path parameters</p>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[#183833]/45">{ui.pathParameters}</p>
             <div className="mt-2 divide-y divide-[#eef0ee] rounded-2xl border border-[#eef0ee] bg-white">
-              {ep.pathParams.map((p) => <ParamRow key={p.name} p={p} />)}
+              {ep.pathParams.map((p) => <ParamRow key={p.name} p={p} desc={txParam(locale, ep, p.name)} ui={ui} />)}
             </div>
           </div>
         )}
 
         {ep.params && (
           <div className="mt-5">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[#183833]/45">Query parameters</p>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[#183833]/45">{ui.queryParameters}</p>
             <div className="mt-2 divide-y divide-[#eef0ee] rounded-2xl border border-[#eef0ee] bg-white">
-              {ep.params.map((p) => <ParamRow key={p.name} p={p} />)}
+              {ep.params.map((p) => <ParamRow key={p.name} p={p} desc={txParam(locale, ep, p.name)} ui={ui} />)}
             </div>
           </div>
         )}
 
         {ep.body && (
           <div className="mt-5">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[#183833]/45">Request body · application/json</p>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[#183833]/45">{ui.requestBody}</p>
             <div className="mt-2 divide-y divide-[#eef0ee] rounded-2xl border border-[#eef0ee] bg-white">
-              {ep.body.map((p) => <ParamRow key={p.name} p={p} />)}
+              {ep.body.map((p) => <ParamRow key={p.name} p={p} desc={txParam(locale, ep, p.name)} ui={ui} />)}
             </div>
           </div>
         )}
 
         <div className="mt-5">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-[#183833]/45">Responses</p>
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[#183833]/45">{ui.responses}</p>
           <div className="mt-2 space-y-1.5">
-            {ep.responses.map((r) => (
+            {ep.responses.map((r, i) => (
               <div key={r.code} className="flex items-center gap-2.5 text-sm">
                 <span className="rounded-md px-2 py-0.5 font-mono text-xs font-bold text-white" style={{ background: r.code === "200" ? GREEN : RED }}>{r.code}</span>
-                <span className="text-[#183833]/70">{r.label}</span>
+                <span className="text-[#183833]/70">{respLabels[i]}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-5 flex items-center gap-3 overflow-x-auto rounded-xl border border-[#e6ece4] bg-[#f4f7f2] px-4 py-3">
+        <div dir="ltr" className="mt-5 flex items-center gap-3 overflow-x-auto rounded-xl border border-[#e6ece4] bg-[#f4f7f2] px-4 py-3">
           <span className="shrink-0 font-mono text-xs font-bold uppercase tracking-wide" style={{ color: methodColor(ep.method) }}>{ep.method}</span>
           <span className="whitespace-nowrap font-mono text-sm" style={{ color: INK }}>/v1{ep.path}</span>
         </div>
@@ -437,34 +873,34 @@ function EndpointCard({ ep, lang, setLang }: { ep: Endpoint; lang: Lang; setLang
 
       {/* КОД */}
       <div className="min-w-0 space-y-4">
-        <RequestPanel ep={ep} lang={lang} setLang={setLang} />
-        <ResponsePanel ep={ep} />
+        <RequestPanel ep={ep} lang={lang} setLang={setLang} ui={ui} />
+        <ResponsePanel ep={ep} ui={ui} />
       </div>
     </article>
   );
 }
 
-function ParamRow({ p }: { p: Param }) {
+function ParamRow({ p, desc, ui }: { p: Param; desc: string; ui: UiDict }) {
   return (
     <div className="grid grid-cols-1 gap-1.5 p-3.5 sm:grid-cols-[150px_1fr] sm:gap-4">
       <div>
-        <code className="font-mono text-[13px] font-semibold" style={{ color: INK }}>{p.name}</code>
-        {p.required && <span className="ml-1.5 align-middle text-[10px] font-semibold uppercase" style={{ color: RED }}>required</span>}
-        <p className="mt-0.5 font-mono text-[11px] text-[#183833]/45">{p.type}</p>
+        <code dir="ltr" className="font-mono text-[13px] font-semibold" style={{ color: INK }}>{p.name}</code>
+        {p.required && <span className="ml-1.5 align-middle text-[10px] font-semibold uppercase" style={{ color: RED }}>{ui.required}</span>}
+        <p dir="ltr" className="mt-0.5 font-mono text-[11px] text-[#183833]/45">{p.type}</p>
       </div>
       <div className="min-w-0">
         <div className="flex flex-wrap gap-1.5">
-          {p.def != null && <span className="rounded-md bg-[#f0f6e8] px-2 py-0.5 font-mono text-[11px] font-medium" style={{ color: INK }}>Default: {p.def}</span>}
-          {p.enums && <span className="rounded-md bg-[#eaf6f8] px-2 py-0.5 font-mono text-[11px] font-medium" style={{ color: TEAL }}>Enum: {p.enums.join(" · ")}</span>}
+          {p.def != null && <span dir="ltr" className="rounded-md bg-[#f0f6e8] px-2 py-0.5 font-mono text-[11px] font-medium" style={{ color: INK }}>{ui.defaultPrefix}{p.def}</span>}
+          {p.enums && <span dir="ltr" className="rounded-md bg-[#eaf6f8] px-2 py-0.5 font-mono text-[11px] font-medium" style={{ color: TEAL }}>{ui.enumPrefix}{p.enums.join(" · ")}</span>}
         </div>
-        <p className="mt-1.5 text-[13px] leading-snug text-[#183833]/65">{p.desc}</p>
+        <p className="mt-1.5 text-[13px] leading-snug text-[#183833]/65">{desc}</p>
       </div>
     </div>
   );
 }
 
 /* ---------- панель запроса ---------- */
-function RequestPanel({ ep, lang, setLang }: { ep: Endpoint; lang: Lang; setLang: (l: Lang) => void }) {
+function RequestPanel({ ep, lang, setLang, ui }: { ep: Endpoint; lang: Lang; setLang: (l: Lang) => void; ui: UiDict }) {
   const code = buildCode(ep, lang);
   return (
     <div className="overflow-hidden rounded-2xl border border-[#13322e] bg-[#0f2a27] shadow-[0_24px_60px_rgba(24,56,51,0.22)]">
@@ -473,9 +909,9 @@ function RequestPanel({ ep, lang, setLang }: { ep: Endpoint; lang: Lang; setLang
           <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-          <span className="ml-2 text-xs font-medium text-white/55">Request</span>
+          <span className="ml-2 text-xs font-medium text-white/55">{ui.request}</span>
         </div>
-        <CopyBtn text={code} />
+        <CopyBtn text={code} ui={ui} />
       </div>
       <div className="flex gap-1 border-b border-white/10 px-3 py-2">
         {LANGS.map(([id, label]) => (
@@ -485,7 +921,7 @@ function RequestPanel({ ep, lang, setLang }: { ep: Endpoint; lang: Lang; setLang
           </button>
         ))}
       </div>
-      <pre key={lang} className="ds-scroll overflow-x-auto px-5 py-4 font-mono text-[12.5px] leading-relaxed text-[#cfe8c4]" style={{ animation: "dsPanel .3s ease both" }}>
+      <pre key={lang} dir="ltr" className="ds-scroll overflow-x-auto px-5 py-4 font-mono text-[12.5px] leading-relaxed text-[#cfe8c4]" style={{ animation: "dsPanel .3s ease both" }}>
         <code dangerouslySetInnerHTML={{ __html: hlCode(code) }} />
       </pre>
     </div>
@@ -493,15 +929,15 @@ function RequestPanel({ ep, lang, setLang }: { ep: Endpoint; lang: Lang; setLang
 }
 
 /* ---------- панель ответа ---------- */
-function ResponsePanel({ ep }: { ep: Endpoint }) {
+function ResponsePanel({ ep, ui }: { ep: Endpoint; ui: UiDict }) {
   const codes = Object.keys(ep.res);
   const [tab, setTab] = useState(codes[0]);
   const json = ep.res[tab];
   return (
     <div className="overflow-hidden rounded-2xl border border-[#13322e] bg-[#0f2a27] shadow-[0_24px_60px_rgba(24,56,51,0.22)]">
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
-        <span className="text-xs font-medium text-white/55">Response · application/json</span>
-        <CopyBtn text={json} />
+        <span className="text-xs font-medium text-white/55">{ui.response}</span>
+        <CopyBtn text={json} ui={ui} />
       </div>
       <div className="flex gap-1 border-b border-white/10 px-3 py-2">
         {codes.map((c) => (
@@ -511,7 +947,7 @@ function ResponsePanel({ ep }: { ep: Endpoint }) {
           </button>
         ))}
       </div>
-      <pre key={tab} className="ds-scroll overflow-x-auto px-5 py-4 font-mono text-[12.5px] leading-relaxed text-[#cfe8c4]" style={{ animation: "dsPanel .3s ease both" }}>
+      <pre key={tab} dir="ltr" className="ds-scroll overflow-x-auto px-5 py-4 font-mono text-[12.5px] leading-relaxed text-[#cfe8c4]" style={{ animation: "dsPanel .3s ease both" }}>
         <code dangerouslySetInnerHTML={{ __html: hlJson(json) }} />
       </pre>
     </div>
@@ -519,7 +955,7 @@ function ResponsePanel({ ep }: { ep: Endpoint }) {
 }
 
 /* ---------- кнопка копирования ---------- */
-function CopyBtn({ text }: { text: string }) {
+function CopyBtn({ text, ui }: { text: string; ui: UiDict }) {
   const [done, setDone] = useState(false);
   const t = useRef<ReturnType<typeof setTimeout>>(undefined);
   return (
@@ -527,7 +963,7 @@ function CopyBtn({ text }: { text: string }) {
       onClick={() => { navigator.clipboard?.writeText(text); setDone(true); clearTimeout(t.current); t.current = setTimeout(() => setDone(false), 1500); }}
       className="ease-smooth flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-medium text-white/55 transition-all hover:bg-white/10 hover:text-white"
     >
-      {done ? <><Check className="h-3.5 w-3.5" style={{ color: GREEN }} /> Copied</> : <><Copy className="h-3.5 w-3.5" /> Copy</>}
+      {done ? <><Check className="h-3.5 w-3.5" style={{ color: GREEN }} /> {ui.copied}</> : <><Copy className="h-3.5 w-3.5" /> {ui.copy}</>}
     </button>
   );
 }

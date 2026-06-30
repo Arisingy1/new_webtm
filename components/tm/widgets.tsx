@@ -2,6 +2,40 @@
 
 import { Pause, TrendingUp, TrendingDown, Mic } from "lucide-react";
 import { GREEN, INK, RED, TEAL, Tag, Badge } from "./ui";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import type { Locale } from "@/lib/i18n";
+
+const DICT: Record<Locale, {
+  leadership: string;
+  empathy: string;
+  problemSolving: string;
+  titles: { michaela: string; samantha: string; david: string };
+}> = {
+  en: {
+    leadership: "Leadership",
+    empathy: "Empathy",
+    problemSolving: "Problem Solving",
+    titles: { michaela: "Lead UI Eng", samantha: "Product Des", david: "Senior Frontend Developer" },
+  },
+  es: {
+    leadership: "Liderazgo",
+    empathy: "Empatía",
+    problemSolving: "Resolución de problemas",
+    titles: { michaela: "Líder de Ing. de UI", samantha: "Diseñadora de Producto", david: "Desarrollador Frontend Senior" },
+  },
+  pt: {
+    leadership: "Liderança",
+    empathy: "Empatia",
+    problemSolving: "Resolução de problemas",
+    titles: { michaela: "Líder de Eng. de UI", samantha: "Designer de Produto", david: "Desenvolvedor Frontend Sênior" },
+  },
+  ar: {
+    leadership: "القيادة",
+    empathy: "التعاطف",
+    problemSolving: "حل المشكلات",
+    titles: { michaela: "مهندسة واجهات رئيسية", samantha: "مصمّمة منتجات", david: "مطوّر واجهات أمامية أول" },
+  },
+};
 
 /* deterministic bar arrays (SSR-safe, no Math at render) */
 const WAVE = [34, 52, 70, 88, 96, 72, 50, 30, 58, 80, 94, 66, 44, 30, 52, 74, 90, 62, 40, 56, 36, 26, 48, 68];
@@ -48,6 +82,7 @@ function MetricPill({
 
 /* 1 · Soft-skills meter (Leadership / Empathy / Problem Solving) */
 export function SoftSkillsWidget() {
+  const t = DICT[useLocale()];
   return (
     <div className="relative h-[260px] w-[380px]">
       <div className="absolute left-1/2 top-1/2 flex h-[150px] w-[300px] -translate-x-1/2 -translate-y-1/2 items-center gap-3 rounded-[36px] bg-white px-5 shadow-[0_24px_60px_rgba(24,56,51,0.16)]">
@@ -56,9 +91,9 @@ export function SoftSkillsWidget() {
         </span>
         <Bars heights={WAVE} />
       </div>
-      <MetricPill label="Leadership" val="88%" up className="absolute left-0 top-0 w-[170px]" />
-      <MetricPill label="Empathy" val="75%" up className="absolute right-0 top-7 w-[160px]" />
-      <MetricPill label="Problem Solving" val="68%" up={false} className="absolute bottom-0 left-1/2 w-[210px] -translate-x-1/2" />
+      <MetricPill label={t.leadership} val="88%" up className="absolute left-0 top-0 w-[170px]" />
+      <MetricPill label={t.empathy} val="75%" up className="absolute right-0 top-7 w-[160px]" />
+      <MetricPill label={t.problemSolving} val="68%" up={false} className="absolute bottom-0 left-1/2 w-[210px] -translate-x-1/2" />
     </div>
   );
 }
@@ -96,26 +131,27 @@ export function VideoInterviewWidget() {
 
 /* 3 · Candidate stack (overlapping cards, central highlighted) */
 export function CandidateStack() {
+  const t = DICT[useLocale()];
   return (
     <div className="relative h-[240px] w-[380px]">
       {/* side peeking cards */}
       <div className="absolute left-0 top-10 w-[170px] -rotate-6 rounded-2xl bg-white p-3 opacity-90 shadow-[0_14px_30px_rgba(24,56,51,0.1)]">
         <div className="h-16 rounded-lg bg-gradient-to-br from-[#cfe0c2] to-[#a9c79a]" />
         <p className="mt-2 truncate text-sm font-semibold" style={{ color: INK }}>Michaela T</p>
-        <p className="truncate text-[11px]" style={{ color: TEAL }}>Lead UI Eng</p>
+        <p className="truncate text-[11px]" style={{ color: TEAL }}>{t.titles.michaela}</p>
         <div className="mt-2"><Tag kind="interview" /></div>
       </div>
       <div className="absolute right-0 top-10 w-[170px] rotate-6 rounded-2xl bg-white p-3 opacity-90 shadow-[0_14px_30px_rgba(24,56,51,0.1)]">
         <div className="h-16 rounded-lg bg-gradient-to-br from-[#cfe6ef] to-[#9bcfe0]" />
         <p className="mt-2 truncate text-sm font-semibold" style={{ color: INK }}>Samantha C</p>
-        <p className="truncate text-[11px]" style={{ color: TEAL }}>Product Des</p>
+        <p className="truncate text-[11px]" style={{ color: TEAL }}>{t.titles.samantha}</p>
         <div className="mt-2 flex items-center gap-2"><Tag kind="offer" /><Badge value="79%" /></div>
       </div>
       {/* central highlighted */}
       <div className="absolute left-1/2 top-0 w-[210px] -translate-x-1/2 rounded-2xl bg-white p-3 shadow-[0_28px_60px_rgba(24,56,51,0.2)]">
         <div className="h-28 rounded-xl bg-gradient-to-br from-[#d8c5b4] to-[#b0917b]" />
         <p className="mt-3 text-base font-semibold" style={{ color: INK }}>David Parker</p>
-        <p className="text-xs" style={{ color: TEAL }}>Senior Frontend Developer</p>
+        <p className="text-xs" style={{ color: TEAL }}>{t.titles.david}</p>
         <div className="mt-3 flex items-center gap-2"><Tag kind="offer" /><Badge /></div>
       </div>
     </div>

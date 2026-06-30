@@ -4,6 +4,8 @@ import { GREEN, INK } from "./ui";
 import { AnimatedChat } from "./AnimatedChat";
 import { ComparisonPanel } from "./ComparisonPanel";
 import { ComplianceDiagram } from "./ComplianceDiagram";
+import { useLocale } from "./LocaleProvider";
+import { HOME } from "@/lib/content/home";
 
 /* ============================================================
    Блок 2 — «Ценность и бизнес-результаты».
@@ -14,6 +16,7 @@ import { ComplianceDiagram } from "./ComplianceDiagram";
    ============================================================ */
 
 export default function BusinessValue() {
+  const c = HOME[useLocale()];
   return (
     <section className="w-full px-3 py-10 sm:px-4 sm:py-12 md:px-8">
       <div
@@ -25,21 +28,15 @@ export default function BusinessValue() {
 
         {/* текст + выделенный заголовок */}
         <div className="relative">
-          <h2 className="max-w-[26ch] text-[clamp(1.75rem,6.5vw,3.5rem)] font-extrabold leading-[1.1] tracking-tight" style={{ color: INK }}>
-            Deep candidate analytics built on{" "}
+          <h2 className="max-w-[26ch] text-[clamp(1.75rem,6.5vw,3.5rem)] font-extrabold leading-[1.1] tracking-tight text-balance" style={{ color: INK }}>
+            {c.bvA}
             <span className="relative inline-block sm:whitespace-nowrap">
-              <span className="relative z-10" style={{ color: GREEN }}>objective data</span>
+              <span className="relative z-10" style={{ color: GREEN }}>{c.bvAccent}</span>
               <span className="absolute inset-x-[-3px] bottom-[0.1em] -z-0 h-[0.4em] -rotate-1 rounded-sm" style={{ background: `${GREEN}30` }} />
             </span>
           </h2>
 
-          <p className="mt-5 max-w-full text-base font-light leading-relaxed sm:text-lg lg:max-w-[66%]" style={{ color: `${INK}bf` }}>
-            Built to take the routine off HR and give a complete picture of every
-            candidate, the <span className="font-medium" style={{ color: GREEN }}>TalentMind</span> platform
-            helps you make well-grounded decisions faster. AI analyzes interview
-            recordings, surfacing hidden soft-skill patterns and corporate-culture
-            fit to protect your business from costly hiring mistakes
-          </p>
+          <p className="mt-5 max-w-full text-base font-light leading-relaxed sm:text-lg lg:max-w-[66%]" style={{ color: `${INK}bf` }}>{c.bvP}</p>
         </div>
 
         {/* 3 живых превью-экрана платформы (вместо статичных картинок):

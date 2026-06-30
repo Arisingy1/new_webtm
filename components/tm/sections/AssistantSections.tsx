@@ -5,6 +5,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MessagesSquare, Brain, Zap, Users, Sparkles } from "lucide-react";
 import { GREEN, INK, TEAL } from "@/components/tm/ui";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import { BLOCKS } from "@/lib/content/blocks";
 
 const AMBER = "#E8A317";
 
@@ -23,6 +25,7 @@ const FEATURES: { n: string; title: string; text: string; color: string; icon: R
 
 export default function AssistantSections() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const c = BLOCKS[useLocale()].assistant;
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -40,13 +43,13 @@ export default function AssistantSections() {
       <section id="caps" className="relative mx-auto max-w-[1340px] px-6 py-16 md:px-10">
         <div className="as-reveal mb-12 flex flex-wrap items-end justify-between gap-4">
           <h2 className="max-w-[16ch] text-[clamp(2rem,3.6vw,3.6rem)] font-bold leading-[1.05] tracking-tight" style={{ color: INK }}>
-            What the <span style={{ color: GREEN }}>assistant</span> can do
+            {c.bentoPre}<span style={{ color: GREEN }}>{c.bentoAccent}</span>{c.bentoPost}
           </h2>
-          <p className="max-w-sm text-[#183833]/55">Five capabilities that turn your pipeline into a conversation partner</p>
+          <p className="max-w-sm text-[#183833]/55">{c.bentoSub}</p>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((f) => (
+          {FEATURES.map((f, i) => (
             <article
               key={f.n}
               className={`as-reveal group relative overflow-hidden rounded-[28px] border border-[#e8efe6] bg-white p-7 shadow-[0_22px_55px_rgba(24,56,51,0.07)] transition-all duration-500 hover:-translate-y-1.5 ${f.span}`}
@@ -56,8 +59,8 @@ export default function AssistantSections() {
                 <span className="grid h-14 w-14 place-items-center rounded-2xl" style={{ background: `${f.color}1a`, color: f.color }}>{f.icon}</span>
                 <span className="font-mono text-5xl font-black leading-none" style={{ color: `${f.color}26` }}>{f.n}</span>
               </div>
-              <h3 className="relative mt-6 text-2xl font-bold tracking-tight" style={{ color: INK }}>{f.title}</h3>
-              <p className="relative mt-2.5 max-w-md leading-relaxed text-[#183833]/60">{f.text}</p>
+              <h3 className="relative mt-6 text-2xl font-bold tracking-tight" style={{ color: INK }}>{c.features[i].title}</h3>
+              <p className="relative mt-2.5 max-w-md leading-relaxed text-[#183833]/60">{c.features[i].text}</p>
             </article>
           ))}
         </div>

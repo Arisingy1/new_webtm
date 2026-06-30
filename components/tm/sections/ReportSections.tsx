@@ -9,6 +9,9 @@ import {
   SoftSkillsMap, StarCases, Recommendations,
 } from "@/components/tm/reportBlocks";
 import { smoothJumpTo } from "@/components/tm/transition";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import { BLOCKS } from "@/lib/content/blocks";
+import type { Locale } from "@/lib/i18n";
 
 /* ── палитра бренда TalentMind ── */
 const GREEN = "#7AB800";
@@ -43,27 +46,62 @@ export function RingGauge({ value }: { value: number }) {
 }
 
 /* живая карточка «Оценка корпоративной совместимости» (для разбора) */
+const COMPAT: Record<Locale, {
+  index: string; high: string; desc: string; matchByDim: string; gap: string;
+  dims: [string, string, string, string, string]; tone: { on: string; close: string; below: string };
+}> = {
+  en: {
+    index: "Compatibility index", high: "High compatibility",
+    desc: "The candidate's profile is close to the company DNA: processes, results, and quality",
+    matchByDim: "Match by dimension", gap: "gap",
+    dims: ["Stability & processes", "Results orientation", "Attention to detail", "People orientation", "Teamwork"],
+    tone: { on: "On target", close: "Close", below: "Below benchmark" },
+  },
+  es: {
+    index: "Índice de compatibilidad", high: "Compatibilidad alta",
+    desc: "El perfil del candidato se acerca al ADN de la empresa: procesos, resultados y calidad",
+    matchByDim: "Coincidencia por dimensión", gap: "brecha",
+    dims: ["Estabilidad y procesos", "Orientación a resultados", "Atención al detalle", "Orientación a las personas", "Trabajo en equipo"],
+    tone: { on: "En objetivo", close: "Cerca", below: "Por debajo del umbral" },
+  },
+  pt: {
+    index: "Índice de compatibilidade", high: "Compatibilidade alta",
+    desc: "O perfil do candidato está próximo do DNA da empresa: processos, resultados e qualidade",
+    matchByDim: "Correspondência por dimensão", gap: "lacuna",
+    dims: ["Estabilidade e processos", "Orientação a resultados", "Atenção aos detalhes", "Orientação às pessoas", "Trabalho em equipe"],
+    tone: { on: "No alvo", close: "Perto", below: "Abaixo do referencial" },
+  },
+  ar: {
+    index: "مؤشر التوافق", high: "توافق عالٍ",
+    desc: "ملف المرشّح قريب من الحمض النووي للشركة: العمليات والنتائج والجودة",
+    matchByDim: "التوافق حسب البُعد", gap: "فجوة",
+    dims: ["الاستقرار والعمليات", "التوجّه نحو النتائج", "الاهتمام بالتفاصيل", "التوجّه نحو الأشخاص", "العمل الجماعي"],
+    tone: { on: "ضمن الهدف", close: "قريب", below: "دون المعيار" },
+  },
+};
+
 export function CompatCard() {
+  const tc = COMPAT[useLocale()];
   const dims: [string, number, number][] = [
-    ["Stability & processes", 82, 78],
-    ["Results orientation", 80, 78],
-    ["Attention to detail", 76, 74],
-    ["People orientation", 70, 68],
-    ["Teamwork", 64, 78],
+    [tc.dims[0], 82, 78],
+    [tc.dims[1], 80, 78],
+    [tc.dims[2], 76, 74],
+    [tc.dims[3], 70, 68],
+    [tc.dims[4], 64, 78],
   ];
-  const tone = (g: number) => (g >= 0 ? { c: GREEN, l: "On target" } : g >= -8 ? { c: AMBER, l: "Close" } : { c: RED, l: "Below benchmark" });
+  const tone = (g: number) => (g >= 0 ? { c: GREEN, l: tc.tone.on } : g >= -8 ? { c: AMBER, l: tc.tone.close } : { c: RED, l: tc.tone.below });
   return (
     <div className="grid gap-4 lg:grid-cols-[0.82fr_1.18fr]">
       <div className="flex flex-col items-center justify-center rounded-2xl border border-[#d8ecc4] bg-gradient-to-br from-[#f3faea] to-[#eef7e0] p-4 text-center">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-[#183833]/45">Compatibility index</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-[#183833]/45">{tc.index}</p>
         <div className="mt-2"><RingGauge value={74} /></div>
-        <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold shadow-sm" style={{ color: GREEN }}>High compatibility</span>
-        <p className="mt-2 text-[11px] leading-snug text-[#183833]/65">The candidate's profile is close to the company DNA: processes, results, and quality</p>
+        <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold shadow-sm" style={{ color: GREEN }}>{tc.high}</span>
+        <p className="mt-2 text-[11px] leading-snug text-[#183833]/65">{tc.desc}</p>
       </div>
       <div>
         <div className="flex items-center justify-between gap-2">
-          <p className="flex items-center gap-2 text-sm font-bold" style={{ color: INK }}><span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg" style={{ background: `${GREEN}1a` }}><Target className="h-3.5 w-3.5" style={{ color: GREEN }} /></span> Match by dimension</p>
-          <span className="hidden items-center gap-1.5 text-[10px] text-[#183833]/45 sm:flex"><span className="inline-block h-2.5 w-3.5 rounded-full border border-[#cfd6ce]" style={{ background: "#e0e5df" }} /> gap</span>
+          <p className="flex items-center gap-2 text-sm font-bold" style={{ color: INK }}><span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg" style={{ background: `${GREEN}1a` }}><Target className="h-3.5 w-3.5" style={{ color: GREEN }} /></span> {tc.matchByDim}</p>
+          <span className="hidden items-center gap-1.5 text-[10px] text-[#183833]/45 sm:flex"><span className="inline-block h-2.5 w-3.5 rounded-full border border-[#cfd6ce]" style={{ background: "#e0e5df" }} /> {tc.gap}</span>
         </div>
         <div className="mt-3 space-y-2.5">
           {dims.map(([name, val, ref]) => {
@@ -147,6 +185,7 @@ export default function ReportSections({
 } = {}) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const c = BLOCKS[useLocale()].report;
 
   /* ── закреплённый разбор: текст и картинка меняются (как было) ── */
   useEffect(() => {
@@ -230,20 +269,20 @@ export default function ReportSections({
           {/* ЛЕВО — сменяющийся текст + прогресс */}
           <div className="flex h-[82vh] flex-col justify-center">
             <div className="relative h-[420px]">
-              {STEPS.map((s) => (
+              {STEPS.map((s, i) => (
                 <div key={s.n} className="sc-text absolute inset-0 flex flex-col justify-center">
                   <span className="select-none text-[4.5rem] font-black leading-none tracking-tighter" style={{ color: `${GREEN}3a` }}>
                     {s.n}
                   </span>
                   <span className="mt-4 inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: GREEN }}>
                     <span className="h-1.5 w-1.5 rounded-full" style={{ background: GREEN }} />
-                    Section {s.n} / {TOTAL.toString().padStart(2, "0")}
+                    {c.section} {s.n} / {TOTAL.toString().padStart(2, "0")}
                   </span>
                   <h2 className="mt-3 text-[clamp(2rem,2.7vw,3.1rem)] font-bold leading-[1.06] tracking-tight text-balance" style={{ color: INK }}>
-                    {s.title}
+                    {c.steps[i].title}
                   </h2>
                   <p className="mt-5 text-lg leading-relaxed text-pretty text-[#183833]/70">
-                    {s.text}
+                    {c.steps[i].text}
                   </p>
                 </div>
               ))}
@@ -258,24 +297,24 @@ export default function ReportSections({
               ))}
             </div>
             <div className="mt-3 text-sm font-medium" style={{ color: `${INK}80` }}>
-              {(active + 1).toString().padStart(2, "0")} / {TOTAL.toString().padStart(2, "0")} · {STEPS[active].title}
+              {(active + 1).toString().padStart(2, "0")} / {TOTAL.toString().padStart(2, "0")} · {c.steps[active].title}
             </div>
           </div>
 
           {/* ПРАВО — сменяющаяся картинка */}
           <div className="relative h-[82vh]">
-            {STEPS.map((s) => (
+            {STEPS.map((s, i) => (
               <div key={s.n} className="sc-img absolute inset-0 flex items-center">
                 <div className="w-full overflow-hidden rounded-[26px] border border-[#e6ece4] bg-white shadow-[0_30px_80px_rgba(24,56,51,0.12)]">
                   <div className="flex items-center gap-2 border-b border-[#eef2ec] bg-[#fbfdfa] px-5 py-3.5">
                     <span className="h-3 w-3 rounded-full" style={{ background: RED }} />
                     <span className="h-3 w-3 rounded-full" style={{ background: AMBER }} />
                     <span className="h-3 w-3 rounded-full" style={{ background: GREEN }} />
-                    <span className="ml-3 truncate text-sm font-medium" style={{ color: `${INK}80` }}>TalentMind · {s.title}</span>
-                    <span className="ml-auto hidden items-center gap-1.5 rounded-full bg-[#f1f6ec] px-3 py-1 text-xs font-semibold sm:inline-flex" style={{ color: GREEN }}>Section {s.n}</span>
+                    <span className="ml-3 truncate text-sm font-medium" style={{ color: `${INK}80` }}>TalentMind · {c.steps[i].title}</span>
+                    <span className="ml-auto hidden items-center gap-1.5 rounded-full bg-[#f1f6ec] px-3 py-1 text-xs font-semibold sm:inline-flex" style={{ color: GREEN }}>{c.section} {s.n}</span>
                   </div>
                   <div className="bg-white p-4 md:p-5">
-                    {s.node ?? <img src={s.img} alt={s.title} className="w-full rounded-xl" />}
+                    {s.node ?? <img src={s.img} alt={c.steps[i].title} className="w-full rounded-xl" />}
                   </div>
                 </div>
               </div>
@@ -299,16 +338,16 @@ export default function ReportSections({
 
       {/* МОБИЛЬНАЯ ВЕРСИЯ — код-блоки вместо картинок (в стиле сайта) */}
       <section className="px-4 pb-16 pt-4 sm:px-6 lg:hidden">
-        {STEPS.map((s) => (
+        {STEPS.map((s, i) => (
           <div key={s.n} className="sc-mob mb-14">
             <span className="inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: GREEN }}>
               <span className="grid h-7 w-7 place-items-center rounded-full text-[12px] font-bold text-white" style={{ background: GREEN }}>{s.n}</span>
-              Section {s.n} / {TOTAL.toString().padStart(2, "0")}
+              {c.section} {s.n} / {TOTAL.toString().padStart(2, "0")}
             </span>
-            <h2 className="mt-3 text-2xl font-bold leading-[1.1] tracking-tight" style={{ color: INK }}>{s.title}</h2>
-            <p className="mt-2 text-base leading-relaxed text-[#183833]/70">{s.text}</p>
+            <h2 className="mt-3 text-2xl font-bold leading-[1.1] tracking-tight" style={{ color: INK }}>{c.steps[i].title}</h2>
+            <p className="mt-2 text-base leading-relaxed text-[#183833]/70">{c.steps[i].text}</p>
             <div className="mt-5">
-              {s.node ?? <img src={s.img} alt={s.title} className="w-full rounded-2xl border border-[#e6ece4]" />}
+              {s.node ?? <img src={s.img} alt={c.steps[i].title} className="w-full rounded-2xl border border-[#e6ece4]" />}
             </div>
           </div>
         ))}

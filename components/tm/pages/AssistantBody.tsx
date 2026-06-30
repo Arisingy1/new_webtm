@@ -6,6 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Users, Sparkles, ArrowRight } from "lucide-react";
 import { Arrow, GREEN, INK, TEAL } from "@/components/tm/ui";
 import AssistantSections from "@/components/tm/sections/AssistantSections";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import { BLOCKS } from "@/lib/content/blocks";
+import type { Locale } from "@/lib/i18n";
 
 /* ============================================================
    AssistantBody — полное тело страницы «ИИ-ассистент» (hero с
@@ -16,6 +19,9 @@ import AssistantSections from "@/components/tm/sections/AssistantSections";
 export default function AssistantBody({ embedded = false }: { embedded?: boolean }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
+  const c = BLOCKS[locale].assistant;
+  const chips = CHIPS[locale];
 
   /* параллакс слоёв сцены по курсору */
   useEffect(() => {
@@ -61,28 +67,23 @@ export default function AssistantBody({ embedded = false }: { embedded?: boolean
       <section className={`relative mx-auto grid max-w-[1340px] grid-cols-1 items-center gap-12 px-6 pb-16 md:px-10 lg:grid-cols-[1.05fr_1fr] ${embedded ? "pt-10" : "pt-36 lg:pt-44"}`}>
         {/* ЛЕВО */}
         <div className="relative z-10">
-          <h1 className="pd-rise text-[clamp(2rem,4.2vw,4rem)] font-bold leading-[1.05] tracking-tight" style={{ color: INK }}>
-            Your <span style={{ color: GREEN }}>personal</span>
-            <br />
+          <h1 className="pd-rise text-[clamp(2rem,4.2vw,4rem)] font-bold leading-[1.05] tracking-tight text-balance" style={{ color: INK }}>
+            {c.hero.pre}
             <span className="relative inline-block whitespace-nowrap pb-[0.26em] -mb-[0.26em] align-top">
-              <span style={{ color: GREEN }}>analyst</span>
+              <span style={{ color: GREEN }}>{c.hero.accent}</span>
               <svg className="absolute bottom-[0.05em] left-0 w-full overflow-visible" height="18" viewBox="0 0 300 18" fill="none" preserveAspectRatio="none">
                 <path d="M5 9 Q 42 3.5 78 9 T 152 9 T 226 9 T 296 8" stroke={GREEN} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
               </svg>
-            </span>{" "}
-            across all
-            <br />candidates
+            </span>
+            {c.hero.post}
           </h1>
-          <p className="pd-rise mt-7 max-w-lg text-lg leading-relaxed text-[#183833]/65">
-            Not reports and spreadsheets, but a real conversation. The assistant keeps every interview
-            in your pipeline in memory and answers any question in seconds
-          </p>
+          <p className="pd-rise mt-7 max-w-lg text-lg leading-relaxed text-[#183833]/65">{c.hero.p}</p>
           <div className="pd-rise mt-9 flex flex-wrap items-center gap-3">
             <a href="https://app.talentmind.app" className="ease-smooth group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-1" style={{ background: GREEN, boxShadow: `0 18px 45px ${GREEN}40` }}>
-              Start for free <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              {c.hero.cta1} <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </a>
             <a href="#caps" className="ease-smooth inline-flex items-center gap-2 rounded-2xl border border-[#183833]/15 bg-white/60 px-6 py-4 text-lg font-medium text-[#183833] backdrop-blur transition-all duration-300 hover:-translate-y-1">
-              What it does
+              {c.hero.cta2}
             </a>
           </div>
         </div>
@@ -104,14 +105,14 @@ export default function AssistantBody({ embedded = false }: { embedded?: boolean
           {/* плавающие чипы */}
           <div className="depth absolute right-0 top-[6%] z-30 lg:right-[2%] lg:top-[26%]" data-depth="40">
             <div className="animate-floaty rounded-2xl border border-[#e6ece4] bg-white px-4 py-2.5 shadow-[0_18px_44px_rgba(24,56,51,0.12)]" style={{ animationDelay: "0.6s" }}>
-              <p className="text-xs text-[#183833]/55">Compatibility</p>
+              <p className="text-xs text-[#183833]/55">{chips.compatibility}</p>
               <p className="text-xl font-bold" style={{ color: GREEN }}>88%</p>
             </div>
           </div>
           <div className="depth absolute left-0 top-[19%] z-30 lg:left-[1%] lg:top-[40%]" data-depth="34">
             <div className="animate-floaty flex items-center gap-2 rounded-2xl border border-[#e6ece4] bg-white px-4 py-2.5 shadow-[0_18px_44px_rgba(24,56,51,0.12)]" style={{ animationDelay: "1.2s" }}>
               <Users className="h-4 w-4" style={{ color: TEAL }} />
-              <p className="text-sm font-semibold" style={{ color: INK }}>3 candidates</p>
+              <p className="text-sm font-semibold" style={{ color: INK }}>{chips.candidates}</p>
             </div>
           </div>
         </div>
@@ -125,10 +126,10 @@ export default function AssistantBody({ embedded = false }: { embedded?: boolean
         <section className="relative mx-auto mb-24 max-w-[1200px] px-6 md:px-10">
           <div className="pd-reveal relative overflow-hidden rounded-[2.75rem] p-10 text-center text-white shadow-[0_40px_90px_rgba(122,184,0,0.32)] md:p-16" style={{ background: `linear-gradient(135deg, ${GREEN}, #5e9400)` }}>
             <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-white/20 blur-[90px]" />
-            <h2 className="relative text-3xl font-bold tracking-tight sm:text-5xl">Ask the assistant about your candidates</h2>
-            <p className="relative mx-auto mt-4 max-w-xl text-lg text-white/85">5 analyses free, no credit card required. Your first answer in under a minute</p>
+            <h2 className="relative text-3xl font-bold tracking-tight sm:text-5xl">{c.cta.title}</h2>
+            <p className="relative mx-auto mt-4 max-w-xl text-lg text-white/85">{c.cta.sub}</p>
             <a href="https://app.talentmind.app" className="ease-smooth relative mt-8 inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 text-lg font-semibold transition-all duration-300 hover:-translate-y-1" style={{ color: GREEN }}>
-              Start for free <ArrowRight className="h-5 w-5" />
+              {c.cta.button} <ArrowRight className="h-5 w-5" />
             </a>
           </div>
         </section>
@@ -140,13 +141,60 @@ export default function AssistantBody({ embedded = false }: { embedded?: boolean
 /* ============================================================
    Анимированный чат с ассистентом (печать вопроса → ответ ИИ)
    ============================================================ */
-const CHAT_SCRIPT = [
-  { q: "Who's the best fit for the team lead role?", a: "Dmitry Smirnov — 88% compatibility. Strong leadership and systems thinking" },
-  { q: "And what are his risks?", a: "Salary expectations above market. Otherwise a solid candidate" },
-  { q: "Compare him with Sofia Kovaleva", a: "Sofia scores higher on empathy, Dmitry on strategy. Both cleared the hiring threshold" },
-];
+type ChatCopy = { script: { q: string; a: string }[]; aiAssistant: string; status: string; placeholder: string };
+
+const CHAT: Record<Locale, ChatCopy> = {
+  en: {
+    script: [
+      { q: "Who's the best fit for the team lead role?", a: "Dmitry Smirnov — 88% compatibility. Strong leadership and systems thinking" },
+      { q: "And what are his risks?", a: "Salary expectations above market. Otherwise a solid candidate" },
+      { q: "Compare him with Sofia Kovaleva", a: "Sofia scores higher on empathy, Dmitry on strategy. Both cleared the hiring threshold" },
+    ],
+    aiAssistant: "AI Assistant",
+    status: "pipeline analysis · online",
+    placeholder: "Ask about a candidate…",
+  },
+  es: {
+    script: [
+      { q: "¿Quién encaja mejor para el puesto de team lead?", a: "Dmitry Smirnov — 88% de compatibilidad. Fuerte liderazgo y pensamiento sistémico" },
+      { q: "¿Y cuáles son sus riesgos?", a: "Expectativas salariales por encima del mercado. Por lo demás, un candidato sólido" },
+      { q: "Compáralo con Sofia Kovaleva", a: "Sofia puntúa más alto en empatía y Dmitry en estrategia. Ambos superaron el umbral de contratación" },
+    ],
+    aiAssistant: "Asistente de IA",
+    status: "análisis del pipeline · en línea",
+    placeholder: "Pregunta sobre un candidato…",
+  },
+  pt: {
+    script: [
+      { q: "Quem é o melhor para a vaga de team lead?", a: "Dmitry Smirnov — 88% de compatibilidade. Forte liderança e pensamento sistêmico" },
+      { q: "E quais são os riscos dele?", a: "Expectativas salariais acima do mercado. No restante, um candidato sólido" },
+      { q: "Compare-o com Sofia Kovaleva", a: "Sofia pontua mais em empatia e Dmitry em estratégia. Ambos superaram o limite de contratação" },
+    ],
+    aiAssistant: "Assistente de IA",
+    status: "análise do pipeline · online",
+    placeholder: "Pergunte sobre um candidato…",
+  },
+  ar: {
+    script: [
+      { q: "من الأنسب لدور قائد الفريق؟", a: "Dmitry Smirnov — توافق بنسبة 88%. قيادة قوية وتفكير منظومي" },
+      { q: "وما المخاطر لديه؟", a: "توقعات الراتب أعلى من السوق. وفيما عدا ذلك، مرشّح قوي" },
+      { q: "قارنه بـ Sofia Kovaleva", a: "تحرز Sofia درجة أعلى في التعاطف، وDmitry في الاستراتيجية. وكلاهما تجاوز عتبة التوظيف" },
+    ],
+    aiAssistant: "مساعد الذكاء الاصطناعي",
+    status: "تحليل قائمة المرشّحين · متصل",
+    placeholder: "اسأل عن مرشّح…",
+  },
+};
+
+const CHIPS: Record<Locale, { compatibility: string; candidates: string }> = {
+  en: { compatibility: "Compatibility", candidates: "3 candidates" },
+  es: { compatibility: "Compatibilidad", candidates: "3 candidatos" },
+  pt: { compatibility: "Compatibilidade", candidates: "3 candidatos" },
+  ar: { compatibility: "التوافق", candidates: "3 مرشّحين" },
+};
 
 function AssistantChat() {
+  const t = CHAT[useLocale()];
   const [messages, setMessages] = useState<{ role: "q" | "a"; text: string }[]>([]);
   const [input, setInput] = useState("");
   const [aiTyping, setAiTyping] = useState(false);
@@ -160,7 +208,7 @@ function AssistantChat() {
       while (!cancelled) {
         setMessages([]); setInput(""); setAiTyping(false);
         await sleep(700);
-        for (const { q, a } of CHAT_SCRIPT) {
+        for (const { q, a } of t.script) {
           if (cancelled) return;
           for (let i = 1; i <= q.length; i++) { if (cancelled) return; setInput(q.slice(0, i)); await sleep(26); }
           await sleep(420);
@@ -177,15 +225,15 @@ function AssistantChat() {
     };
     run();
     return () => { cancelled = true; timers.forEach(clearTimeout); };
-  }, []);
+  }, [t]);
 
   return (
     <div className="flex h-[330px] w-full flex-col overflow-hidden rounded-[26px] border border-[#e9efe6] bg-white/95 p-5 shadow-[0_34px_80px_rgba(24,56,51,0.2)] backdrop-blur-xl">
       <div className="flex items-center gap-2 border-b border-[#eef0ee] pb-3">
         <img src="/robot.png" alt="" className="h-8 w-8 object-contain" />
         <div className="leading-tight">
-          <p className="text-sm font-semibold" style={{ color: INK }}>AI Assistant</p>
-          <p className="flex items-center gap-1 text-[11px] text-[#183833]/45"><span className="h-1.5 w-1.5 rounded-full" style={{ background: GREEN }} /> pipeline analysis · online</p>
+          <p className="text-sm font-semibold" style={{ color: INK }}>{t.aiAssistant}</p>
+          <p className="flex items-center gap-1 text-[11px] text-[#183833]/45"><span className="h-1.5 w-1.5 rounded-full" style={{ background: GREEN }} /> {t.status}</p>
         </div>
       </div>
       <div className="flex flex-1 flex-col justify-end gap-2 overflow-hidden py-3">
@@ -214,7 +262,7 @@ function AssistantChat() {
       </div>
       <div className="flex items-center gap-2 rounded-xl bg-[#f4f7f2] px-3.5 py-2.5">
         <span className="flex-1 truncate text-[13px]">
-          {input ? <span style={{ color: INK }}>{input}</span> : <span className="text-[#183833]/35">Ask about a candidate…</span>}
+          {input ? <span style={{ color: INK }}>{input}</span> : <span className="text-[#183833]/35">{t.placeholder}</span>}
           <span className="ml-px inline-block h-3.5 w-px translate-y-0.5 animate-pulse align-middle" style={{ background: INK }} />
         </span>
         <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg" style={{ background: GREEN }}><Arrow className="h-4 w-4 text-white" /></span>

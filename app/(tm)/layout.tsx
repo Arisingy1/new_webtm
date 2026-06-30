@@ -1,5 +1,7 @@
 // TalentMind site layout — Lenis smooth scroll + Header/Footer
 import LenisProvider from "@/components/tm/LenisProvider";
+import { LocaleProvider } from "@/components/tm/LocaleProvider";
+import SiteShell from "@/components/tm/SiteShell";
 import Header from "@/components/tm/Header";
 import Footer from "@/components/tm/Footer";
 import CookieConsent from "@/components/tm/CookieConsent";
@@ -8,11 +10,9 @@ export default function TMLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
+    <LocaleProvider>
     <LenisProvider>
-      <div
-        className="relative w-full overflow-x-clip text-[#183833] antialiased"
-        style={{ fontFamily: "var(--font-display), system-ui, sans-serif" }}
-      >
+      <SiteShell>
         {/* единый фон всего сайта — почти белый с лёгким зелёным оттенком */}
         <div className="pointer-events-none fixed inset-0 z-0" style={{ background: "radial-gradient(125% 90% at 15% 0%, #ffffff 0%, #fbfdf8 45%, #f6faf1 78%, #f2f8ec 100%)" }} />
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
@@ -25,7 +25,8 @@ export default function TMLayout({
         <main className="relative z-10">{children}</main>
         <Footer />
         <CookieConsent />
-      </div>
+      </SiteShell>
     </LenisProvider>
+    </LocaleProvider>
   );
 }

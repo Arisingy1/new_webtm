@@ -2,24 +2,39 @@
 
 import { useEffect, useState } from "react";
 import { GREEN, INK } from "./ui";
+import { useLocale } from "@/components/tm/LocaleProvider";
+import type { Locale } from "@/lib/i18n";
 
 /* ============================================================
    «Диаграмма соответствия» — живой превью-экран: роза-диаграмма
    навыков кандидата против требований профиля.
    ============================================================ */
-const RADAR: { l: string; v: number; req: number }[] = [
-  { l: "Management", v: 35, req: 86 }, { l: "Leadership", v: 90, req: 86 }, { l: "Communication", v: 40, req: 80 },
-  { l: "Planning", v: 30, req: 80 }, { l: "Adaptability", v: 72, req: 72 }, { l: "Resilience", v: 50, req: 84 },
-  { l: "Teamwork", v: 18, req: 80 }, { l: "Empathy", v: 25, req: 85 }, { l: "Problem solving", v: 62, req: 86 },
-  { l: "Critical thinking", v: 62, req: 80 },
+const RADAR_BASE: { v: number; req: number }[] = [
+  { v: 35, req: 86 }, { v: 90, req: 86 }, { v: 40, req: 80 },
+  { v: 30, req: 80 }, { v: 72, req: 72 }, { v: 50, req: 84 },
+  { v: 18, req: 80 }, { v: 25, req: 85 }, { v: 62, req: 86 },
+  { v: 62, req: 80 },
 ];
+const RADAR_LABELS: Record<Locale, string[]> = {
+  en: ["Management", "Leadership", "Communication", "Planning", "Adaptability", "Resilience", "Teamwork", "Empathy", "Problem solving", "Critical thinking"],
+  es: ["Gestión", "Liderazgo", "Comunicación", "Planificación", "Adaptabilidad", "Resiliencia", "Trabajo en equipo", "Empatía", "Resolución de problemas", "Pensamiento crítico"],
+  pt: ["Gestão", "Liderança", "Comunicação", "Planejamento", "Adaptabilidade", "Resiliência", "Trabalho em equipe", "Empatia", "Resolução de problemas", "Pensamento crítico"],
+  ar: ["الإدارة", "القيادة", "التواصل", "التخطيط", "القدرة على التكيّف", "تحمّل الضغط", "العمل الجماعي", "التعاطف", "حل المشكلات", "التفكير النقدي"],
+};
+const DICT: Record<Locale, { matchDiagram: string; subtitle: string; req: string; low: string; mid: string; high: string }> = {
+  en: { matchDiagram: "Match diagram", subtitle: "The chart shows where the candidate falls short of the profile requirements", req: "Profile requirements", low: "Low skill level", mid: "Medium skill level", high: "High skill level" },
+  es: { matchDiagram: "Diagrama de compatibilidad", subtitle: "El gráfico muestra dónde el candidato no alcanza los requisitos del perfil", req: "Requisitos del perfil", low: "Nivel de habilidad bajo", mid: "Nivel de habilidad medio", high: "Nivel de habilidad alto" },
+  pt: { matchDiagram: "Diagrama de compatibilidade", subtitle: "O gráfico mostra onde o candidato fica aquém dos requisitos do perfil", req: "Requisitos do perfil", low: "Nível de habilidade baixo", mid: "Nível de habilidade médio", high: "Nível de habilidade alto" },
+  ar: { matchDiagram: "مخطط التوافق", subtitle: "يُظهر المخطط المواضع التي يقصّر فيها المرشّح عن متطلبات الملف", req: "متطلبات الملف", low: "مستوى مهارة منخفض", mid: "مستوى مهارة متوسط", high: "مستوى مهارة عالٍ" },
+};
 
 export function ComplianceDiagram() {
+  const t = DICT[useLocale()];
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-[#e9efe6] bg-white shadow-[0_28px_60px_rgba(24,56,51,0.16)]">
       <div className="border-b border-[#eef0ee] px-5 py-3.5 text-center">
-        <p className="text-base font-bold" style={{ color: INK }}>Match diagram</p>
-        <p className="mt-0.5 text-[11px] text-[#183833]/55">The chart shows where the candidate falls short of the profile requirements</p>
+        <p className="text-base font-bold" style={{ color: INK }}>{t.matchDiagram}</p>
+        <p className="mt-0.5 text-[11px] text-[#183833]/55">{t.subtitle}</p>
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-start p-4">
@@ -32,6 +47,10 @@ export function ComplianceDiagram() {
 function RoseChart() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
+  const loc = useLocale();
+  const labels = RADAR_LABELS[loc];
+  const lg = DICT[loc];
+  const RADAR = RADAR_BASE.map((d, i) => ({ ...d, l: labels[i] }));
   const N = RADAR.length, cx = 280, cy = 220, R = 140, seg = 360 / N, pad = 1.6, labelR = R + 18;
   const lvl = (v: number) => (v >= 60 ? GREEN : v >= 40 ? "#bcdd93" : "#f2a0a0");
   const rad = (d: number) => (d * Math.PI) / 180;
@@ -62,7 +81,7 @@ function RoseChart() {
         <style>{`@keyframes roseG{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}`}</style>
       </svg>
       <div className="mt-3 grid grid-cols-2 gap-x-5 gap-y-1.5 text-[11px] text-[#183833]/70">
-        <Lg c="#bcd9ec" t="Profile requirements" /><Lg c="#f2a0a0" t="Low skill level" /><Lg c="#bcdd93" t="Medium skill level" /><Lg c={GREEN} t="High skill level" />
+        <Lg c="#bcd9ec" t={lg.req} /><Lg c="#f2a0a0" t={lg.low} /><Lg c="#bcdd93" t={lg.mid} /><Lg c={GREEN} t={lg.high} />
       </div>
     </div>
   );
