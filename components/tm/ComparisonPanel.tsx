@@ -12,16 +12,14 @@ import type { Locale } from "@/lib/i18n";
 const AMBER = "#E8A317";
 
 type Cand = { name: string; v: number; d: string };
-/* имена кандидатов не переводятся; v — число; описания d — по локали */
-const CAND_BASE: { name: string; v: number }[] = [
-  { name: "Dmitry Smirnov", v: 88 },
-  { name: "Sofia Kovaleva", v: 82 },
-  { name: "Egor Morozov", v: 80 },
-  { name: "Anna Sokolova", v: 78 },
-  { name: "Maxim Orlov", v: 76 },
-  { name: "Maria Lebedeva", v: 60 },
-  { name: "Pavel Novikov", v: 58 },
-];
+/* оценки общие; имена и описания адаптированы под локаль */
+const CAND_SCORES = [88, 82, 80, 78, 76, 60, 58];
+const CAND_NAMES: Record<Locale, string[]> = {
+  en: ["James Bennett", "Sophie Carter", "Ethan Brooks", "Anna Sullivan", "Max Turner", "Mary Lawson", "Paul Hayes"],
+  es: ["Diego Fernández", "Sofía Gómez", "Mateo Ruiz", "Ana Torres", "Lucas Romero", "María López", "Pablo Navarro"],
+  pt: ["Diogo Almeida", "Sofia Costa", "Mateus Oliveira", "Ana Ribeiro", "Lucas Carvalho", "Maria Santos", "Paulo Nogueira"],
+  ar: ["أحمد العتيبي", "سارة المنصوري", "خالد القحطاني", "نورة الشمري", "محمد الفهد", "ريم العنزي", "فهد الدوسري"],
+};
 const CAND_DESC: Record<Locale, string[]> = {
   en: [
     "Strong T-shaped profile: deep expertise in project management plus a broad set of competencies. Solves problems and adapts quickly.",
@@ -81,7 +79,7 @@ function More({ label }: { label: string }) {
 export function ComparisonPanel() {
   const loc = useLocale();
   const ui = UI[loc];
-  const CANDS: Cand[] = CAND_BASE.map((c, i) => ({ ...c, d: CAND_DESC[loc][i] }));
+  const CANDS: Cand[] = CAND_SCORES.map((v, i) => ({ name: CAND_NAMES[loc][i], v, d: CAND_DESC[loc][i] }));
   return (
     <div className="flex h-full overflow-hidden rounded-3xl border border-[#e9efe6] bg-white shadow-[0_28px_60px_rgba(24,56,51,0.16)]">
       {/* боковая панель */}
