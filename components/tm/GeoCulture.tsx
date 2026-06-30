@@ -71,7 +71,7 @@ export default function GeoCulture() {
 
           <div className="relative max-w-2xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-[#d8ecc4] bg-white/70 px-4 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] backdrop-blur" style={{ color: INK }}>
-              <Globe2 className="h-3.5 w-3.5" style={{ color: GREEN }} /> الجيوثقافة · الخليج والشرق الأوسط
+              <Globe2 className="h-3.5 w-3.5" style={{ color: GREEN }} /> الخليج والشرق الأوسط
             </span>
             <h2 className="mt-5 font-bold leading-[1.12]" style={{ color: INK }}>
               التوظيف <span style={{ color: GREEN }}>بثقافة منطقتكم</span>، لا بقوالب عامة

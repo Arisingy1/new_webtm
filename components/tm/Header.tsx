@@ -9,7 +9,9 @@ export default function Header() {
   const locale = useLocale();
   const t = T[locale];
   const LINKS: [string, string][] = [
-    [t.nav.platform, localize("/platform", locale)],
+    [t.nav.softskill, localize("/otchet", locale)],
+    [t.nav.culture, localize("/culture", locale)],
+    ...(locale === "ar" ? [[t.nav.geoculture, localize("/geoculture", locale)] as [string, string]] : []),
     [t.nav.pricing, localize("/pricing", locale)],
     [t.nav.partners, localize("/partners", locale)],
     [t.nav.contacts, localize("/contacts", locale)],

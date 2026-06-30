@@ -78,7 +78,7 @@ const es: OfferContent = {
   kicker: "Información legal", title: "Términos del servicio", org: "TalentMind AI CORP", updated: "Última actualización: 8 de junio de 2026", copyright: "© 2026 TalentMind AI CORP",
   sections: [
     { h: "1. Aceptación de los Términos", body: [
-      "Estos Términos del servicio (los «Términos») constituyen un acuerdo vinculante entre tú y TalentMind AI CORP, una empresa de Delaware («TalentMind», «nosotros»), que rige tu acceso y uso de la plataforma, los sitios web y los servicios relacionados de TalentMind (en conjunto, los «Servicios»).",
+      "Estos Términos del servicio (los «Términos») constituyen un acuerdo vinculante entre tú y TalentMind AI CORP («TalentMind», «nosotros»), que rige tu acceso y uso de la plataforma, los sitios web y los servicios relacionados de TalentMind (en conjunto, los «Servicios»).",
       "Al crear una cuenta, hacer clic en «Acepto» o usar los Servicios, aceptas estos Términos. Si los usas en nombre de una entidad, declaras tener autoridad para obligarla.",
       "Si no estás de acuerdo con estos Términos, no uses los Servicios.",
     ] },
@@ -118,19 +118,19 @@ const es: OfferContent = {
       "13.3. Las disposiciones que deban subsistir (tarifas debidas, PI, confidencialidad, renuncias, responsabilidad, indemnización) seguirán vigentes.",
     ] },
     { h: "14. Ley aplicable y disputas", body: [
-      "14.1. Estos Términos se rigen por las leyes del Estado de Delaware, sin atender a sus normas de conflicto de leyes.",
-      "14.2. Las partes intentarán resolver las disputas de forma informal; toda disputa no resuelta en treinta (30) días se resolverá mediante arbitraje vinculante en EE. UU., salvo que cualquiera de las partes solicite medidas cautelares para proteger su PI o información confidencial.",
-      "14.3. Tú y TalentMind renunciáis a juicio con jurado y a participar en acciones colectivas. Estos Términos están redactados en inglés.",
+      "14.1. Estos Términos se rigen por las leyes de la República Argentina, sin atender a sus normas de conflicto de leyes.",
+      "14.2. Las partes intentarán resolver las disputas de forma informal; toda disputa no resuelta en treinta (30) días se someterá a la jurisdicción de los tribunales competentes de la República Argentina o, a opción de las partes, a arbitraje en Argentina, salvo que cualquiera de las partes solicite medidas cautelares para proteger su PI o información confidencial.",
+      "14.3. Tú y TalentMind renunciáis a participar en acciones colectivas. Estos Términos están redactados en español para la región de América Latina.",
     ] },
     { h: "15. Cambios en estos Términos", body: ["Podemos actualizar estos Términos. Cuando hagamos cambios sustanciales, actualizaremos la fecha de «última actualización» y avisaremos. El uso continuado tras la entrada en vigor implica aceptación."] },
-    { h: "16. Contacto", body: [{ list: ["TalentMind AI CORP (empresa de Delaware)", "Correo: legal@talentmind.app", "Web: talentmind.app"] }] },
+    { h: "16. Contacto", body: [{ list: ["TalentMind AI CORP", "Correo: legal@talentmind.app", "Web: talentmind.app"] }] },
   ],
   plans: {
     kicker: "Planes y precios", title: "Planes de suscripción de TalentMind", intro: "Los Servicios se ofrecen en cuatro planes. Las funciones disponibles y los límites de evaluaciones dependen del plan que elijas:",
     cPlan: "Plan", cPrice: "Precio", cLimit: "Límite de evaluaciones", cIncluded: "Qué incluye",
     tiers: [
       { name: "Free", price: "$0", limit: "5 evaluaciones (única vez)", incl: "Incluye:", feats: ["Carga del perfil de cultura corporativa", "Puntuación básica de soft skills e informe con IA", "Paneles de analítica básicos"] },
-      { name: "Starter", price: "$149 / mes", limit: "hasta 30 evaluaciones / mes", incl: "Todo lo de Free, y además:", feats: ["Integraciones con videoconferencia", "Datos en centros de datos seguros en EE. UU.", "Soporte por correo"] },
+      { name: "Starter", price: "$149 / mes", limit: "hasta 30 evaluaciones / mes", incl: "Todo lo de Free, y además:", feats: ["Integraciones con videoconferencia", "Datos en centros de datos seguros en la región de América Latina", "Soporte por correo"] },
       { name: "Growth", price: "$449 / mes", limit: "hasta 100 evaluaciones / mes", incl: "Todo lo de Starter, y además:", feats: ["Integraciones con ATS", "Informes con tu marca (logo de la empresa)", "Soporte prioritario"] },
       { name: "Scale", price: "$1,699 / mes", limit: "hasta 400 evaluaciones / mes", incl: "Todo lo de Growth, y además:", feats: ["API abierta y webhooks", "1 modelo de competencias de IA a medida", "Control de sesgos", "Gerente de cuenta dedicado"] },
     ],
@@ -143,7 +143,7 @@ const pt: OfferContent = {
   kicker: "Informações legais", title: "Termos de serviço", org: "TalentMind AI CORP", updated: "Última atualização: 8 de junho de 2026", copyright: "© 2026 TalentMind AI CORP",
   sections: [
     { h: "1. Aceitação dos Termos", body: [
-      "Estes Termos de serviço (os «Termos») são um acordo vinculante entre você e a TalentMind AI CORP, uma empresa de Delaware («TalentMind», «nós»), que rege seu acesso e uso da plataforma, dos sites e dos serviços relacionados da TalentMind (em conjunto, os «Serviços»).",
+      "Estes Termos de serviço (os «Termos») são um acordo vinculante entre você e a TalentMind AI CORP («TalentMind», «nós»), que rege seu acesso e uso da plataforma, dos sites e dos serviços relacionados da TalentMind (em conjunto, os «Serviços»).",
       "Ao criar uma conta, clicar em «Concordo» ou usar os Serviços, você aceita estes Termos. Se os usar em nome de uma entidade, você declara ter autoridade para vinculá-la.",
       "Se você não concordar com estes Termos, não use os Serviços.",
     ] },
@@ -163,7 +163,7 @@ const pt: OfferContent = {
     ] },
     { h: "5. Dados do cliente e dos candidatos", body: [
       "5.1. Você mantém todos os direitos sobre os dados que envia («Dados do cliente»). Você nos concede uma licença limitada para processá-los a fim de prestar e melhorar os Serviços, conforme nossa Política de privacidade.",
-      "5.2. Você é o controlador das informações pessoais dos candidatos que envia e é responsável pelos avisos e consentimentos exigidos; nós atuamos como seu provedor de serviços/operador.",
+      "5.2. Você é o controlador das informações pessoais dos candidatos que envia e é responsável pelos avisos e consentimentos exigidos nos termos da Lei Geral de Proteção de Dados (LGPD); nós atuamos como seu provedor de serviços/operador.",
     ] },
     { h: "6. Tarifas e pagamento", body: [
       "6.1. Os planos pagos são cobrados antecipadamente todos os meses em dólares dos EUA (USD), conforme seu plano e os preços publicados em talentmind.app.",
@@ -183,19 +183,19 @@ const pt: OfferContent = {
       "13.3. As disposições que devam subsistir (tarifas devidas, PI, confidencialidade, isenções, responsabilidade, indenização) permanecerão em vigor.",
     ] },
     { h: "14. Lei aplicável e disputas", body: [
-      "14.1. Estes Termos são regidos pelas leis do Estado de Delaware, sem considerar suas regras de conflito de leis.",
-      "14.2. As partes tentarão resolver disputas de forma informal; qualquer disputa não resolvida em trinta (30) dias será resolvida por arbitragem vinculante nos EUA, exceto que qualquer parte pode buscar medida liminar para proteger sua PI ou informações confidenciais.",
-      "14.3. Você e a TalentMind renunciam ao júri e à participação em ações coletivas. Estes Termos estão redigidos em inglês.",
+      "14.1. Estes Termos são regidos pelas leis da República Federativa do Brasil, sem considerar suas regras de conflito de leis.",
+      "14.2. As partes tentarão resolver disputas de forma informal; qualquer disputa não resolvida em trinta (30) dias será submetida ao foro da comarca competente no Brasil ou, mediante acordo das partes, à arbitragem no Brasil, exceto que qualquer parte pode buscar medida liminar para proteger sua PI ou informações confidenciais.",
+      "14.3. Você e a TalentMind renunciam à participação em ações coletivas. Estes Termos estão redigidos em português para o Brasil.",
     ] },
     { h: "15. Alterações nestes Termos", body: ["Podemos atualizar estes Termos. Quando fizermos mudanças relevantes, atualizaremos a data de «última atualização» e avisaremos. O uso continuado após a vigência implica aceitação."] },
-    { h: "16. Contato", body: [{ list: ["TalentMind AI CORP (empresa de Delaware)", "E-mail: legal@talentmind.app", "Web: talentmind.app"] }] },
+    { h: "16. Contato", body: [{ list: ["TalentMind AI CORP", "E-mail: legal@talentmind.app", "Web: talentmind.app"] }] },
   ],
   plans: {
     kicker: "Planos e preços", title: "Planos de assinatura da TalentMind", intro: "Os Serviços são oferecidos em quatro planos. Os recursos disponíveis e os limites de avaliações dependem do plano escolhido:",
     cPlan: "Plano", cPrice: "Preço", cLimit: "Limite de avaliações", cIncluded: "O que está incluído",
     tiers: [
       { name: "Free", price: "$0", limit: "5 avaliações (única vez)", incl: "Inclui:", feats: ["Upload do perfil de cultura corporativa", "Pontuação básica de soft skills e relatório com IA", "Painéis de análise básicos"] },
-      { name: "Starter", price: "$149 / mês", limit: "até 30 avaliações / mês", incl: "Tudo do Free, e mais:", feats: ["Integrações com videoconferência", "Dados em data centers seguros nos EUA", "Suporte por e-mail"] },
+      { name: "Starter", price: "$149 / mês", limit: "até 30 avaliações / mês", incl: "Tudo do Free, e mais:", feats: ["Integrações com videoconferência", "Dados em data centers seguros no Brasil", "Suporte por e-mail"] },
       { name: "Growth", price: "$449 / mês", limit: "até 100 avaliações / mês", incl: "Tudo do Starter, e mais:", feats: ["Integrações com ATS", "Relatórios com sua marca (logo da empresa)", "Suporte prioritário"] },
       { name: "Scale", price: "$1,699 / mês", limit: "até 400 avaliações / mês", incl: "Tudo do Growth, e mais:", feats: ["API aberta e webhooks", "1 modelo de competências de IA personalizado", "Controle de viés", "Gerente de conta dedicado"] },
     ],
@@ -248,9 +248,9 @@ const ar: OfferContent = {
       "13.3. تظل سارية الأحكام التي يُفترض بقاؤها بعد الإنهاء (الرسوم المستحقة، والملكية الفكرية، والسرية، وإخلاء المسؤولية، والمسؤولية، والتعويض).",
     ] },
     { h: "14. القانون الحاكم والنزاعات", body: [
-      "14.1. تخضع هذه الشروط للقوانين المعمول بها في الولاية القضائية المختصة بدول مجلس التعاون الخليجي، من دون اعتبار لقواعد تنازع القوانين.",
-      "14.2. يسعى الطرفان أولاً إلى تسوية النزاعات ودياً؛ وأي نزاع لا يُحلّ خلال ثلاثين (30) يوماً يُحسَم عن طريق التحكيم الملزم وفق الولاية القضائية المختصة بدول مجلس التعاون الخليجي، باستثناء حق أيٍّ من الطرفين في طلب الإجراءات الزجرية لحماية ملكيته الفكرية أو معلوماته السرية.",
-      "14.3. يتنازل كلٌّ منك ومن TalentMind عن أي حق في المحاكمة أمام هيئة محلّفين وفي المشاركة في دعوى جماعية. وهذه الشروط محرّرة باللغة الإنجليزية.",
+      "14.1. تخضع هذه الشروط للقوانين المعمول بها في الولاية القضائية المختصة بمنطقة الشرق الأوسط وشمال إفريقيا (MENA)، من دون اعتبار لقواعد تنازع القوانين.",
+      "14.2. يسعى الطرفان أولاً إلى تسوية النزاعات ودياً؛ وأي نزاع لا يُحلّ خلال ثلاثين (30) يوماً يُحسَم عن طريق التحكيم الملزم وفق الولاية القضائية المختصة بمنطقة الشرق الأوسط وشمال إفريقيا (MENA)، باستثناء حق أيٍّ من الطرفين في طلب الإجراءات الزجرية لحماية ملكيته الفكرية أو معلوماته السرية.",
+      "14.3. يتنازل كلٌّ منك ومن TalentMind عن أي حق في المشاركة في دعوى جماعية. وهذه الشروط محرّرة باللغة العربية لمنطقة الشرق الأوسط وشمال إفريقيا (MENA).",
     ] },
     { h: "15. التغييرات على هذه الشروط", body: ["يجوز لنا تحديث هذه الشروط. وعند إجراء تغييرات جوهرية، نحدّث تاريخ «آخر تحديث» ونقدّم إشعاراً بذلك. ويُعدّ استمرارك في الاستخدام بعد سريان التغييرات قبولاً بها."] },
     { h: "16. التواصل", body: [{ list: ["TalentMind AI CORP", "البريد الإلكتروني: legal@talentmind.app", "الموقع: talentmind.app"] }] },

@@ -327,7 +327,7 @@ const makeSteps = (a: Auto, w: Widgets, link: (h: string) => string): Step[] => 
           <h2 className="text-3xl font-bold leading-tight tracking-tight text-balance sm:text-5xl" style={{ color: INK }}>
             {a.fit.pre}<span style={{ color: GREEN }}>{a.fit.accent}</span>{a.fit.post}
           </h2>
-          <a href={link("/platform#block-1")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+          <a href={link("/culture")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
             {a.fit.link} <Arrow style={{ color: GREEN }} />
           </a>
           </div>
@@ -489,7 +489,7 @@ const makeSteps = (a: Auto, w: Widgets, link: (h: string) => string): Step[] => 
           <h2 className="text-3xl font-bold leading-tight tracking-tight text-balance sm:text-5xl" style={{ color: INK }}>
             {a.report.pre}<span style={{ color: GREEN }}>{a.report.accent}</span>{a.report.post}
           </h2>
-          <a href={link("/platform#block-2")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+          <a href={link("/otchet")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
             {a.report.link} <Arrow style={{ color: GREEN }} />
           </a>
           </div>
@@ -523,7 +523,7 @@ const makeSteps = (a: Auto, w: Widgets, link: (h: string) => string): Step[] => 
           <h2 className="text-3xl font-bold leading-tight tracking-tight text-balance sm:text-5xl" style={{ color: INK }}>
             {a.copilot.pre}<span style={{ color: GREEN }}>{a.copilot.accent}</span>{a.copilot.post}
           </h2>
-          <a href={link("/platform#block-3")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
+          <a href={link("/ai-assistant")} className="mt-4 inline-flex items-center gap-1.5 text-base font-medium" style={{ color: GREEN }}>
             {a.copilot.link} <Arrow style={{ color: GREEN }} />
           </a>
           </div>

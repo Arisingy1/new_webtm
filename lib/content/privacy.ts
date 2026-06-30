@@ -33,14 +33,14 @@ const en: PrivacyContent = {
       "5.4. If you upload information about other individuals, you represent that you have provided required notices and obtained required consents.",
     ] },
     { h: "6. Data Retention", body: ["We keep personal information only as long as needed to provide the Services, comply with legal obligations, and resolve disputes. Uploaded interview files are handled as described in Section 5. When no longer needed, we delete or de-identify information."] },
-    { h: "7. Data Security", body: ["We maintain administrative, technical, and physical safeguards, including encryption in transit and access controls. No method of transmission or storage is completely secure. We will notify you of a security incident as required by law."] },
+    { h: "7. Data Security", body: ["We maintain administrative, technical, and physical safeguards, including encryption in transit and access controls. No method of transmission or storage is completely secure. We will notify you of a security incident as required by applicable U.S. state breach-notification laws."] },
     { h: "8. Your Privacy Rights", body: [
       "Depending on where you live, you may have the right to:",
       { list: ["access the personal information we hold about you;", "delete personal information we collected from you;", "correct inaccurate information;", "opt out of the “sale” or “sharing” of personal information;", "not be discriminated against for exercising your rights."] },
       "To exercise these rights, contact us at privacy@talentmind.app. If you are a candidate whose data was uploaded by an organization, please also contact that organization.",
     ] },
     { h: "9. Cookies & Tracking", body: ["We use cookies and similar technologies to operate the site, remember preferences, and measure usage. You can control cookies through your browser and the cookie banner. We honor Global Privacy Control (GPC) signals where required."] },
-    { h: "10. International Data Transfers", body: ["We are based in the United States, and information may be processed in the U.S. and other countries where we or our providers operate, with appropriate safeguards."] },
+    { h: "10. International Data Transfers", body: ["We are based in the United States and host information in U.S. data centers; information may also be processed in other countries where we or our providers operate, with appropriate safeguards."] },
     { h: "11. Children's Privacy", body: ["The Services are intended for businesses and users at least 18 years old. We do not knowingly collect personal information from children under 16."] },
     { h: "12. Changes to This Policy", body: ["We may update this Policy. When we make material changes, we update the “last updated” date and provide notice where appropriate."] },
     { h: "13. Contact Us", body: [{ list: ["TalentMind AI CORP", "Email: privacy@talentmind.app", "Web: talentmind.app/privacy"] }] },
@@ -52,8 +52,8 @@ const es: PrivacyContent = {
   sections: [
     { h: "1. Introducción", body: [
       "Esta Política de privacidad explica cómo TalentMind AI CORP («TalentMind», «nosotros») recopila, usa, divulga y protege la información cuando visitas talentmind.app, usas nuestra plataforma de evaluación de candidatos o interactúas con nosotros (en conjunto, los «Servicios»).",
-      "Somos una empresa de Delaware con sede en Estados Unidos. Al usar los Servicios, aceptas las prácticas descritas en esta Política. Si no estás de acuerdo, no uses los Servicios.",
-      "Esta Política se ajusta a las leyes de privacidad aplicables de EE. UU., incluida la CCPA reformada por la CPRA («CCPA/CPRA») y otras leyes estatales, en la medida en que apliquen.",
+      "Prestamos nuestros Servicios a clientes en la Argentina y en América Latina. Al usar los Servicios, aceptas las prácticas descritas en esta Política. Si no estás de acuerdo, no uses los Servicios.",
+      "Esta Política se ajusta a la Ley 25.326 de Protección de los Datos Personales de la Argentina y a las normas de protección de datos personales vigentes en América Latina, en la medida en que apliquen al tratamiento de tus datos personales. La autoridad de control es la Agencia de Acceso a la Información Pública (AAIP).",
     ] },
     { h: "2. Información que recopilamos", body: [
       "Recopilamos las siguientes categorías de información:",
@@ -78,12 +78,12 @@ const es: PrivacyContent = {
     { h: "6. Conservación de datos", body: ["Conservamos la información personal solo el tiempo necesario para prestar los Servicios, cumplir obligaciones legales y resolver disputas. Los archivos de entrevista se tratan según la Sección 5. Cuando ya no es necesaria, eliminamos o anonimizamos la información."] },
     { h: "7. Seguridad de los datos", body: ["Mantenemos salvaguardas administrativas, técnicas y físicas, incluido el cifrado en tránsito y controles de acceso. Ningún método de transmisión o almacenamiento es completamente seguro. Te notificaremos un incidente de seguridad según lo exija la ley."] },
     { h: "8. Tus derechos de privacidad", body: [
-      "Según dónde residas, puedes tener derecho a:",
-      { list: ["acceder a la información personal que tenemos sobre ti;", "eliminar la información personal que recopilamos de ti;", "corregir información inexacta;", "rechazar la «venta» o el «intercambio» de tu información personal;", "no ser discriminado por ejercer tus derechos."] },
-      "Para ejercer estos derechos, escríbenos a privacy@talentmind.app. Si eres un candidato cuyos datos subió una organización, contacta también con esa organización.",
+      "Conforme a la Ley 25.326 y a las normas de protección de datos aplicables en América Latina, puedes tener derecho a:",
+      { list: ["acceder a la información personal que tenemos sobre ti;", "solicitar la supresión de la información personal que recopilamos de ti;", "rectificar o actualizar información inexacta o desactualizada;", "oponerte al tratamiento de tu información personal en los supuestos previstos por la ley;", "no ser discriminado por ejercer tus derechos."] },
+      "Para ejercer estos derechos, escríbenos a privacy@talentmind.app; también puedes presentar un reclamo ante la Agencia de Acceso a la Información Pública (AAIP). Si eres un candidato cuyos datos subió una organización, contacta también con esa organización.",
     ] },
     { h: "9. Cookies y seguimiento", body: ["Usamos cookies y tecnologías similares para operar el sitio, recordar preferencias y medir el uso. Puedes controlar las cookies desde tu navegador y el banner de cookies. Respetamos las señales de Global Privacy Control (GPC) cuando se exige."] },
-    { h: "10. Transferencias internacionales de datos", body: ["Tenemos sede en Estados Unidos y la información puede procesarse en EE. UU. y otros países donde operamos nosotros o nuestros proveedores, con las garantías adecuadas."] },
+    { h: "10. Transferencias internacionales de datos", body: ["La información se aloja en centros de datos de la región (América Latina) y puede procesarse en la Argentina y en otros países donde operamos nosotros o nuestros proveedores, con las garantías adecuadas conforme a la Ley 25.326."] },
     { h: "11. Privacidad de menores", body: ["Los Servicios están destinados a empresas y usuarios de al menos 18 años. No recopilamos conscientemente información personal de menores de 16 años."] },
     { h: "12. Cambios en esta Política", body: ["Podemos actualizar esta Política. Cuando hagamos cambios sustanciales, actualizaremos la fecha de «última actualización» y avisaremos cuando corresponda."] },
     { h: "13. Contacto", body: [{ list: ["TalentMind AI CORP", "Correo: privacy@talentmind.app", "Web: talentmind.app/privacy"] }] },
@@ -95,8 +95,8 @@ const pt: PrivacyContent = {
   sections: [
     { h: "1. Introdução", body: [
       "Esta Política de privacidade explica como a TalentMind AI CORP («TalentMind», «nós») coleta, usa, divulga e protege informações quando você visita talentmind.app, usa nossa plataforma de avaliação de candidatos ou interage conosco (em conjunto, os «Serviços»).",
-      "Somos uma empresa de Delaware sediada nos Estados Unidos. Ao usar os Serviços, você concorda com as práticas descritas nesta Política. Se não concordar, não use os Serviços.",
-      "Esta Política está alinhada às leis de privacidade aplicáveis dos EUA, incluindo a CCPA conforme alterada pela CPRA («CCPA/CPRA») e outras leis estaduais, na medida em que se apliquem.",
+      "Prestamos nossos Serviços a clientes no Brasil. Ao usar os Serviços, você concorda com as práticas descritas nesta Política. Se não concordar, não use os Serviços.",
+      "Esta Política está alinhada à Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018) e demais normas brasileiras aplicáveis, na medida em que se apliquem ao tratamento dos seus dados pessoais. A autoridade fiscalizadora é a Autoridade Nacional de Proteção de Dados (ANPD).",
     ] },
     { h: "2. Informações que coletamos", body: [
       "Coletamos as seguintes categorias de informações:",
@@ -121,12 +121,12 @@ const pt: PrivacyContent = {
     { h: "6. Retenção de dados", body: ["Mantemos as informações pessoais apenas pelo tempo necessário para prestar os Serviços, cumprir obrigações legais e resolver disputas. Os arquivos de entrevista são tratados conforme a Seção 5. Quando não são mais necessárias, excluímos ou anonimizamos as informações."] },
     { h: "7. Segurança dos dados", body: ["Mantemos salvaguardas administrativas, técnicas e físicas, incluindo criptografia em trânsito e controles de acesso. Nenhum método de transmissão ou armazenamento é completamente seguro. Notificaremos você sobre um incidente de segurança conforme exigido por lei."] },
     { h: "8. Seus direitos de privacidade", body: [
-      "Dependendo de onde você mora, você pode ter o direito de:",
-      { list: ["acessar as informações pessoais que mantemos sobre você;", "excluir as informações pessoais que coletamos de você;", "corrigir informações imprecisas;", "recusar a «venda» ou o «compartilhamento» de suas informações pessoais;", "não ser discriminado por exercer seus direitos."] },
-      "Para exercer esses direitos, escreva para privacy@talentmind.app. Se você é um candidato cujos dados foram enviados por uma organização, contate também essa organização.",
+      "De acordo com a LGPD, como titular dos dados, você pode ter o direito de:",
+      { list: ["acessar as informações pessoais que mantemos sobre você;", "solicitar a eliminação das informações pessoais que coletamos de você;", "corrigir informações imprecisas ou desatualizadas;", "opor-se ao tratamento dos seus dados pessoais nas hipóteses previstas em lei e revogar o consentimento;", "não ser discriminado por exercer seus direitos."] },
+      "Para exercer esses direitos, escreva para privacy@talentmind.app; você também pode apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD). Se você é um candidato (titular dos dados) cujos dados foram enviados por uma organização, contate também essa organização.",
     ] },
     { h: "9. Cookies e rastreamento", body: ["Usamos cookies e tecnologias semelhantes para operar o site, lembrar preferências e medir o uso. Você pode controlar os cookies pelo navegador e pelo banner de cookies. Respeitamos os sinais de Global Privacy Control (GPC) quando exigido."] },
-    { h: "10. Transferências internacionais de dados", body: ["Estamos sediados nos Estados Unidos, e as informações podem ser processadas nos EUA e em outros países onde nós ou nossos provedores operamos, com as devidas salvaguardas."] },
+    { h: "10. Transferências internacionais de dados", body: ["As informações são hospedadas em data centers no Brasil (na região) e podem ser processadas no Brasil e em outros países onde nós ou nossos provedores operamos, com as devidas salvaguardas previstas na LGPD."] },
     { h: "11. Privacidade de crianças", body: ["Os Serviços destinam-se a empresas e usuários com pelo menos 18 anos. Não coletamos intencionalmente informações pessoais de menores de 16 anos."] },
     { h: "12. Alterações nesta Política", body: ["Podemos atualizar esta Política. Quando fizermos alterações relevantes, atualizaremos a data de «última atualização» e avisaremos quando apropriado."] },
     { h: "13. Contato", body: [{ list: ["TalentMind AI CORP", "E-mail: privacy@talentmind.app", "Web: talentmind.app/privacy"] }] },
@@ -138,8 +138,8 @@ const ar: PrivacyContent = {
   sections: [
     { h: "1. مقدمة", body: [
       "توضّح سياسة الخصوصية هذه كيف تقوم TalentMind AI CORP («TalentMind» أو «نحن» أو «الشركة») بجمع المعلومات واستخدامها والإفصاح عنها وحمايتها عند زيارتك لموقع talentmind.app أو استخدامك منصّتنا لتقييم المرشّحين أو تفاعلك معنا بأي شكل آخر (يُشار إليها مجتمعةً بـ«الخدمات»).",
-      "نقدّم خدماتنا للعملاء في دول مجلس التعاون الخليجي والمناطق المجاورة. باستخدامك للخدمات، فإنك توافق على الممارسات الموضّحة في هذه السياسة. وإذا كنت لا توافق عليها، فيُرجى عدم استخدام الخدمات.",
-      "تتوافق هذه السياسة مع أنظمة حماية البيانات المعمول بها في دول مجلس التعاون الخليجي، بالقدر الذي تنطبق فيه على معالجة بياناتك الشخصية.",
+      "نقدّم خدماتنا للعملاء في منطقة الشرق الأوسط وشمال إفريقيا (MENA). باستخدامك للخدمات، فإنك توافق على الممارسات الموضّحة في هذه السياسة. وإذا كنت لا توافق عليها، فيُرجى عدم استخدام الخدمات.",
+      "تتوافق هذه السياسة مع أنظمة حماية البيانات المعمول بها في منطقة الشرق الأوسط وشمال إفريقيا (MENA)، بما في ذلك أنظمة حماية البيانات الشخصية (PDPL) في الإمارات العربية المتحدة والمملكة العربية السعودية، بالقدر الذي تنطبق فيه على معالجة بياناتك الشخصية. ويخضع تطبيق هذه السياسة لاختصاص الجهة المعنية في منطقة الشرق الأوسط وشمال إفريقيا.",
     ] },
     { h: "2. المعلومات التي نجمعها", body: [
       "نجمع الفئات التالية من المعلومات:",
@@ -164,12 +164,12 @@ const ar: PrivacyContent = {
     { h: "6. الاحتفاظ بالبيانات", body: ["نحتفظ بالمعلومات الشخصية فقط طوال المدة اللازمة لتقديم الخدمات والامتثال للالتزامات القانونية وحلّ النزاعات. وتُعالَج ملفّات المقابلات المرفوعة على النحو الموضّح في القسم 5. وعندما تنتفي الحاجة إليها، نحذف المعلومات أو نزيل منها المعرّفات."] },
     { h: "7. أمن البيانات", body: ["نطبّق ضمانات إدارية وتقنية ومادية، تشمل التشفير أثناء النقل وضوابط الوصول. ولا توجد وسيلة نقل أو تخزين آمنة تماماً. وسنُخطرك بأي حادث أمني وفقاً لما تقتضيه الأنظمة المعمول بها."] },
     { h: "8. حقوقك في الخصوصية", body: [
-      "وفقاً لأنظمة حماية البيانات المعمول بها، قد يكون لك الحق في:",
+      "وفقاً لأنظمة حماية البيانات الشخصية المعمول بها في منطقة الشرق الأوسط وشمال إفريقيا (MENA)، قد يكون لك الحق في:",
       { list: ["الوصول إلى المعلومات الشخصية التي نحتفظ بها عنك؛", "حذف المعلومات الشخصية التي جمعناها منك؛", "تصحيح المعلومات غير الدقيقة؛", "الاعتراض على معالجة معلوماتك الشخصية ونقلها وسحب موافقتك عليها؛", "عدم التعرّض للتمييز نتيجة ممارستك لحقوقك."] },
       "لممارسة هذه الحقوق، تواصل معنا عبر privacy@talentmind.app. وإذا كنت مرشّحاً رفعت مؤسسةٌ ما بياناتك، فيُرجى التواصل أيضاً مع تلك المؤسسة.",
     ] },
     { h: "9. ملفّات تعريف الارتباط والتتبّع", body: ["نستخدم ملفّات تعريف الارتباط والتقنيات المماثلة لتشغيل الموقع وتذكّر التفضيلات وقياس الاستخدام. ويمكنك التحكّم في ملفّات تعريف الارتباط من خلال متصفّحك ولافتة ملفّات تعريف الارتباط. ونحترم إشارات التحكّم في الخصوصية متى ما اشترطت الأنظمة المعمول بها ذلك."] },
-    { h: "10. عمليات نقل البيانات دولياً", body: ["قد تُعالَج المعلومات في دول مجلس التعاون الخليجي وفي دول أخرى نعمل فيها نحن أو مزوّدو خدماتنا، مع توفير الضمانات المناسبة لذلك."] },
+    { h: "10. عمليات نقل البيانات دولياً", body: ["تُستضاف المعلومات في مراكز بيانات داخل منطقة الشرق الأوسط وشمال إفريقيا، وقد تُعالَج في المنطقة وفي دول أخرى نعمل فيها نحن أو مزوّدو خدماتنا، مع توفير الضمانات المناسبة لذلك."] },
     { h: "11. خصوصية الأطفال", body: ["الخدمات موجّهة للشركات وللمستخدمين الذين لا تقلّ أعمارهم عن 18 عاماً. ولا نجمع عن قصد معلومات شخصية من الأطفال دون سن 16 عاماً."] },
     { h: "12. التغييرات على هذه السياسة", body: ["قد نحدّث هذه السياسة. وعند إجراء تغييرات جوهرية، نحدّث تاريخ «آخر تحديث» ونقدّم إشعاراً حيثما كان ذلك مناسباً."] },
     { h: "13. تواصل معنا", body: [{ list: ["TalentMind AI CORP", "البريد الإلكتروني: privacy@talentmind.app", "الموقع: talentmind.app/privacy"] }] },
