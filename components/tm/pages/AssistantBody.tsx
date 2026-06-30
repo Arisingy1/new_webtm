@@ -146,9 +146,9 @@ type ChatCopy = { script: { q: string; a: string }[]; aiAssistant: string; statu
 const CHAT: Record<Locale, ChatCopy> = {
   en: {
     script: [
-      { q: "Who's the best fit for the team lead role?", a: "Dmitry Smirnov — 88% compatibility. Strong leadership and systems thinking" },
+      { q: "Who's the best fit for the team lead role?", a: "James Bennett — 88% compatibility. Strong leadership and systems thinking" },
       { q: "And what are his risks?", a: "Salary expectations above market. Otherwise a solid candidate" },
-      { q: "Compare him with Sofia Kovaleva", a: "Sofia scores higher on empathy, Dmitry on strategy. Both cleared the hiring threshold" },
+      { q: "Compare him with Sophie Carter", a: "Sophie scores higher on empathy, James on strategy. Both cleared the hiring threshold" },
     ],
     aiAssistant: "AI Assistant",
     status: "pipeline analysis · online",
@@ -156,9 +156,9 @@ const CHAT: Record<Locale, ChatCopy> = {
   },
   es: {
     script: [
-      { q: "¿Quién encaja mejor para el puesto de team lead?", a: "Dmitry Smirnov — 88% de compatibilidad. Fuerte liderazgo y pensamiento sistémico" },
+      { q: "¿Quién encaja mejor para el puesto de team lead?", a: "Diego Fernández — 88% de compatibilidad. Fuerte liderazgo y pensamiento sistémico" },
       { q: "¿Y cuáles son sus riesgos?", a: "Expectativas salariales por encima del mercado. Por lo demás, un candidato sólido" },
-      { q: "Compáralo con Sofia Kovaleva", a: "Sofia puntúa más alto en empatía y Dmitry en estrategia. Ambos superaron el umbral de contratación" },
+      { q: "Compáralo con Sofía Gómez", a: "Sofía puntúa más alto en empatía y Diego en estrategia. Ambos superaron el umbral de contratación" },
     ],
     aiAssistant: "Asistente de IA",
     status: "análisis del pipeline · en línea",
@@ -166,9 +166,9 @@ const CHAT: Record<Locale, ChatCopy> = {
   },
   pt: {
     script: [
-      { q: "Quem é o melhor para a vaga de team lead?", a: "Dmitry Smirnov — 88% de compatibilidade. Forte liderança e pensamento sistêmico" },
+      { q: "Quem é o melhor para a vaga de team lead?", a: "Diogo Almeida — 88% de compatibilidade. Forte liderança e pensamento sistêmico" },
       { q: "E quais são os riscos dele?", a: "Expectativas salariais acima do mercado. No restante, um candidato sólido" },
-      { q: "Compare-o com Sofia Kovaleva", a: "Sofia pontua mais em empatia e Dmitry em estratégia. Ambos superaram o limite de contratação" },
+      { q: "Compare-o com Sofia Costa", a: "Sofia pontua mais em empatia e Diogo em estratégia. Ambos superaram o limite de contratação" },
     ],
     aiAssistant: "Assistente de IA",
     status: "análise do pipeline · online",
@@ -176,9 +176,9 @@ const CHAT: Record<Locale, ChatCopy> = {
   },
   ar: {
     script: [
-      { q: "من الأنسب لدور قائد الفريق؟", a: "Dmitry Smirnov — توافق بنسبة 88%. قيادة قوية وتفكير منظومي" },
+      { q: "من الأنسب لدور قائد الفريق؟", a: "أحمد العتيبي — توافق بنسبة 88%. قيادة قوية وتفكير منظومي" },
       { q: "وما المخاطر لديه؟", a: "توقعات الراتب أعلى من السوق. وفيما عدا ذلك، مرشّح قوي" },
-      { q: "قارنه بـ Sofia Kovaleva", a: "تحرز Sofia درجة أعلى في التعاطف، وDmitry في الاستراتيجية. وكلاهما تجاوز عتبة التوظيف" },
+      { q: "قارنه بـ سارة المنصوري", a: "تحرز سارة درجة أعلى في التعاطف، وأحمد في الاستراتيجية. وكلاهما تجاوز عتبة التوظيف" },
     ],
     aiAssistant: "مساعد الذكاء الاصطناعي",
     status: "تحليل قائمة المرشّحين · متصل",

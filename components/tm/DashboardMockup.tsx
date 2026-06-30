@@ -13,6 +13,8 @@ const DICT: Record<
   {
     steps: { load: string; loadSub: string; assistant: string; assistantSub: string; compare: string; compareSub: string };
     nav: { aiAssistant: string; home: string; departments: string; settings: string };
+    user: string;
+    userInitials: string;
     role: string;
     collapse: string;
     aiAssistant: string;
@@ -36,6 +38,8 @@ const DICT: Record<
       compareSub: "Choose the best candidate",
     },
     nav: { aiAssistant: "AI assistant", home: "Home", departments: "Departments", settings: "Settings" },
+    user: "Olivia Hayes",
+    userInitials: "OH",
     role: "Recruiter",
     collapse: "Collapse menu",
     aiAssistant: "AI Assistant",
@@ -52,8 +56,8 @@ const DICT: Record<
       { name: "Michaela Thompson", note: "Offer sent" },
       { name: "Samantha Carter", note: "Salary negotiation" },
       { name: "Alex Johnson", note: "Exit in 2 weeks" },
-      { name: "Natalia Lebedeva", note: "Strong T-shape, good communication" },
-      { name: "Roman Kim", note: "" },
+      { name: "Daniel Brooks", note: "Strong T-shape, good communication" },
+      { name: "Rachel Cole", note: "" },
     ],
   },
   es: {
@@ -66,6 +70,8 @@ const DICT: Record<
       compareSub: "Elige al mejor candidato",
     },
     nav: { aiAssistant: "Asistente de IA", home: "Inicio", departments: "Departamentos", settings: "Ajustes" },
+    user: "Lucía Romero",
+    userInitials: "LR",
     role: "Reclutador",
     collapse: "Contraer menú",
     aiAssistant: "Asistente de IA",
@@ -78,12 +84,12 @@ const DICT: Record<
     welcome: "Bienvenido a",
     newReports: "Nuevos informes",
     cards: [
-      { name: "David Parker", note: "Perfil en T sólido, buena comunicación" },
-      { name: "Michaela Thompson", note: "Oferta enviada" },
-      { name: "Samantha Carter", note: "Negociación salarial" },
-      { name: "Alex Johnson", note: "Salida en 2 semanas" },
-      { name: "Natalia Lebedeva", note: "Perfil en T sólido, buena comunicación" },
-      { name: "Roman Kim", note: "" },
+      { name: "David Romero", note: "Perfil en T sólido, buena comunicación" },
+      { name: "Micaela Torres", note: "Oferta enviada" },
+      { name: "Valentina Ríos", note: "Negociación salarial" },
+      { name: "Alejandro Gil", note: "Salida en 2 semanas" },
+      { name: "Daniel Castro", note: "Perfil en T sólido, buena comunicación" },
+      { name: "Camila Ortega", note: "" },
     ],
   },
   pt: {
@@ -96,6 +102,8 @@ const DICT: Record<
       compareSub: "Escolha o melhor candidato",
     },
     nav: { aiAssistant: "Assistente de IA", home: "Início", departments: "Departamentos", settings: "Configurações" },
+    user: "Beatriz Santos",
+    userInitials: "BS",
     role: "Recrutador",
     collapse: "Recolher menu",
     aiAssistant: "Assistente de IA",
@@ -108,12 +116,12 @@ const DICT: Record<
     welcome: "Bem-vindo ao",
     newReports: "Novos relatórios",
     cards: [
-      { name: "David Parker", note: "Perfil em T forte, boa comunicação" },
-      { name: "Michaela Thompson", note: "Oferta enviada" },
-      { name: "Samantha Carter", note: "Negociação salarial" },
-      { name: "Alex Johnson", note: "Saída em 2 semanas" },
-      { name: "Natalia Lebedeva", note: "Perfil em T forte, boa comunicação" },
-      { name: "Roman Kim", note: "" },
+      { name: "David Ramos", note: "Perfil em T forte, boa comunicação" },
+      { name: "Micaela Torres", note: "Oferta enviada" },
+      { name: "Valentina Rios", note: "Negociação salarial" },
+      { name: "Alexandre Pinto", note: "Saída em 2 semanas" },
+      { name: "Daniel Castro", note: "Perfil em T forte, boa comunicação" },
+      { name: "Camila Costa", note: "" },
     ],
   },
   ar: {
@@ -126,6 +134,8 @@ const DICT: Record<
       compareSub: "اختر أفضل مرشّح",
     },
     nav: { aiAssistant: "مساعد الذكاء الاصطناعي", home: "الرئيسية", departments: "الأقسام", settings: "الإعدادات" },
+    user: "نورة الشمري",
+    userInitials: "ن",
     role: "مسؤول التوظيف",
     collapse: "طيّ القائمة",
     aiAssistant: "مساعد الذكاء الاصطناعي",
@@ -138,12 +148,12 @@ const DICT: Record<
     welcome: "مرحبًا بك في",
     newReports: "تقارير جديدة",
     cards: [
-      { name: "David Parker", note: "ملف T قوي، تواصل جيد" },
-      { name: "Michaela Thompson", note: "تم إرسال العرض" },
-      { name: "Samantha Carter", note: "التفاوض على الراتب" },
-      { name: "Alex Johnson", note: "مغادرة خلال أسبوعين" },
-      { name: "Natalia Lebedeva", note: "ملف T قوي، تواصل جيد" },
-      { name: "Roman Kim", note: "" },
+      { name: "داود كريم", note: "ملف T قوي، تواصل جيد" },
+      { name: "ميساء ثابت", note: "تم إرسال العرض" },
+      { name: "سمر قاسم", note: "التفاوض على الراتب" },
+      { name: "علي حسن", note: "مغادرة خلال أسبوعين" },
+      { name: "ليلى مراد", note: "ملف T قوي، تواصل جيد" },
+      { name: "ريان خوري", note: "" },
     ],
   },
 };
@@ -250,9 +260,9 @@ export default function DashboardMockup() {
 
           {/* профиль пользователя */}
           <div className="mt-auto flex items-center gap-3 border-t border-[#ededed] px-2 pt-4">
-            <span className="grid h-9 w-9 place-items-center rounded-full text-sm font-semibold text-white" style={{ background: TEAL }}>AK</span>
+            <span className="grid h-9 w-9 place-items-center rounded-full text-sm font-semibold text-white" style={{ background: TEAL }}>{t.userInitials}</span>
             <div>
-              <p className="text-sm font-medium" style={{ color: INK }}>Alexander Kozlov</p>
+              <p className="text-sm font-medium" style={{ color: INK }}>{t.user}</p>
               <p className="text-xs" style={{ color: TEAL }}>{t.role}</p>
             </div>
           </div>

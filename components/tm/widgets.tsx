@@ -9,30 +9,35 @@ const DICT: Record<Locale, {
   leadership: string;
   empathy: string;
   problemSolving: string;
+  names: { michaela: string; samantha: string; david: string };
   titles: { michaela: string; samantha: string; david: string };
 }> = {
   en: {
     leadership: "Leadership",
     empathy: "Empathy",
     problemSolving: "Problem Solving",
+    names: { michaela: "Michaela T.", samantha: "Samantha C.", david: "David Parker" },
     titles: { michaela: "Lead UI Eng", samantha: "Product Des", david: "Senior Frontend Developer" },
   },
   es: {
     leadership: "Liderazgo",
     empathy: "Empatía",
     problemSolving: "Resolución de problemas",
+    names: { michaela: "Micaela T.", samantha: "Valentina R.", david: "David Romero" },
     titles: { michaela: "Líder de Ing. de UI", samantha: "Diseñadora de Producto", david: "Desarrollador Frontend Senior" },
   },
   pt: {
     leadership: "Liderança",
     empathy: "Empatia",
     problemSolving: "Resolução de problemas",
+    names: { michaela: "Micaela T.", samantha: "Valentina R.", david: "David Ramos" },
     titles: { michaela: "Líder de Eng. de UI", samantha: "Designer de Produto", david: "Desenvolvedor Frontend Sênior" },
   },
   ar: {
     leadership: "القيادة",
     empathy: "التعاطف",
     problemSolving: "حل المشكلات",
+    names: { michaela: "ميساء ثابت", samantha: "سمر قاسم", david: "داود كريم" },
     titles: { michaela: "مهندسة واجهات رئيسية", samantha: "مصمّمة منتجات", david: "مطوّر واجهات أمامية أول" },
   },
 };
@@ -137,20 +142,20 @@ export function CandidateStack() {
       {/* side peeking cards */}
       <div className="absolute left-0 top-10 w-[170px] -rotate-6 rounded-2xl bg-white p-3 opacity-90 shadow-[0_14px_30px_rgba(24,56,51,0.1)]">
         <div className="h-16 rounded-lg bg-gradient-to-br from-[#cfe0c2] to-[#a9c79a]" />
-        <p className="mt-2 truncate text-sm font-semibold" style={{ color: INK }}>Michaela T</p>
+        <p className="mt-2 truncate text-sm font-semibold" style={{ color: INK }}>{t.names.michaela}</p>
         <p className="truncate text-[11px]" style={{ color: TEAL }}>{t.titles.michaela}</p>
         <div className="mt-2"><Tag kind="interview" /></div>
       </div>
       <div className="absolute right-0 top-10 w-[170px] rotate-6 rounded-2xl bg-white p-3 opacity-90 shadow-[0_14px_30px_rgba(24,56,51,0.1)]">
         <div className="h-16 rounded-lg bg-gradient-to-br from-[#cfe6ef] to-[#9bcfe0]" />
-        <p className="mt-2 truncate text-sm font-semibold" style={{ color: INK }}>Samantha C</p>
+        <p className="mt-2 truncate text-sm font-semibold" style={{ color: INK }}>{t.names.samantha}</p>
         <p className="truncate text-[11px]" style={{ color: TEAL }}>{t.titles.samantha}</p>
         <div className="mt-2 flex items-center gap-2"><Tag kind="offer" /><Badge value="79%" /></div>
       </div>
       {/* central highlighted */}
       <div className="absolute left-1/2 top-0 w-[210px] -translate-x-1/2 rounded-2xl bg-white p-3 shadow-[0_28px_60px_rgba(24,56,51,0.2)]">
         <div className="h-28 rounded-xl bg-gradient-to-br from-[#d8c5b4] to-[#b0917b]" />
-        <p className="mt-3 text-base font-semibold" style={{ color: INK }}>David Parker</p>
+        <p className="mt-3 text-base font-semibold" style={{ color: INK }}>{t.names.david}</p>
         <p className="text-xs" style={{ color: TEAL }}>{t.titles.david}</p>
         <div className="mt-3 flex items-center gap-2"><Tag kind="offer" /><Badge /></div>
       </div>

@@ -9,10 +9,10 @@ import type { Locale } from "@/lib/i18n";
 
 /* строки живых мини-превью под шагами */
 const PV: Record<Locale, { cultureBars: [string, string, string]; compatibility: string; highFit: string; q: string; a: string }> = {
-  en: { cultureBars: ["Innovation", "Stability", "Results"], compatibility: "Compatibility", highFit: "High fit", q: "Best fit for the role?", a: "Dmitry — 88% match" },
-  es: { cultureBars: ["Innovación", "Estabilidad", "Resultados"], compatibility: "Compatibilidad", highFit: "Encaje alto", q: "¿Quién encaja mejor para el puesto?", a: "Dmitry — 88% de coincidencia" },
-  pt: { cultureBars: ["Inovação", "Estabilidade", "Resultados"], compatibility: "Compatibilidade", highFit: "Alto encaixe", q: "Quem encaixa melhor na vaga?", a: "Dmitry — 88% de correspondência" },
-  ar: { cultureBars: ["الابتكار", "الاستقرار", "النتائج"], compatibility: "التوافق", highFit: "توافق عالٍ", q: "من الأنسب للدور؟", a: "Dmitry — توافق بنسبة 88%" },
+  en: { cultureBars: ["Innovation", "Stability", "Results"], compatibility: "Compatibility", highFit: "High fit", q: "Best fit for the role?", a: "James — 88% match" },
+  es: { cultureBars: ["Innovación", "Estabilidad", "Resultados"], compatibility: "Compatibilidad", highFit: "Encaje alto", q: "¿Quién encaja mejor para el puesto?", a: "Diego — 88% de coincidencia" },
+  pt: { cultureBars: ["Inovação", "Estabilidade", "Resultados"], compatibility: "Compatibilidade", highFit: "Alto encaixe", q: "Quem encaixa melhor na vaga?", a: "Diogo — 88% de correspondência" },
+  ar: { cultureBars: ["الابتكار", "الاستقرار", "النتائج"], compatibility: "التوافق", highFit: "توافق عالٍ", q: "من الأنسب للدور؟", a: "أحمد — توافق بنسبة 88%" },
 };
 
 /* ── палитра бренда TalentMind ── */

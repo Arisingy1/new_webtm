@@ -211,6 +211,7 @@ const COMPAT_ATTENTION: Record<Locale, [string, string][]> = {
 const UI: Record<Locale, {
   resultsTitle: string;
   resultsSubtitle: string;
+  candidateName: string;
   candidateRole: string;
   candidateIndustry: string;
   matchScore: string;
@@ -275,6 +276,7 @@ const UI: Record<Locale, {
   en: {
     resultsTitle: "Analysis results",
     resultsSubtitle: "A detailed breakdown of soft skills and cultural fit based on a real interview",
+    candidateName: "James Bennett",
     candidateRole: "Senior Project Manager",
     candidateIndustry: "IT · e-commerce",
     matchScore: "Match score",
@@ -411,6 +413,7 @@ const UI: Record<Locale, {
   es: {
     resultsTitle: "Resultados del análisis",
     resultsSubtitle: "Un desglose detallado de las habilidades blandas y la compatibilidad cultural basado en una entrevista real",
+    candidateName: "Diego Fernández",
     candidateRole: "Jefe de Proyecto Sénior",
     candidateIndustry: "TI · comercio electrónico",
     matchScore: "Índice de compatibilidad",
@@ -547,6 +550,7 @@ const UI: Record<Locale, {
   pt: {
     resultsTitle: "Resultados da análise",
     resultsSubtitle: "Um detalhamento das habilidades comportamentais e da compatibilidade cultural com base em uma entrevista real",
+    candidateName: "Diogo Almeida",
     candidateRole: "Gerente de Projetos Sênior",
     candidateIndustry: "TI · comércio eletrônico",
     matchScore: "Índice de compatibilidade",
@@ -683,6 +687,7 @@ const UI: Record<Locale, {
   ar: {
     resultsTitle: "نتائج التحليل",
     resultsSubtitle: "تحليل تفصيلي للمهارات الشخصية والتوافق الثقافي استنادًا إلى مقابلة حقيقية",
+    candidateName: "أحمد العتيبي",
     candidateRole: "مدير مشاريع أول",
     candidateIndustry: "تقنية المعلومات · التجارة الإلكترونية",
     matchScore: "مؤشر التوافق",
@@ -862,7 +867,7 @@ export default function ReportPage() {
         {/* 0 · шапка кандидата + соответствие */}
         <div className="rv flex flex-col items-start justify-between gap-6 rounded-3xl border border-[#e6ece4] bg-white p-6 shadow-[0_16px_44px_rgba(24,56,51,0.06)] sm:flex-row sm:items-center md:px-8">
           <div>
-            <h2 className="text-[1.7rem] font-bold leading-tight tracking-tight" style={{ color: INK }}>Dmitry Sokolov</h2>
+            <h2 className="text-[1.7rem] font-bold leading-tight tracking-tight" style={{ color: INK }}>{t.candidateName}</h2>
             <p className="mt-1.5 text-sm font-semibold leading-snug" style={{ color: TEAL }}>{t.candidateRole}</p>
             <p className="text-sm font-medium leading-snug" style={{ color: `${TEAL}b3` }}>{t.candidateIndustry}</p>
           </div>
