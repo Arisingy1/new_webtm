@@ -11,6 +11,7 @@ export default function Header() {
   const LINKS: [string, string][] = [
     [t.nav.softskill, localize("/otchet", locale)],
     [t.nav.culture, localize("/culture", locale)],
+    [t.nav.aiAssistant, localize("/ai-assistant", locale)],
     ...(locale === "ar" ? [[t.nav.geoculture, localize("/geoculture", locale)] as [string, string]] : []),
     [t.nav.pricing, localize("/pricing", locale)],
     [t.nav.partners, localize("/partners", locale)],

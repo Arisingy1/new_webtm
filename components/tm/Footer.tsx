@@ -22,7 +22,7 @@ export default function Footer() {
 
   const L = t.footer.links;
   const cols: { h: string; links: [string, string][] }[] = [
-    { h: t.footer.product, links: [[L.softskill, "/otchet"], [L.culture, "/culture"], [L.pricing, "/pricing"], [L.contacts, "/contacts"]] },
+    { h: t.footer.product, links: [[L.softskill, "/otchet"], [L.culture, "/culture"], [L.aiAssistant, "/ai-assistant"], [L.pricing, "/pricing"], [L.contacts, "/contacts"]] },
     { h: t.footer.resources, links: [[L.api, "/api"], [L.security, "/security"], [L.partners, "/partners"]] },
   ];
 
