@@ -73,7 +73,7 @@ export default function ContactsPage() {
         <div className="reveal space-y-4">
           {[
             { icon: <Mail className="h-5 w-5" />, t: c.labels.email, v: "info@talentmind.app", href: "mailto:info@talentmind.app", a: GREEN },
-            { icon: <LinkedInIcon className="h-5 w-5" />, t: c.labels.linkedin, v: "talentmindapp", href: "https://www.linkedin.com/company/talentmindapp", a: "#0A66C2" },
+            { icon: <LinkedInIcon className="h-5 w-5" />, t: c.labels.linkedin, v: "TalentMind", href: "https://www.linkedin.com/company/talentmindapp", a: "#0A66C2" },
             { icon: <MapPin className="h-5 w-5" />, t: c.labels.office, v: "1850 S Ocean Dr, Unit 1203, Hallandale Beach, FL 33009, USA", href: undefined, a: TEAL },
           ].map((card) => (
             <div key={card.t} className="flex items-center gap-4 rounded-2xl border border-[#ededed] bg-white p-5 shadow-[0_12px_30px_rgba(24,56,51,0.05)]">

@@ -252,6 +252,21 @@
     }
   }
 
+  /* RTL: the 200%-wide track aligns to the right edge, so translating it -50%
+     slides the whole band off-screen and leaves a gap instead of looping.
+     Move it +50% so the second copy scrolls seamlessly into view. */
+  @keyframes amzmarquee-rtl {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(50%);
+    }
+  }
+  [dir="rtl"] .animate-\[amzmarquee_28s_linear_infinite\] {
+    animation-name: amzmarquee-rtl;
+  }
+
   /* "How it works" — seamless flowing data signal along SVG connectors.
      Pattern length = 2 + 14 = 16; offset moves by a multiple of 16 → no jump. */
   @keyframes flowdash {

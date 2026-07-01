@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe } from "lucide-react";
+import { Globe, Mail } from "lucide-react";
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -37,14 +37,22 @@ export default function Footer() {
             style={{ filter: "brightness(0) invert(1)" }}
           />
           <p className="mt-4 max-w-xs text-sm text-white/55">{t.footer.tagline}</p>
-          <a
-            href="https://www.linkedin.com/company/talentmindapp"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white/70 transition-colors hover:border-white/40 hover:text-white"
-          >
-            <LinkedInIcon className="h-4 w-4" /> {t.footer.linkedin}
-          </a>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <a
+              href="https://www.linkedin.com/company/talentmindapp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white/70 transition-colors hover:border-white/40 hover:text-white"
+            >
+              <LinkedInIcon className="h-4 w-4" /> {t.footer.linkedin}
+            </a>
+            <a
+              href="mailto:info@talentmind.app"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-white/70 transition-colors hover:border-white/40 hover:text-white"
+            >
+              <Mail className="h-4 w-4" /> info@talentmind.app
+            </a>
+          </div>
         </div>
         {cols.map((col) => (
           <div key={col.h}>
