@@ -1,10 +1,10 @@
 import type { Locale } from "@/lib/i18n";
 
-export type Tier = { name: string; monthly: number; unit: string; desc: string; incl: string; feats: string[]; hot: boolean };
+export type Tier = { name: string; monthly: number; annual: number; unit: string; desc: string; incl: string; feats: string[]; hot: boolean };
 export type PricingContent = {
   h1a: string; h1accent: string; sub: string;
   billMonthly: string; billAnnual: string; save: string;
-  perMonth: string; perMonthAnnual: string;
+  perMonth: string; perMonthAnnual: string; totalPerYear: (amount: string) => string;
   tiers: Tier[];
   cta: (name: string) => string; startFree: string;
   offerPre: string; offerLink: string;
@@ -15,13 +15,13 @@ export type PricingContent = {
 
 const en: PricingContent = {
   h1a: "Choose your ", h1accent: "hiring plan", sub: "Transparent pricing that grows with your team",
-  billMonthly: "Monthly", billAnnual: "Annually", save: "−15%",
-  perMonth: "per month", perMonthAnnual: "per month · billed annually",
+  billMonthly: "Monthly", billAnnual: "Annually", save: "Save",
+  perMonth: "per month", perMonthAnnual: "per month, equal payments", totalPerYear: (a) => `${a} total per year`,
   tiers: [
-    { name: "Free", monthly: 0, unit: "5 interviews", desc: "To try the platform. No credit card required", incl: "Included in the plan:", feats: ["Corporate culture profile upload", "Basic soft-skills scoring and AI report", "Basic analytics dashboards"], hot: false },
-    { name: "Starter", monthly: 149, unit: "up to 30 interviews", desc: "Perfect for small teams and a fast start with AI in hiring", incl: "Everything in Free, plus:", feats: ["Video-conferencing integrations", "Data stored in secure U.S. data centers", "Email support"], hot: false },
-    { name: "Growth", monthly: 449, unit: "up to 100 interviews", desc: "For fast-growing companies and structured HR teams", incl: "Everything in Starter, plus:", feats: ["ATS integrations", "Branded reports (your company logo)", "Priority support"], hot: true },
-    { name: "Scale", monthly: 1699, unit: "up to 400 interviews", desc: "For large businesses that need customization and automation", incl: "Everything in Growth, plus:", feats: ["Open API and webhooks", "1 custom AI competency model", "Bias control", "Dedicated account manager"], hot: false },
+    { name: "Free", monthly: 0, annual: 0, unit: "5 interviews", desc: "To try the platform. No credit card required", incl: "Included in the plan:", feats: ["Corporate culture profile upload", "Basic soft-skills scoring and AI report", "Basic analytics dashboards"], hot: false },
+    { name: "Starter", monthly: 149, annual: 1499.99, unit: "up to 30 interviews", desc: "Perfect for small teams and a fast start with AI in hiring", incl: "Everything in Free, plus:", feats: ["Video-conferencing integrations", "Data stored in secure U.S. data centers", "Email support"], hot: false },
+    { name: "Growth", monthly: 449, annual: 4499.99, unit: "up to 100 interviews", desc: "For fast-growing companies and structured HR teams", incl: "Everything in Starter, plus:", feats: ["ATS integrations", "Branded reports (your company logo)", "Priority support"], hot: true },
+    { name: "Scale", monthly: 1699, annual: 17999.99, unit: "up to 400 interviews", desc: "For large businesses that need customization and automation", incl: "Everything in Growth, plus:", feats: ["Open API and webhooks", "1 custom AI competency model", "Bias control", "Dedicated account manager"], hot: false },
   ],
   cta: (n) => `Choose ${n}`, startFree: "Start for free",
   offerPre: "By providing payment information, you accept the terms of the ", offerLink: "Terms of Service",
@@ -38,13 +38,13 @@ const en: PricingContent = {
 
 const es: PricingContent = {
   h1a: "Elige tu ", h1accent: "plan de contratación", sub: "Precios transparentes que crecen con tu equipo",
-  billMonthly: "Mensual", billAnnual: "Anual", save: "−15%",
-  perMonth: "al mes", perMonthAnnual: "al mes · facturado anualmente",
+  billMonthly: "Mensual", billAnnual: "Anual", save: "Ahorra",
+  perMonth: "al mes", perMonthAnnual: "al mes, pagos iguales", totalPerYear: (a) => `${a} al año en total`,
   tiers: [
-    { name: "Free", monthly: 0, unit: "5 entrevistas", desc: "Para probar la plataforma. Sin tarjeta de crédito", incl: "Incluido en el plan:", feats: ["Carga del perfil de cultura corporativa", "Puntuación básica de soft skills e informe con IA", "Paneles de analítica básicos"], hot: false },
-    { name: "Starter", monthly: 149, unit: "hasta 30 entrevistas", desc: "Ideal para equipos pequeños y un inicio rápido con IA en la contratación", incl: "Todo lo de Free, y además:", feats: ["Integraciones con videoconferencia", "Datos en centros de datos seguros en EE. UU.", "Soporte por correo"], hot: false },
-    { name: "Growth", monthly: 449, unit: "hasta 100 entrevistas", desc: "Para empresas en rápido crecimiento y equipos de RR. HH. estructurados", incl: "Todo lo de Starter, y además:", feats: ["Integraciones con ATS", "Informes con tu marca (logo de la empresa)", "Soporte prioritario"], hot: true },
-    { name: "Scale", monthly: 1699, unit: "hasta 400 entrevistas", desc: "Para grandes empresas que necesitan personalización y automatización", incl: "Todo lo de Growth, y además:", feats: ["API abierta y webhooks", "1 modelo de competencias de IA a medida", "Control de sesgos", "Gerente de cuenta dedicado"], hot: false },
+    { name: "Free", monthly: 0, annual: 0, unit: "5 entrevistas", desc: "Para probar la plataforma. Sin tarjeta de crédito", incl: "Incluido en el plan:", feats: ["Carga del perfil de cultura corporativa", "Puntuación básica de soft skills e informe con IA", "Paneles de analítica básicos"], hot: false },
+    { name: "Starter", monthly: 149, annual: 1499.99, unit: "hasta 30 entrevistas", desc: "Ideal para equipos pequeños y un inicio rápido con IA en la contratación", incl: "Todo lo de Free, y además:", feats: ["Integraciones con videoconferencia", "Datos en centros de datos seguros en EE. UU.", "Soporte por correo"], hot: false },
+    { name: "Growth", monthly: 449, annual: 4499.99, unit: "hasta 100 entrevistas", desc: "Para empresas en rápido crecimiento y equipos de RR. HH. estructurados", incl: "Todo lo de Starter, y además:", feats: ["Integraciones con ATS", "Informes con tu marca (logo de la empresa)", "Soporte prioritario"], hot: true },
+    { name: "Scale", monthly: 1699, annual: 17999.99, unit: "hasta 400 entrevistas", desc: "Para grandes empresas que necesitan personalización y automatización", incl: "Todo lo de Growth, y además:", feats: ["API abierta y webhooks", "1 modelo de competencias de IA a medida", "Control de sesgos", "Gerente de cuenta dedicado"], hot: false },
   ],
   cta: (n) => `Elegir ${n}`, startFree: "Empezar gratis",
   offerPre: "Al proporcionar la información de pago, aceptas los ", offerLink: "Términos del servicio",
@@ -61,13 +61,13 @@ const es: PricingContent = {
 
 const pt: PricingContent = {
   h1a: "Escolha seu ", h1accent: "plano de contratação", sub: "Preços transparentes que crescem com sua equipe",
-  billMonthly: "Mensal", billAnnual: "Anual", save: "−15%",
-  perMonth: "por mês", perMonthAnnual: "por mês · cobrado anualmente",
+  billMonthly: "Mensal", billAnnual: "Anual", save: "Economize",
+  perMonth: "por mês", perMonthAnnual: "por mês, pagamentos iguais", totalPerYear: (a) => `${a} por ano no total`,
   tiers: [
-    { name: "Free", monthly: 0, unit: "5 entrevistas", desc: "Para experimentar a plataforma. Sem cartão de crédito", incl: "Incluído no plano:", feats: ["Upload do perfil de cultura corporativa", "Pontuação básica de soft skills e relatório com IA", "Painéis de análise básicos"], hot: false },
-    { name: "Starter", monthly: 149, unit: "até 30 entrevistas", desc: "Perfeito para equipes pequenas e um começo rápido com IA na contratação", incl: "Tudo do Free, e mais:", feats: ["Integrações com videoconferência", "Dados em data centers seguros nos EUA", "Suporte por e-mail"], hot: false },
-    { name: "Growth", monthly: 449, unit: "até 100 entrevistas", desc: "Para empresas em crescimento rápido e equipes de RH estruturadas", incl: "Tudo do Starter, e mais:", feats: ["Integrações com ATS", "Relatórios com sua marca (logo da empresa)", "Suporte prioritário"], hot: true },
-    { name: "Scale", monthly: 1699, unit: "até 400 entrevistas", desc: "Para grandes empresas que precisam de personalização e automação", incl: "Tudo do Growth, e mais:", feats: ["API aberta e webhooks", "1 modelo de competências de IA personalizado", "Controle de viés", "Gerente de conta dedicado"], hot: false },
+    { name: "Free", monthly: 0, annual: 0, unit: "5 entrevistas", desc: "Para experimentar a plataforma. Sem cartão de crédito", incl: "Incluído no plano:", feats: ["Upload do perfil de cultura corporativa", "Pontuação básica de soft skills e relatório com IA", "Painéis de análise básicos"], hot: false },
+    { name: "Starter", monthly: 149, annual: 1499.99, unit: "até 30 entrevistas", desc: "Perfeito para equipes pequenas e um começo rápido com IA na contratação", incl: "Tudo do Free, e mais:", feats: ["Integrações com videoconferência", "Dados em data centers seguros nos EUA", "Suporte por e-mail"], hot: false },
+    { name: "Growth", monthly: 449, annual: 4499.99, unit: "até 100 entrevistas", desc: "Para empresas em crescimento rápido e equipes de RH estruturadas", incl: "Tudo do Starter, e mais:", feats: ["Integrações com ATS", "Relatórios com sua marca (logo da empresa)", "Suporte prioritário"], hot: true },
+    { name: "Scale", monthly: 1699, annual: 17999.99, unit: "até 400 entrevistas", desc: "Para grandes empresas que precisam de personalização e automação", incl: "Tudo do Growth, e mais:", feats: ["API aberta e webhooks", "1 modelo de competências de IA personalizado", "Controle de viés", "Gerente de conta dedicado"], hot: false },
   ],
   cta: (n) => `Escolher ${n}`, startFree: "Começar grátis",
   offerPre: "Ao fornecer as informações de pagamento, você aceita os ", offerLink: "Termos de serviço",
@@ -84,13 +84,13 @@ const pt: PricingContent = {
 
 const ar: PricingContent = {
   h1a: "اختر ", h1accent: "خطة التوظيف", sub: "أسعار شفّافة تنمو مع فريقك",
-  billMonthly: "شهري", billAnnual: "سنوي", save: "−15%",
-  perMonth: "شهريًا", perMonthAnnual: "شهريًا · تُدفع سنويًا",
+  billMonthly: "شهري", billAnnual: "سنوي", save: "وفّر",
+  perMonth: "شهريًا", perMonthAnnual: "شهريًا بأقساط متساوية", totalPerYear: (a) => `${a} إجمالاً في السنة`,
   tiers: [
-    { name: "Free", monthly: 0, unit: "5 مقابلات", desc: "لتجربة المنصة. لا حاجة لبطاقة ائتمان", incl: "مشمول في الخطة:", feats: ["رفع ملف الثقافة المؤسسية", "تقييم أساسي للمهارات الشخصية وتقرير بالذكاء الاصطناعي", "لوحات تحليلات أساسية"], hot: false },
-    { name: "Starter", monthly: 149, unit: "حتى 30 مقابلة", desc: "مثالية للفرق الصغيرة وللبدء السريع مع الذكاء الاصطناعي في التوظيف", incl: "كل ما في Free، بالإضافة إلى:", feats: ["تكاملات مع مؤتمرات الفيديو", "تخزين البيانات في مراكز بيانات آمنة في الولايات المتحدة", "دعم عبر البريد الإلكتروني"], hot: false },
-    { name: "Growth", monthly: 449, unit: "حتى 100 مقابلة", desc: "للشركات سريعة النمو وفرق الموارد البشرية المنظّمة", incl: "كل ما في Starter، بالإضافة إلى:", feats: ["تكاملات مع أنظمة تتبّع المتقدّمين", "تقارير بعلامتك التجارية (شعار شركتك)", "دعم ذو أولوية"], hot: true },
-    { name: "Scale", monthly: 1699, unit: "حتى 400 مقابلة", desc: "للشركات الكبيرة التي تحتاج إلى التخصيص والأتمتة", incl: "كل ما في Growth، بالإضافة إلى:", feats: ["API مفتوحة وwebhooks", "نموذج كفاءات ذكاء اصطناعي مخصّص واحد", "ضبط التحيّز", "مدير حساب مخصّص"], hot: false },
+    { name: "Free", monthly: 0, annual: 0, unit: "5 مقابلات", desc: "لتجربة المنصة. لا حاجة لبطاقة ائتمان", incl: "مشمول في الخطة:", feats: ["رفع ملف الثقافة المؤسسية", "تقييم أساسي للمهارات الشخصية وتقرير بالذكاء الاصطناعي", "لوحات تحليلات أساسية"], hot: false },
+    { name: "Starter", monthly: 149, annual: 1499.99, unit: "حتى 30 مقابلة", desc: "مثالية للفرق الصغيرة وللبدء السريع مع الذكاء الاصطناعي في التوظيف", incl: "كل ما في Free، بالإضافة إلى:", feats: ["تكاملات مع مؤتمرات الفيديو", "تخزين البيانات في مراكز بيانات آمنة في الولايات المتحدة", "دعم عبر البريد الإلكتروني"], hot: false },
+    { name: "Growth", monthly: 449, annual: 4499.99, unit: "حتى 100 مقابلة", desc: "للشركات سريعة النمو وفرق الموارد البشرية المنظّمة", incl: "كل ما في Starter، بالإضافة إلى:", feats: ["تكاملات مع أنظمة تتبّع المتقدّمين", "تقارير بعلامتك التجارية (شعار شركتك)", "دعم ذو أولوية"], hot: true },
+    { name: "Scale", monthly: 1699, annual: 17999.99, unit: "حتى 400 مقابلة", desc: "للشركات الكبيرة التي تحتاج إلى التخصيص والأتمتة", incl: "كل ما في Growth، بالإضافة إلى:", feats: ["API مفتوحة وwebhooks", "نموذج كفاءات ذكاء اصطناعي مخصّص واحد", "ضبط التحيّز", "مدير حساب مخصّص"], hot: false },
   ],
   cta: (n) => `اختر ${n}`, startFree: "ابدأ مجانًا",
   offerPre: "بتقديمك معلومات الدفع، فإنك تقبل شروط ", offerLink: "شروط الخدمة",

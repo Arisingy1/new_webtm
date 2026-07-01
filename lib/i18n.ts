@@ -56,7 +56,7 @@ type UI = {
 
 export const T: Record<Locale, UI> = {
   en: {
-    nav: { softskill: "Soft-skill report", culture: "Culture report", geoculture: "Geoculture", pricing: "Pricing", partners: "Partners", contacts: "Contacts" },
+    nav: { softskill: "Soft-skill report", culture: "Culture Fit report", geoculture: "Geoculture", pricing: "Pricing", partners: "Partners", contacts: "Contacts" },
     login: "Log in",
     tryFree: "Try for free",
     footer: {
@@ -64,7 +64,7 @@ export const T: Record<Locale, UI> = {
       linkedin: "LinkedIn",
       product: "Product",
       resources: "Resources",
-      links: { softskill: "Soft-skill report", culture: "Culture report", pricing: "Pricing", contacts: "Contacts", api: "API", security: "Security", partners: "Partners" },
+      links: { softskill: "Soft-skill report", culture: "Culture Fit report", pricing: "Pricing", contacts: "Contacts", api: "API", security: "Security", partners: "Partners" },
       privacy: "Privacy Policy",
       terms: "Terms of Service",
       language: "Language",
@@ -72,7 +72,7 @@ export const T: Record<Locale, UI> = {
     },
   },
   es: {
-    nav: { softskill: "Informe soft skills", culture: "Informe de cultura", geoculture: "Geocultura", pricing: "Precios", partners: "Socios", contacts: "Contacto" },
+    nav: { softskill: "Informe soft skills", culture: "Informe de culture fit", geoculture: "Geocultura", pricing: "Precios", partners: "Socios", contacts: "Contacto" },
     login: "Iniciar sesión",
     tryFree: "Probar gratis",
     footer: {
@@ -80,7 +80,7 @@ export const T: Record<Locale, UI> = {
       linkedin: "LinkedIn",
       product: "Producto",
       resources: "Recursos",
-      links: { softskill: "Informe soft skills", culture: "Informe de cultura", pricing: "Precios", contacts: "Contacto", api: "API", security: "Seguridad", partners: "Socios" },
+      links: { softskill: "Informe soft skills", culture: "Informe de culture fit", pricing: "Precios", contacts: "Contacto", api: "API", security: "Seguridad", partners: "Socios" },
       privacy: "Política de privacidad",
       terms: "Términos del servicio",
       language: "Idioma",
@@ -88,7 +88,7 @@ export const T: Record<Locale, UI> = {
     },
   },
   pt: {
-    nav: { softskill: "Relatório soft skills", culture: "Relatório de cultura", geoculture: "Geocultura", pricing: "Preços", partners: "Parceiros", contacts: "Contato" },
+    nav: { softskill: "Relatório soft skills", culture: "Relatório de culture fit", geoculture: "Geocultura", pricing: "Preços", partners: "Parceiros", contacts: "Contato" },
     login: "Entrar",
     tryFree: "Experimentar grátis",
     footer: {
@@ -96,7 +96,7 @@ export const T: Record<Locale, UI> = {
       linkedin: "LinkedIn",
       product: "Produto",
       resources: "Recursos",
-      links: { softskill: "Relatório soft skills", culture: "Relatório de cultura", pricing: "Preços", contacts: "Contato", api: "API", security: "Segurança", partners: "Parceiros" },
+      links: { softskill: "Relatório soft skills", culture: "Relatório de culture fit", pricing: "Preços", contacts: "Contato", api: "API", security: "Segurança", partners: "Parceiros" },
       privacy: "Política de privacidade",
       terms: "Termos de serviço",
       language: "Idioma",
@@ -104,7 +104,7 @@ export const T: Record<Locale, UI> = {
     },
   },
   ar: {
-    nav: { softskill: "تقرير المهارات", culture: "تقرير الثقافة", geoculture: "الجيوثقافة", pricing: "الأسعار", partners: "الشركاء", contacts: "تواصل معنا" },
+    nav: { softskill: "تقرير المهارات", culture: "تقرير التوافق الثقافي", geoculture: "الجيوثقافة", pricing: "الأسعار", partners: "الشركاء", contacts: "تواصل معنا" },
     login: "تسجيل الدخول",
     tryFree: "جرّب مجانًا",
     footer: {
@@ -112,7 +112,7 @@ export const T: Record<Locale, UI> = {
       linkedin: "لينكدإن",
       product: "المنتج",
       resources: "الموارد",
-      links: { softskill: "تقرير المهارات", culture: "تقرير الثقافة", pricing: "الأسعار", contacts: "تواصل معنا", api: "API", security: "الأمان", partners: "الشركاء" },
+      links: { softskill: "تقرير المهارات", culture: "تقرير التوافق الثقافي", pricing: "الأسعار", contacts: "تواصل معنا", api: "API", security: "الأمان", partners: "الشركاء" },
       privacy: "سياسة الخصوصية",
       terms: "شروط الخدمة",
       language: "اللغة",

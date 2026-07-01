@@ -6,10 +6,14 @@ import { Arrow, GREEN, INK } from "./ui";
 import { useLocale } from "./LocaleProvider";
 import { PRICING } from "@/lib/content/pricing";
 
-/* Annual discount: paying yearly saves 15% off the monthly price. */
-const ANNUAL_DISCOUNT = 0.15;
-const money = (n: number) => "$" + Math.round(n).toLocaleString("en-US");
-const annualMonthly = (monthly: number) => Math.round(monthly * (1 - ANNUAL_DISCOUNT));
+/* USD formatting: show cents only when the amount has them ($149 vs $1,499.99). */
+const money = (n: number) =>
+  "$" + (Number.isInteger(n) ? n.toLocaleString("en-US") : n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+
+/* Equal monthly payment when billed annually (annual total / 12). */
+const monthlyInstalment = (annual: number) => Math.round(annual / 12);
+/* Actual saving vs paying 12 months at the monthly rate. */
+const annualOff = (monthly: number, annual: number) => Math.round((1 - annual / (monthly * 12)) * 100);
 
 export default function PricingBento() {
   const locale = useLocale();
@@ -55,8 +59,8 @@ export default function PricingBento() {
       <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {c.tiers.map((t) => {
           const free = t.monthly === 0;
-          const shown = annual && !free ? annualMonthly(t.monthly) : t.monthly;
-          const discounted = annual && !free;
+          const yearly = annual && !free;
+          const instalment = yearly ? monthlyInstalment(t.annual) : t.monthly;
           return (
             <div
               key={t.name}
@@ -77,25 +81,29 @@ export default function PricingBento() {
                 )}
               </div>
 
-              {/* old price + save badge (annual only) */}
+              {/* struck monthly price + saving badge (annual only) */}
               <div className="mt-5 flex h-5 items-center gap-2">
-                {discounted && (
+                {yearly && (
                   <>
                     <span className="text-sm font-medium text-[#183833]/40 line-through">{money(t.monthly)}</span>
-                    <span className="rounded-full px-1.5 py-0.5 text-[10px] font-bold" style={{ background: `${GREEN}1f`, color: GREEN }}>{c.save}</span>
+                    <span className="rounded-full px-1.5 py-0.5 text-[10px] font-bold" style={{ background: `${GREEN}1f`, color: GREEN }}>−{annualOff(t.monthly, t.annual)}%</span>
                   </>
                 )}
               </div>
-              {/* price */}
+              {/* price — big monthly instalment */}
               <div className="mt-1 flex items-end gap-2">
-                <span className="text-[2.6rem] font-bold leading-none tracking-tight" style={{ color: INK }}>{money(shown)}</span>
+                <span className="text-[2.6rem] font-bold leading-none tracking-tight" style={{ color: INK }}>{money(instalment)}</span>
               </div>
               <p className="mt-2 text-sm font-medium text-[#183833]/55">
-                {free ? t.unit : `${discounted ? c.perMonthAnnual : c.perMonth} · ${t.unit}`}
+                {free ? t.unit : `${yearly ? c.perMonthAnnual : c.perMonth} · ${t.unit}`}
               </p>
+              {/* annual total (annual only) */}
+              <div className="mt-1 flex h-5 items-center">
+                {yearly && <p className="text-xs font-medium text-[#183833]/45">{c.totalPerYear(money(t.annual))}</p>}
+              </div>
 
               {/* description */}
-              <p className="mt-4 text-sm leading-snug text-[#183833]/70">{t.desc}</p>
+              <p className="mt-3 text-sm leading-snug text-[#183833]/70">{t.desc}</p>
 
               {/* features */}
               <p className="mt-6 text-xs font-semibold uppercase tracking-wide text-[#183833]/45">{t.incl}</p>
